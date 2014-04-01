@@ -1,5 +1,11 @@
 from django.contrib import admin
 from billing.models import Bill, BillLine
 
-admin.site.register(Bill)
-admin.site.register(BillLine)
+class BillLineInline(admin.TabularInline):
+    model = BillLine
+    extra = 1
+
+class BillAdmin(admin.ModelAdmin):
+    inlines = [BillLineInline]
+
+admin.site.register(Bill, BillAdmin)
