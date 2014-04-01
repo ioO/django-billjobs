@@ -1,3 +1,4 @@
 *.pyc
 billjobs/settings_dev.py
+dev.sqlite3
 
