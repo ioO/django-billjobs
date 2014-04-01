@@ -6,14 +6,15 @@ class Bill(models.Model):
 
 class BillLine(models.Model):
 
-    SERVICES_CHOICES = (
-            ('FT', 'Full Time'),
-            ('PT', 'Part Time'),
-            ('MD', 'Mid Time'),
-            )
-
     bill = models.ForeignKey(Bill)
-    service = models.CharField(max_length=2, choices=SERVICES_CHOICES,
-                               default='FT')
+    service = models.ForeignKey(Service)
     quantity = models.SmallIntegerField(default=1)
+    total = models.Float()
 
+class Service(models.Model):
+
+    reference = models.CharField(max_length=5)
+    name = models.CharField()
+    description = models.CharField()
+    price = models.FloatField()
+   
