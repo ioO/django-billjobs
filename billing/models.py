@@ -11,6 +11,10 @@ class Service(models.Model):
     description = models.CharField(max_length=1024)
     price = models.FloatField()
 
+    def __unicode__(self):
+        """ Return name as object representation """
+        return self.name
+
 class BillLine(models.Model):
 
     bill = models.ForeignKey(Bill)
