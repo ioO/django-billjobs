@@ -1,7 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save, pre_init
+from django.db.models.signals import pre_save, pre_init, post_save, post_delete
 import datetime
 
 
@@ -11,6 +11,7 @@ class Bill(models.Model):
     number = models.CharField(max_length=10, unique=True, blank=True)
     isPaid = models.BooleanField(default=False)
     billing_date = models.DateField()
+    amount = models.FloatField(blank=True)
 
 
 class Service(models.Model):
@@ -62,3 +63,16 @@ def define_number(sender, instance, **kwargs):
             last_num = '001'
 
         instance.number = 'F%s%s' % (today.strftime('%Y%m'), last_num)
+
+@receiver(post_save, sender=BillLine)
+@receiver(post_delete, sender=BillLine)
+def set_bill_amount(sender, instance, **kwargs):
+    """ set total price of billing when saving """
+    # reset self.amount in case is already set
+    bill = instance.bill
+    bill.amount = 0
+    for line in bill.billline_set.all():
+        bill.amount += line.total
+
+    bill.save()
+

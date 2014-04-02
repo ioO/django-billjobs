@@ -36,9 +36,10 @@
     "model": "billing.billline", 
     "fields": {
         "total": 180.0, 
-        "bill":1, 
+        "bill": 1, 
         "service": 1,
-        "quantity": 1}
+        "quantity": 1
+    }
 },
 {
     "model": "billing.service",
