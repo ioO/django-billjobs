@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
 from billing.models import Bill, BillLine, Service, UserProfile
 
 class BillLineInline(admin.TabularInline):
@@ -15,6 +16,23 @@ class UserProfileAdmin(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileAdmin, )
+    fieldsets = (
+            (None, {
+                'fields': ('username', 'password')
+                }),
+            (_('Personal info'), {
+                'fields': ('first_name', 'last_name', 'email')
+                }),
+            (_('Permissions'), {
+                'classes': ('collapse',),
+                'fields': ('is_active', 'is_staff', 'is_superuser',
+                           'groups', 'user_permissions')
+                }),
+            (_('Important dates'), {
+                'classes': ('collapse',),
+                'fields': ('last_login', 'date_joined')
+                })
+            )
 
 admin.site.register(Bill, BillAdmin)
 admin.site.register(Service)
