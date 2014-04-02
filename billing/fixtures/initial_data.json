@@ -18,7 +18,7 @@
     "pk": 1,
     "fields": {
         "user": 1,
-        "billing_address": "19 rue du coworking 34000 Montpellier"
+        "billing_address": "19 rue du coworking\r\n34000 Montpellier"
     }
 },
 {

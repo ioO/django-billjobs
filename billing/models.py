@@ -36,7 +36,7 @@ class BillLine(models.Model):
 class UserProfile(models.Model):
     """ extend User class """
     user = models.OneToOneField(User)
-    billing_address = models.CharField(max_length=1024)
+    billing_address = models.TextField(max_length=1024)
 
 
 @receiver(pre_save, sender=BillLine)
