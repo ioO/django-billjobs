@@ -1,0 +1,46 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "first_name": "Bill",
+        "last_name": "Jobs",
+        "username": "bj",
+        "email": "bj@soreia.com",
+        "is_active": True,
+        "is_staff": True,
+        "is_superuser": True,
+    }
+},
+{
+    "model": "billing.service",
+    "pk": 1,
+    "fields": {
+        "reference": "FT001",
+        "name": "Full Time",
+        "description": "Accès plein temps 1 mois",
+        "price": 180.0,
+    }
+},
+{
+    "model": "billing.service",
+    "pk": 2,
+    "fields": {
+        "reference": "MT001",
+        "name": "Mid Time",
+        "description": "Accès  mi-temps 1 mois",
+        "price": 100.0,
+    }
+},
+{
+    "model": "billing.service",
+    "pk": 3,
+    "fields": {
+        "reference": "SR001",
+        "name": "Réunion 1 journée",
+        "description": "Accès à la salle de réunion pour 1 journée",
+        "price": 140.0,
+    }
+},
+]
+
