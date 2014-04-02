@@ -7,6 +7,7 @@ import datetime
 
 class Bill(models.Model):
 
+    user = models.ForeignKey(User)
     number = models.CharField(max_length=10, unique=True, blank=True)
     isPaid = models.BooleanField(default=False)
     billing_date = models.DateField()
