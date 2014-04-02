@@ -1,5 +1,6 @@
 from django.db import models
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, pre_init
 import datetime
 
@@ -28,6 +29,12 @@ class BillLine(models.Model):
     service = models.ForeignKey(Service)
     quantity = models.SmallIntegerField(default=1)
     total = models.FloatField(blank=True)
+
+
+class UserProfile(models.Model):
+    """ extend User class """
+    user = models.OneToOneField(User)
+    billing_address = models.CharField(max_length=1024)
 
 
 @receiver(pre_save, sender=BillLine)
