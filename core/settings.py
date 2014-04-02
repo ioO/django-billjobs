@@ -40,9 +40,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'billjobs.urls'
+ROOT_URLCONF = 'core.urls'
 
-WSGI_APPLICATION = 'billjobs.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Internationalization
