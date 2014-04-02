@@ -7,9 +7,10 @@
         "last_name": "Jobs",
         "username": "bj",
         "email": "bj@soreia.com",
-        "is_active": True,
-        "is_staff": True,
-        "is_superuser": True,
+        "is_active": "True",
+        "is_staff": "True",
+        "is_superuser": "True",
+        "password": "pbkdf2_sha256$12000$T6j1zDkom2ls$H64TBAbXO6DJQe3aPfj2fwfCG9fOLnxzvwp2HcZmfXI="
     }
 },
 {
@@ -19,7 +20,7 @@
         "reference": "FT001",
         "name": "Full Time",
         "description": "Accès plein temps 1 mois",
-        "price": 180.0,
+        "price": 180.0
     }
 },
 {
@@ -29,7 +30,7 @@
         "reference": "MT001",
         "name": "Mid Time",
         "description": "Accès  mi-temps 1 mois",
-        "price": 100.0,
+        "price": 100.0
     }
 },
 {
@@ -39,8 +40,8 @@
         "reference": "SR001",
         "name": "Réunion 1 journée",
         "description": "Accès à la salle de réunion pour 1 journée",
-        "price": 140.0,
+        "price": 140.0
     }
-},
+}
 ]
 
