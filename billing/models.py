@@ -5,7 +5,8 @@ from django.db.models.signals import pre_save
 
 class Bill(models.Model):
 
-    bill_date = models.DateField()
+    number = models.CharField(max_length=9, unique=True)
+    billing_date = models.DateField()
 
 
 class Service(models.Model):
