@@ -22,6 +22,25 @@
     }
 },
 {
+    "pk": 1, 
+    "model": "billing.bill", 
+    "fields": {
+        "billing_date": "2014-04-02",
+        "isPaid": false, 
+        "user": 1, 
+        "number": "F201404001"
+    }
+},
+{
+    "pk": 1, 
+    "model": "billing.billline", 
+    "fields": {
+        "total": 180.0, 
+        "bill":1, 
+        "service": 1,
+        "quantity": 1}
+},
+{
     "model": "billing.service",
     "pk": 1,
     "fields": {
