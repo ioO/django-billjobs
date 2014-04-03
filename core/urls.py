@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
 
-    url(r'^admin/generate_pdf/\d+/$', 'billing.views.generate_pdf'),
+    url(r'^admin/generate_pdf/(?P<id>\d+)/$', 'billing.views.generate_pdf'),
     url(r'^admin/', include(admin.site.urls)),
 )
