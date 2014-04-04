@@ -21,15 +21,13 @@
 
 <body>
     <div id="header_content">
-
+        <img src="{% static 'logo-coworking.jpg' %}" />
     </div>
 
-    <!-- Content for Static Frame 'footer_frame' -->
-    <div id="footer_content">(c) - page <pdf:pagenumber>
-        of <pdf:pagecount>
+    <div id="footer_content">
+        Association Loi 1901
     </div>
-
-    <!-- HTML Content -->
-    To PDF or not to PDF
+    
+    <p>{{ bill.user }}</p>
 </body>
 </html>
