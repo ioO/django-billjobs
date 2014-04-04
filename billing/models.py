@@ -13,6 +13,9 @@ class Bill(models.Model):
     billing_date = models.DateField()
     amount = models.FloatField(blank=True, default=0)
 
+    def __unicode__(self):
+        return self.number
+
 
 class Service(models.Model):
 
