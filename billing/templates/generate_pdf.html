@@ -64,7 +64,7 @@
     </div>
 
     <div id="billing_detail">
-        <table border="1" color="#CCCCCC">
+        <table border="1" color="#CCCCCC" height="250pt" width="100%">
             <thead>
                 <tr>
                     <th>Désignation</td>
@@ -92,6 +92,23 @@
                 </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td>Total H.T</td>
+                    <td>{{bill.amount}}€</td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td>TVA 0%</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td>Total</td>
+                    <td>{{bill.amount}}€</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </body>
