@@ -35,6 +35,15 @@ def generate_pdf(request, id):
 
     # Put logo on top of pdf original image size is 570px/250px
     pdf.drawImage(settings.STATICFILES_DIRS[0]+'/logo-coworking.jpg', 0, height-75, width=138, height=75)
+    # billing information
+    lh = 15 #define a line height
+    pdf.setFillColorRGB(0.4,0.4,0.4)
+    pdf.setFont("Helvetica-Bold", 14)
+    pdf.drawRightString(width, height-lh, 'Facture');
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawRightString(width, height-2*lh, u'Numéro : %s' % bill.number)
+    pdf.setFont("Helvetica", 10)
+    pdf.drawRightString(width, height-3*lh, u'Date facturation : %s' % bill.billing_date.strftime('%d/%m/%Y'))
 
     pdf.showPage()
     pdf.save()
