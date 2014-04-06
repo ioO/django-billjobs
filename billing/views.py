@@ -23,6 +23,14 @@ def generate_pdf(request, id):
     width = width - 2*cm
     height = height - 2*cm
 
+    # if debug draw lines for document limit
+    if settings.DEBUG is True:
+        pdf.setStrokeColorRGB(1,0,0)
+        pdf.line(0,0,width,0)
+        pdf.line(0,0,0,height)
+        pdf.line(0,height,width,height)
+        pdf.line(width,height,width,0)
+
     # Create a buffer
     buffer = BytesIO()
     buffer.close()
