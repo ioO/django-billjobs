@@ -33,6 +33,9 @@ def generate_pdf(request, id):
         pdf.line(0,height,width,height)
         pdf.line(width,height,width,0)
 
+    # Put logo on top of pdf original image size is 570px/250px
+    pdf.drawImage(settings.STATICFILES_DIRS[0]+'/logo-coworking.jpg', 0, height-75, width=138, height=75)
+
     pdf.showPage()
     pdf.save()
     # get pdf from buffer and return it to response
