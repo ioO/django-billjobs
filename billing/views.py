@@ -15,7 +15,9 @@ def generate_pdf(request, id):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="%s.pdf"' % bill.number
 
-    pdf = canvas.Canvas(filename="test.pdf", pagesize=A4)
+    # Create a buffer
+    buffer = BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=A4)
     # define new 0,0 bottom left with cm as margin
     pdf.translate(cm,cm)
     # define document width and height with cm as margin
@@ -31,8 +33,10 @@ def generate_pdf(request, id):
         pdf.line(0,height,width,height)
         pdf.line(width,height,width,0)
 
-    # Create a buffer
-    buffer = BytesIO()
+    pdf.showPage()
+    pdf.save()
+    # get pdf from buffer and return it to response
+    genpdf = buffer.getvalue()
     buffer.close()
-
-
+    response.write(genpdf)
+    return response
