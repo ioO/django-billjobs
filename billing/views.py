@@ -61,8 +61,16 @@ def generate_pdf(request, id):
 
     # customer
     pdf.drawString(width/2, nh-lh, 'Adressé à')
-    pdf.drawString(width/2+20, nh-3*lh, u'%s %s' % (bill.user.first_name, bill.user.last_name))
-    pdf.drawString(width/2+20, nh-4*lh, u'%s' % bill.user.userprofile.billing_address.replace('\n','<br />'))
+    customer = pdf.beginText()
+    customer.setTextOrigin(width/2+20, nh-3*lh)
+    # create text with \n and remove \r
+    text = '%s %s\n%s' % (bill.user.first_name, bill.user.last_name, 
+                bill.user.userprofile.billing_address.replace('\r',''))
+    # get each line
+    for line in text.split('\n'):
+        customer.textOut(line)
+        customer.moveCursor(0,lh)
+    pdf.drawText(customer)
     pdf.setStrokeColorRGB(0,0,0)
     # rect(x,y,width,height)
     pdf.rect(width/2, nh-8*lh, width/2, 6.4*lh, fill=0)
