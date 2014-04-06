@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
+from reportlab.platypus import Table
 from core import settings
 from io import BytesIO
 from models import Bill
@@ -45,7 +46,7 @@ def generate_pdf(request, id):
     pdf.setFont("Helvetica", 10)
     pdf.drawRightString(width, height-3*lh, u'Date facturation : %s' % bill.billing_date.strftime('%d/%m/%Y'))
 
-    # define new height
+    # define new heght
     nh = height - 90
 
     # seller
@@ -74,6 +75,20 @@ def generate_pdf(request, id):
     pdf.setStrokeColorRGB(0,0,0)
     # rect(x,y,width,height)
     pdf.rect(width/2, nh-8*lh, width/2, 6.4*lh, fill=0)
+
+    # define new heght
+    nh = nh - 10*lh
+
+    data = [['Désignation', 'Prix HT', 'Quantité', 'Total HT']]
+
+    for line in bill.billline_set.all():
+        description = '%s - %s' % (line.service.reference, line.service.name)
+        line = (description, line.service.price, line.quantity, line.total)
+        data.append(line)
+            
+    table = Table(data)
+    table.wrapOn(pdf, width, height)
+    table.drawOn(pdf, 0, nh)
 
     pdf.showPage()
     pdf.save()
