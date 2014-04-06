@@ -93,14 +93,19 @@ def generate_pdf(request, id):
 
     # widths in percent of pdf width
     colWidths = (width*0.55, width*0.15, width*0.15, width*0.15)
-    style = [('GRID', (0,0), (-1,0),1,colors.black),
+    style = [('GRID', (0,0), (-1,0),1, colors.black),
+            ('GRID', (-2,-3), (-1,-1), 1, colors.black),
+            ('BOX', (0,1), (0,-4), 1, colors.black),
+            ('BOX', (1,1), (1,-4), 1, colors.black),
+            ('BOX', (2,1), (2,-4), 1, colors.black),
+            ('BOX', (-1,1), (-1,-4), 1, colors.black),
             ('ALIGN',(0,0),(0,-1),'LEFT'),
             ('ALIGN',(1,0),(-1,-1),'CENTER'),
             ('ALIGN',(-1,0),(-1,-1),'RIGHT'),
             ]
     table = Table(data, colWidths=colWidths, style=style)
-    table.wrapOn(pdf, width, height)
-    table.drawOn(pdf, 0, nh-2*lh)
+    t_width, t_height = table.wrap(0,0)
+    table.drawOn(pdf, 0, nh-t_height)
 
     pdf.showPage()
     pdf.save()
