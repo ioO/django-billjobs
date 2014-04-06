@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
+from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.platypus import Table
@@ -79,16 +80,27 @@ def generate_pdf(request, id):
     # define new heght
     nh = nh - 10*lh
 
-    data = [['Désignation', 'Prix HT', 'Quantité', 'Total HT']]
+    data = [['Désignation', 'Prix unit. HT', 'Quantité', 'Total HT']]
 
     for line in bill.billline_set.all():
-        description = '%s - %s' % (line.service.reference, line.service.name)
+        description = '%s - %s\n%s' % (line.service.reference, line.service.name, line.service.description)
         line = (description, line.service.price, line.quantity, line.total)
         data.append(line)
-            
-    table = Table(data)
+
+    data.append(('', '', 'Total HT', '%s €' % bill.amount))
+    data.append(('', '', 'TVA 0%', '0'))
+    data.append(('', '', 'Total TTC', '%s €' % bill.amount))
+
+    # widths in percent of pdf width
+    colWidths = (width*0.55, width*0.15, width*0.15, width*0.15)
+    style = [('GRID', (0,0), (-1,0),1,colors.black),
+            ('ALIGN',(0,0),(0,-1),'LEFT'),
+            ('ALIGN',(1,0),(-1,-1),'CENTER'),
+            ('ALIGN',(-1,0),(-1,-1),'RIGHT'),
+            ]
+    table = Table(data, colWidths=colWidths, style=style)
     table.wrapOn(pdf, width, height)
-    table.drawOn(pdf, 0, nh)
+    table.drawOn(pdf, 0, nh-2*lh)
 
     pdf.showPage()
     pdf.save()
