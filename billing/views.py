@@ -6,7 +6,8 @@ from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from reportlab.platypus import Table
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Table, Paragraph
 from core import settings
 from io import BytesIO
 from models import Bill
@@ -105,8 +106,23 @@ def generate_pdf(request, id):
             ('FONTNAME', (0,-3), (0,-3), 'Helvetica-Bold'),
             ]
     table = Table(data, colWidths=colWidths, style=style)
+    # create table and get width and height
     t_width, t_height = table.wrap(0,0)
     table.drawOn(pdf, 0, nh-t_height)
+
+    payment_info = """
+    <b>Conditions de règlement:</b> à réception de la facture<br /><br/>
+    Règlement par chèque à l'ordre de <b>Cowork'in Montpellier</b> envoyé à<br/><br/>
+    Cowork'in Montpellier<br/>
+    19 rue de l'école de droit<br/>
+    34000 Montpellier<br/><br/>
+    Règlement par virement<br/><br/>
+    Code IBAN: FR76 4255 9000 3441 0200 2895 736<br/>
+    Code BIC/SWIFT: CCOPFRPPXXX
+    """
+    p = Paragraph(payment_info, getSampleStyleSheet()['Normal'])
+    p.wrapOn(pdf, width*0.6, 100)
+    p.drawOn(pdf, 0, 10)
 
     pdf.showPage()
     pdf.save()
