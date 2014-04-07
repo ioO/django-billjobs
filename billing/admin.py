@@ -34,8 +34,12 @@ class UserAdmin(UserAdmin):
                 })
             )
 
+class ServiceAdmin(admin.ModelAdmin):
+    model = Service
+    list_display = ('__unicode__', 'price')
+
 admin.site.register(Bill, BillAdmin)
-admin.site.register(Service)
+admin.site.register(Service, ServiceAdmin)
 
 # User have to be unregistered
 admin.site.unregister(User)
