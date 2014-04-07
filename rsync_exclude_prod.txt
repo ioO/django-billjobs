@@ -1,4 +1,7 @@
 *.pyc
+.git/
+.gitignore
+rsync_exclude_prod.txt
 LICENSE.md
 README.md
 dev.sqlite3
