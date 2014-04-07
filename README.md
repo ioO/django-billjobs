@@ -8,6 +8,9 @@ We intend to stay easy and lite. You can manage coworkers information and their 
 We do not use permission system, because each coworker can make is own bills every months, and can also add a new 
 coworker. But we use django and it's own user management application. User and group permissions are available.
 
+No tax management. For non-profit organization in France, there is no tax. This application don't manage tax, it only 
+displays legal french information and tax 0% on bills.
+
 Installation
 ------------
 
