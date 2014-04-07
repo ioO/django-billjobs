@@ -122,7 +122,11 @@ def generate_pdf(request, id):
     """
     p = Paragraph(payment_info, getSampleStyleSheet()['Normal'])
     p.wrapOn(pdf, width*0.6, 100)
-    p.drawOn(pdf, 0, 10)
+    p.drawOn(pdf, 0, 3*lh)
+
+    pdf.line(0, 2*lh, width, 2*lh)
+    pdf.setFontSize(8)
+    pdf.drawCentredString(width/2.0, lh, 'Association Loi 1901')
 
     pdf.showPage()
     pdf.save()
