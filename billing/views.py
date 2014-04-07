@@ -53,6 +53,7 @@ def generate_pdf(request, id):
 
     # seller
     pdf.setFillColorRGB(0.95,0.95,0.95)
+    pdf.setStrokeColorRGB(1,1,1)
     # rect(x,y,width,height)
     pdf.rect(0, nh-8*lh, width/2-40, 6.4*lh, fill=1)
     # reset fill for text color
