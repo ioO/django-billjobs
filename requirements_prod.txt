@@ -1,0 +1,4 @@
+Django==1.6.2
+Pillow==2.4.0
+reportlab==3.0
+wsgiref==0.1.2
