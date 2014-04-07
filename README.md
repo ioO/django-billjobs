@@ -34,4 +34,4 @@ production environment.
 Licence
 =======
 
-MIT
+This application is under [MIT License](http://en.wikipedia.org/wiki/MIT_License "MIT License") see *LICENSE.md' file
