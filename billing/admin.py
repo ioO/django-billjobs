@@ -10,6 +10,7 @@ class BillLineInline(admin.TabularInline):
 
 class BillAdmin(admin.ModelAdmin):
     inlines = [BillLineInline]
+    list_display = ('__unicode__', 'coworker_name', 'amount', 'billing_date')
 
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
