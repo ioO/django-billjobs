@@ -1,4 +1,4 @@
 *.pyc
-core/settings_dev.py
+core/settings_*.py
 dev.sqlite3
 
