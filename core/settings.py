@@ -68,3 +68,8 @@ try:
     from settings_dev import *
 except ImportError:
     pass
+
+try:
+    from settings_prod import *
+except ImportError:
+    pass
