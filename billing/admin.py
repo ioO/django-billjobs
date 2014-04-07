@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from billing.models import Bill, BillLine, Service, UserProfile
 
@@ -10,8 +11,16 @@ class BillLineInline(admin.TabularInline):
 
 class BillAdmin(admin.ModelAdmin):
     inlines = [BillLineInline]
-    list_display = ('__unicode__', 'coworker_name', 'amount', 'billing_date', 'isPaid')
+    list_display = ('__unicode__', 'coworker_name', 'amount', 'billing_date', 
+            'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
+
+    def pdf_file_url(self, obj):
+        return '<a href="%s">%s.pdf</a>' % (reverse('generate_pdf', 
+            args=(obj.id,)), obj.number)
+
+    pdf_file_url.allow_tags = True
+
 
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
