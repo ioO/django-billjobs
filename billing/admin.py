@@ -44,6 +44,7 @@ class UserAdmin(UserAdmin):
                 'fields': ('last_login', 'date_joined')
                 })
             )
+    list_display = ('username', 'get_full_name', 'email')
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
