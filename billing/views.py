@@ -87,7 +87,7 @@ def generate_pdf(request, id):
         line = (description, line.service.price, line.quantity, line.total)
         data.append(line)
 
-    data.append(('', '', 'Total HT', '%s €' % bill.amount))
+    data.append(('TVA non applicable art-293B du CGI', '', 'Total HT', '%s €' % bill.amount))
     data.append(('', '', 'TVA 0%', '0'))
     data.append(('', '', 'Total TTC', '%s €' % bill.amount))
 
@@ -102,6 +102,7 @@ def generate_pdf(request, id):
             ('ALIGN',(0,0),(0,-1),'LEFT'),
             ('ALIGN',(1,0),(-1,-1),'CENTER'),
             ('ALIGN',(-1,0),(-1,-1),'RIGHT'),
+            ('FONTNAME', (0,-3), (0,-3), 'Helvetica-Bold'),
             ]
     table = Table(data, colWidths=colWidths, style=style)
     t_width, t_height = table.wrap(0,0)
