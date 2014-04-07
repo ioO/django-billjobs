@@ -1,0 +1,7 @@
+*.pyc
+LICENSE.md
+README.md
+dev.sqlite3
+requirements_dev.txt
+billing/fixtures/*
+core/settings_dev.py
