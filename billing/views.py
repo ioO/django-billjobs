@@ -8,9 +8,9 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
-from core import settings
+from django.conf import settings
 from io import BytesIO
-from models import Bill
+from billing.models import Bill
 
 @login_required
 def generate_pdf(request, id):
