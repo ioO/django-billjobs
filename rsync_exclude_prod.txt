@@ -2,6 +2,7 @@
 .git/
 .gitignore
 rsync_exclude_prod.txt
+manage.py
 LICENSE.md
 README.md
 dev.sqlite3
