@@ -16,7 +16,7 @@ import dj_database_url
 DATABASES['default'] =  dj_database_url.config()
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = 'tk|\ox:.*1x5TBe+\AYCn3u}Gii\TEH9Q[s7^j"}"PE6)sq/t_56|7SV<$v!_~b*'
+SECRET_KEY = 'vVj14cKNh76tO1gzFh5yXG3WnKb8BMWN'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
