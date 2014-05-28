@@ -5,11 +5,31 @@ A django billing app for coworking space.
 
 This app is designed to manage bills for the coworking space **Cowork'in Montpellier**.
 We intend to stay easy and lite. You can manage coworkers informations and their respective bills.
-We do not use permission system, because each coworker can make his own bills every month, and can also add a new 
-coworker. But we use Django and its own user management application. Users and groups permissions are available.
 
 No tax management.  There is no tax for non-profit organization in France. This application doesn't manage tax, it only 
 displays legal French informations and tax 0% on bills.
+
+###User and Group
+
+User and Group management is providing by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
+
+###Billing
+
+Billing application provide two features **bills** and **services**
+
+Bills module allow you to list, create, modify or delete bills. You can generate a pdf and download it.
+You can change **services** default price. Total amount of bill is computed automatically after save. Bill number is 
+also set automatically after save.
+
+Service module allow you to list, create, modify or delete services.
+
+Organisation
+------------
+
+Billjobs project is using [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
+
+**develop** branch is for development.
+**master** branch contains last release.
 
 Installation
 ------------
