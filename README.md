@@ -34,22 +34,86 @@ Billjobs project is using [git flow](http://nvie.com/posts/a-successful-git-bran
 Installation
 ------------
 
-**Clone the repository**
+### For development
 
+**Clone repository**
+
+```bash
     git clone https://github.com/ioO/billjobs.git
+```
 
-**Create a virtualenv with python 2 binary**
+**Checkout develop branch**
+
+```bash
+    git checkout develop
+```
+
+**Create a virtualenv with python 3 binary**
+
+Billjobs was initialy written with __python 2.7__ and move to __python 3.4__
+
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
-    mkvirtualenv billjobs --python=/path/to/python2
+```bash
+    mkvirtualenv billjobs --python=/path/to/python3.4
+```
 
 **Install dependencies**
 
-    pip install -r requirements_dev.txt
+```bash
+    pip install -r requirements.txt
+```
 
-File *requirements_prod.txt* removes dependencies like *django debug toolbar* which aren't recommended to deploy in 
-production environment.
+**Database**
 
+Development settings use sqlite3 engine.
+
+```bash
+    ./manage.py syncdb
+```
+
+If you set a super user it will not work. Read this issue #7
+
+A default super user is in fixtures.
+Login : bill
+Password : jobs
+
+###For testing
+
+Last stable release is master branch
+
+**Clone repository**
+
+```bash
+    git clone https://github.com/ioO/billjobs.git
+```
+
+**Create a virtualenv with python 3 binary**
+
+Billjobs was initialy written with __python 2.7__ and move to __python 3.4__
+
+Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
+
+```bash
+    mkvirtualenv billjobs --python=/path/to/python3.4
+```
+
+**Install dependencies**
+
+```bash
+    pip install -r requirements.txt
+```
+All development dependencies are removed.
+
+**Database**
+
+Database settings will use default and sqlite3 engine.
+
+```bash
+    ./manage.py syncdb
+```
+
+Fixtures with initial data are removed.
 
 Licence
 =======
