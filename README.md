@@ -11,22 +11,22 @@ displays legal French informations and tax 0% on bills.
 
 ###User and Group
 
-User and Group management is providing by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
+User and Group management is provided by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
 
 ###Billing
 
-Billing application provide two features **bills** and **services**
+Billing application provides two features **bills** and **services**
 
-Bills module allow you to list, create, modify or delete bills. You can generate a pdf and download it.
-You can change **services** default price. Total amount of bill is computed automatically after save. Bill number is 
-also set automatically after save.
+Bills module allows you to list, create, modify or delete bills. You can generate a pdf and download it.
+You can change **services** default price. Total amount of bill is computed automatically after saving. Bill number is 
+also set automatically after saving.
 
-Service module allow you to list, create, modify or delete services.
+Service module allows you to list, create, modify or delete services.
 
 Organisation
 ------------
 
-Billjobs project is using [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
+Billjobs project uses [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
 
 **develop** branch is for development.
 **master** branch contains last release.
@@ -46,7 +46,7 @@ Installation
 
 **Create a virtualenv with python 3 binary**
 
-Billjobs was initialy written with __python 2.7__ and move to __python 3.4__
+Billjobs was initially written with __python 2.7__ and move to __python 3.4__
 
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
@@ -58,7 +58,7 @@ Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/late
 
 **Database**
 
-Development settings use sqlite3 engine.
+Development use sqlite3 engine.
 
     ./manage.py syncdb
 
@@ -78,7 +78,7 @@ Last stable release is master branch
 
 **Create a virtualenv with python 3 binary**
 
-Billjobs was initialy written with __python 2.7__ and move to __python 3.4__
+Billjobs was initially written with __python 2.7__ and move to __python 3.4__
 
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
@@ -92,7 +92,7 @@ All development dependencies are removed.
 
 **Database**
 
-Database settings will use default and sqlite3 engine.
+Default database settings are sqlite3 engine.
 
     ./manage.py syncdb
 
