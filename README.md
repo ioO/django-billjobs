@@ -38,15 +38,11 @@ Installation
 
 **Clone repository**
 
-```bash
     git clone https://github.com/ioO/billjobs.git
-```
 
 **Checkout develop branch**
 
-```bash
     git checkout develop
-```
 
 **Create a virtualenv with python 3 binary**
 
@@ -54,23 +50,17 @@ Billjobs was initialy written with __python 2.7__ and move to __python 3.4__
 
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
-```bash
     mkvirtualenv billjobs --python=/path/to/python3.4
-```
 
 **Install dependencies**
 
-```bash
     pip install -r requirements.txt
-```
 
 **Database**
 
 Development settings use sqlite3 engine.
 
-```bash
     ./manage.py syncdb
-```
 
 If you set a super user it will not work. Read this issue #7
 
@@ -84,9 +74,7 @@ Last stable release is master branch
 
 **Clone repository**
 
-```bash
     git clone https://github.com/ioO/billjobs.git
-```
 
 **Create a virtualenv with python 3 binary**
 
@@ -94,24 +82,19 @@ Billjobs was initialy written with __python 2.7__ and move to __python 3.4__
 
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
-```bash
     mkvirtualenv billjobs --python=/path/to/python3.4
-```
 
 **Install dependencies**
 
-```bash
     pip install -r requirements.txt
-```
+
 All development dependencies are removed.
 
 **Database**
 
 Database settings will use default and sqlite3 engine.
 
-```bash
     ./manage.py syncdb
-```
 
 Fixtures with initial data are removed.
 
