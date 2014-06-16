@@ -5,12 +5,12 @@
     "fields": {
         "first_name": "Bill",
         "last_name": "Jobs",
-        "username": "bj",
-        "email": "bj@soreia.com",
+        "username": "bill",
+        "email": "bill@billjobs.org",
         "is_active": "True",
         "is_staff": "True",
         "is_superuser": "True",
-        "password": "pbkdf2_sha256$12000$T6j1zDkom2ls$H64TBAbXO6DJQe3aPfj2fwfCG9fOLnxzvwp2HcZmfXI="
+        "password": "pbkdf2_sha256$12000$QMN9paXglBXD$tHTlNUBEuQM3ZhZggdfw90wqdrj9dCZQna/ikF/SgQ0="
     }
 },
 {
