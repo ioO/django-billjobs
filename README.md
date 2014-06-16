@@ -62,8 +62,11 @@ Development use sqlite3 engine.
 
     ./manage.py syncdb
 
-If you set a super user it will not work. Read this issue #7
+You can use development fixtures located in *billing/fixtures/dev_data.json*
 
+    ./manage.py loaddata dev_data
+
+**If you setup a super user it will be deleted by fixtures data.**
 A default super user is in fixtures.
 Login : bill
 Password : jobs
