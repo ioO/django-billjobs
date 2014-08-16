@@ -79,11 +79,18 @@ def define_number(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Bill)
 def bill_pre_save(sender, instance, **kwargs):
+    """ Always compute the total amount of one bill before save. """
     set_bill_amount(sender, instance, **kwargs)
 
+# If you change a BillLine, Bill object is not save, so pre_save do not compute
+# the total amount.
 @receiver(post_save, sender=BillLine)
 @receiver(post_delete, sender=BillLine)
 def bill_billLine_post_save_and_delete(sender, instance, **kwargs):
+    """ Update Bill total amount when related billLines change 
+        When admin modify or delete a BillLine, Bill instance has no change, so
+        the pre_save is not called and total amount is not computed.
+    """
     set_bill_amount(sender, instance.bill, **kwargs)
 
 def set_bill_amount(sender, instance, **kwargs):
