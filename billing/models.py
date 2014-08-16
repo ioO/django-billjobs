@@ -2,7 +2,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, pre_init, post_save, post_delete
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 import datetime
 
 
