@@ -77,15 +77,23 @@ def define_number(sender, instance, **kwargs):
 
         instance.number = 'F%s%s' % (today.strftime('%Y%m'), last_num)
 
+@receiver(pre_save, sender=Bill)
+def bill_pre_save(sender, instance, **kwargs):
+    set_bill_amount(sender, instance, **kwargs)
+
 @receiver(post_save, sender=BillLine)
 @receiver(post_delete, sender=BillLine)
+def bill_billLine_post_save_and_delete(sender, instance, **kwargs):
+    set_bill_amount(sender, instance.bill, **kwargs)
+
 def set_bill_amount(sender, instance, **kwargs):
     """ set total price of billing when saving """
     # reset self.amount in case is already set
-    bill = instance.bill
+    bill = instance
     bill.amount = 0
     for line in bill.billline_set.all():
         bill.amount += line.total
 
-    bill.save()
+    if sender is not Bill:
+        bill.save()
 
