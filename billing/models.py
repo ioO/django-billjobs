@@ -2,16 +2,19 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, pre_init, post_save, post_delete
+from django.utils.translation import ugettext as _
 import datetime
 
 
 class Bill(models.Model):
 
     user = models.ForeignKey(User)
-    number = models.CharField(max_length=10, unique=True, blank=True)
+    number = models.CharField(max_length=10, unique=True, blank=True, 
+            help_text=_('This value is set automatically. Remove in case of error.'))
     isPaid = models.BooleanField(default=False)
     billing_date = models.DateField()
-    amount = models.FloatField(blank=True, default=0)
+    amount = models.FloatField(blank=True, default=0, 
+            help_text=_('The amount is computed automatically.'))
 
     def __unicode__(self):
         return self.number
@@ -37,7 +40,8 @@ class BillLine(models.Model):
     bill = models.ForeignKey(Bill)
     service = models.ForeignKey(Service)
     quantity = models.SmallIntegerField(default=1)
-    total = models.FloatField(blank=True)
+    total = models.FloatField(blank=True,
+            help_text=_('This value is computed automatically'))
 
 
 class UserProfile(models.Model):
