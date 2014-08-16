@@ -8,12 +8,15 @@ import datetime
 
 class Bill(models.Model):
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, verbose_name=_('Coworker'))
     number = models.CharField(max_length=10, unique=True, blank=True, 
+            verbose_name=_('Bill number'),
             help_text=_('This value is set automatically. Remove in case of error.'))
-    isPaid = models.BooleanField(default=False)
-    billing_date = models.DateField()
+    isPaid = models.BooleanField(default=False, 
+            verbose_name=_('Bill is paid ?'))
+    billing_date = models.DateField(verbose_name=_('Date'))
     amount = models.FloatField(blank=True, default=0, 
+            verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
 
     def __unicode__(self):
