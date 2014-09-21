@@ -51,7 +51,12 @@ class BillLine(models.Model):
 class UserProfile(models.Model):
     """ extend User class """
     user = models.OneToOneField(User)
-    billing_address = models.TextField(max_length=1024)
+    billing_address = models.TextField(max_length=1024, 
+            verbose_name=_('Billing Address'))
+
+    class Meta:
+        verbose_name = _('User Profile')
+        verbose_name_plural = _('User Profiles')
 
 
 @receiver(pre_save, sender=BillLine)
