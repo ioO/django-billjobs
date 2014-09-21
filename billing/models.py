@@ -38,6 +38,10 @@ class Service(models.Model):
         """ Return name as object representation """
         return self.name
 
+    class Meta:
+        verbose_name = _('Service')
+        verbose_name_plural = _('Services')
+
 
 class BillLine(models.Model):
 
@@ -46,6 +50,10 @@ class BillLine(models.Model):
     quantity = models.SmallIntegerField(default=1)
     total = models.FloatField(blank=True,
             help_text=_('This value is computed automatically'))
+
+    class Meta:
+        verbose_name = _('Bill Line')
+        verbose_name_plural = _('Bill Lines')
 
 
 class UserProfile(models.Model):
