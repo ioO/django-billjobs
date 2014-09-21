@@ -20,48 +20,48 @@ msgstr ""
 
 #: billing/admin.py:54
 msgid "Personal info"
-msgstr ""
+msgstr "Information personnelle"
 
 #: billing/admin.py:57
 msgid "Permissions"
-msgstr ""
+msgstr "Permissions"
 
 #: billing/admin.py:62
 msgid "Important dates"
-msgstr ""
+msgstr "Dates importantes"
 
 #: billing/models.py:11
 msgid "Coworker"
-msgstr ""
+msgstr "Coworker"
 
 #: billing/models.py:13
 msgid "Bill number"
-msgstr ""
+msgstr "Numéro de facture"
 
 #: billing/models.py:14
 msgid "This value is set automatically. Remove in case of error."
-msgstr ""
+msgstr "Cette valeur est définie automatiquement. Laisser vide en cas d'erreurs"
 
 #: billing/models.py:16
 msgid "Bill is paid ?"
-msgstr ""
+msgstr "Facture payée ?"
 
 #: billing/models.py:17
 msgid "Check this value when bill is paid"
-msgstr ""
+msgstr "Cocher quand la facture est payée"
 
 #: billing/models.py:18
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: billing/models.py:20
 msgid "Bill total amount"
-msgstr ""
+msgstr "Montant total de la facture"
 
 #: billing/models.py:21
 msgid "The amount is computed automatically."
-msgstr ""
+msgstr "Le montant est calculé automatiquement"
 
 #: billing/models.py:48
 msgid "This value is computed automatically"
-msgstr ""
+msgstr "Cette valeur est caclculée automatiquement"
