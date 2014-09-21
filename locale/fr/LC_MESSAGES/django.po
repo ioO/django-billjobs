@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 15:22+0200\n"
+"POT-Creation-Date: 2014-09-21 16:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,8 @@ msgstr "Numéro de facture"
 
 #: billing/models.py:14
 msgid "This value is set automatically. Remove in case of error."
-msgstr "Cette valeur est définie automatiquement. Laisser vide en cas d'erreurs"
+msgstr ""
+"Cette valeur est définie automatiquement. Laisser vide en cas d'erreurs"
 
 #: billing/models.py:16
 msgid "Bill is paid ?"
@@ -65,3 +66,15 @@ msgstr "Le montant est calculé automatiquement"
 #: billing/models.py:48
 msgid "This value is computed automatically"
 msgstr "Cette valeur est caclculée automatiquement"
+
+#: billing/models.py:55
+msgid "Billing Address"
+msgstr "Adresse de facturation"
+
+#: billing/models.py:58
+msgid "User Profile"
+msgstr "Profil utilisateur"
+
+#: billing/models.py:59
+msgid "User Profiles"
+msgstr "Profils utilisateur"
