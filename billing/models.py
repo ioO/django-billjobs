@@ -25,6 +25,10 @@ class Bill(models.Model):
 
     def coworker_name(self):
         return '%s %s' % (self.user.first_name, self.user.last_name)
+    coworker_name.short_description = _('Coworker name')
+
+    class Meta:
+        verbose_name = _('Bill')
 
 
 class Service(models.Model):
