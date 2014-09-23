@@ -33,10 +33,11 @@ class Bill(models.Model):
 
 class Service(models.Model):
 
-    reference = models.CharField(max_length=5)
-    name = models.CharField(max_length=128)
-    description = models.CharField(max_length=1024)
-    price = models.FloatField()
+    reference = models.CharField(max_length=5, verbose_name=_('Reference'))
+    name = models.CharField(max_length=128, verbose_name=_('Name'))
+    description = models.CharField(max_length=1024, 
+            verbose_name=_('Description'))
+    price = models.FloatField(verbose_name=_('Price'))
 
     def __unicode__(self):
         """ Return name as object representation """
@@ -44,8 +45,6 @@ class Service(models.Model):
 
     class Meta:
         verbose_name = _('Service')
-        verbose_name_plural = _('Services')
-
 
 class BillLine(models.Model):
 
