@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-23 14:11+0200\n"
+"POT-Creation-Date: 2014-09-23 14:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,6 @@ msgid "The amount is computed automatically."
 msgstr "Le montant est calculé automatiquement"
 
 #: billing/models.py:28
-#, fuzzy
 msgid "Coworker name"
 msgstr "Coworker"
 
@@ -72,36 +71,49 @@ msgstr "Coworker"
 msgid "Bill"
 msgstr "Facture"
 
-#: billing/models.py:46
+#: billing/models.py:36
+msgid "Reference"
+msgstr "Reférence"
+
+#: billing/models.py:37
+msgid "Name"
+msgstr "Nom"
+
+#: billing/models.py:39
+msgid "Description"
+msgstr "Description"
+
+#: billing/models.py:40
+msgid "Price"
+msgstr "Prix"
+
+#: billing/models.py:47
 msgid "Service"
 msgstr "Service"
 
-#: billing/models.py:47
-msgid "Services"
-msgstr "Services"
-
-#: billing/models.py:56
+#: billing/models.py:55
 msgid "This value is computed automatically"
 msgstr "Cette valeur est caclculée automatiquement"
 
-#: billing/models.py:59
-#, fuzzy
+#: billing/models.py:58
 msgid "Bill Line"
 msgstr "Numéro de facture"
 
-#: billing/models.py:60
-#, fuzzy
+#: billing/models.py:59
 msgid "Bill Lines"
 msgstr "Numéro de facture"
 
-#: billing/models.py:67
+#: billing/models.py:66
 msgid "Billing Address"
 msgstr "Adresse de facturation"
 
-#: billing/models.py:70
+#: billing/models.py:69
 msgid "User Profile"
 msgstr "Profil utilisateur"
 
-#: billing/models.py:71
+#: billing/models.py:70
 msgid "User Profiles"
 msgstr "Profils utilisateur"
+
+#~ msgid "Services"
+#~ msgstr "Services"
