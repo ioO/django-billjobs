@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
@@ -11,6 +11,9 @@ from reportlab.platypus import Table, Paragraph
 from django.conf import settings
 from io import BytesIO
 from billing.models import Bill
+
+def redirect_home(request):
+    return redirect('/admin/')
 
 @login_required
 def generate_pdf(request, id):
