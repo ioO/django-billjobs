@@ -50,9 +50,10 @@ class BillLine(models.Model):
 
     bill = models.ForeignKey(Bill)
     service = models.ForeignKey(Service)
-    quantity = models.SmallIntegerField(default=1)
+    quantity = models.SmallIntegerField(default=1, verbose_name=_('Quantity'))
     total = models.FloatField(blank=True,
-            help_text=_('This value is computed automatically'))
+            help_text=_('This value is computed automatically'), 
+            verbose_name=_('Total'))
 
     class Meta:
         verbose_name = _('Bill Line')
