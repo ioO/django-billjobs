@@ -11,11 +11,12 @@ class Bill(models.Model):
     user = models.ForeignKey(User, verbose_name=_('Coworker'))
     number = models.CharField(max_length=10, unique=True, blank=True, 
             verbose_name=_('Bill number'),
-            help_text=_('This value is set automatically. Remove in case of error.'))
+            help_text=_('This value is set automatically.'))
     isPaid = models.BooleanField(default=False, 
             verbose_name=_('Bill is paid ?'),
             help_text=_('Check this value when bill is paid'))
-    billing_date = models.DateField(auto_now_add=True,verbose_name=_('Date'))
+    billing_date = models.DateField(auto_now_add=True,verbose_name=_('Date'),
+            help_text=_('This value is set automatically.'))
     amount = models.FloatField(blank=True, default=0, 
             verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
