@@ -10,6 +10,7 @@ class BillLineInline(admin.TabularInline):
     extra = 1
 
 class BillAdmin(admin.ModelAdmin):
+    readonly_fields = ('number', 'billing_date', 'amount')
     inlines = [BillLineInline]
     list_display = ('__unicode__', 'coworker_name', 'amount', 'billing_date', 
             'isPaid', 'pdf_file_url')
