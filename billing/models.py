@@ -15,7 +15,7 @@ class Bill(models.Model):
     isPaid = models.BooleanField(default=False, 
             verbose_name=_('Bill is paid ?'),
             help_text=_('Check this value when bill is paid'))
-    billing_date = models.DateField(verbose_name=_('Date'))
+    billing_date = models.DateField(auto_now_add=True,verbose_name=_('Date'))
     amount = models.FloatField(blank=True, default=0, 
             verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
