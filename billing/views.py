@@ -8,7 +8,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
-from billing.settings import DEBUG_PDF, LOGO_PATH
+from billing.settings import DEBUG_PDF, LOGO_PATH, BILLING_ISSUER
 from billing.models import Bill
 from io import BytesIO
 
@@ -51,7 +51,7 @@ def generate_pdf(request, id):
     pdf.setFont("Helvetica", 10)
     pdf.drawRightString(width, height-3*lh, u'Date facturation : %s' % bill.billing_date.strftime('%d/%m/%Y'))
 
-    # define new heght
+    # define new height
     nh = height - 90
 
     # seller
@@ -61,10 +61,10 @@ def generate_pdf(request, id):
     pdf.rect(0, nh-8*lh, width/2-40, 6.4*lh, fill=1)
     # reset fill for text color
     pdf.setFillColorRGB(0.3,0.3,0.3)
-    pdf.drawString(10, nh-lh, 'Emetteur')
-    pdf.drawString(20, nh-3*lh, 'Cowork\'in Montpellier')
-    pdf.drawString(20, nh-4*lh, '19 rue de l\'école de droit')
-    pdf.drawString(20, nh-5*lh, '34000 Montpellier')
+    pdf.drawString(10, nh-lh, 'Émetteur')
+    issuer = Paragraph(BILLING_ISSUER, getSampleStyleSheet()['Normal'])
+    issuer.wrapOn(pdf, width*0.25, 6*lh)
+    issuer.drawOn(pdf, 20, nh-6*lh)
 
     # customer
     pdf.drawString(width/2, nh-lh, 'Adressé à')
