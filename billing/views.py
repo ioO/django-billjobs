@@ -8,9 +8,9 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
-from django.conf import settings
-from io import BytesIO
+from billing.settings import DEBUG_PDF, LOGO_PATH
 from billing.models import Bill
+from io import BytesIO
 
 def redirect_home(request):
     return redirect('/admin/')
@@ -32,7 +32,7 @@ def generate_pdf(request, id):
     height = height - 2*cm
 
     # if debug draw lines for document limit
-    if settings.DEBUG is True:
+    if DEBUG_PDF is True:
         pdf.setStrokeColorRGB(1,0,0)
         pdf.line(0,0,width,0)
         pdf.line(0,0,0,height)
@@ -40,7 +40,7 @@ def generate_pdf(request, id):
         pdf.line(width,height,width,0)
 
     # Put logo on top of pdf original image size is 570px/250px
-    pdf.drawImage(settings.STATICFILES_DIRS[0]+'/logo-coworking.jpg', 0, height-75, width=138, height=75)
+    pdf.drawImage(LOGO_PATH, 0, height-75, width=138, height=75)
     # billing information
     lh = 15 #define a line height
     pdf.setFillColorRGB(0.3,0.3,0.3)
