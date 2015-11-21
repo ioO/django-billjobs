@@ -8,7 +8,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
-from billing.settings import DEBUG_PDF, LOGO_PATH, BILLING_ISSUER, \
+from billing.settings import BILLJOBS_DEBUG_PDF, LOGO_PATH, BILLING_ISSUER, \
         BILLING_PAYMENT_INFO
 from billing.models import Bill
 from io import BytesIO
@@ -33,7 +33,7 @@ def generate_pdf(request, id):
     height = height - 2*cm
 
     # if debug draw lines for document limit
-    if DEBUG_PDF is True:
+    if BILLJOBS_DEBUG_PDF is True:
         pdf.setStrokeColorRGB(1,0,0)
         pdf.line(0,0,width,0)
         pdf.line(0,0,0,height)

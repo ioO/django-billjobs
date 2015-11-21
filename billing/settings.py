@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from core import settings
+from django.conf import settings
 import os.path
 
-DEBUG_PDF = True
+BILLJOBS_DEBUG_PDF = settings.DEBUG
 # Set app base dir
 BILLING_BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
