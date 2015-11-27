@@ -10,7 +10,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
 from billing.settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
-        BILLING_ISSUER, BILLING_PAYMENT_INFO
+        BILLJOBS_BILL_ISSUER, BILLJOBS_BILL_PAYMENT_INFO
 from billing.models import Bill
 from io import BytesIO
 
@@ -65,7 +65,7 @@ def generate_pdf(request, id):
     # reset fill for text color
     pdf.setFillColorRGB(0.3,0.3,0.3)
     pdf.drawString(10, nh-lh, 'Émetteur')
-    issuer = Paragraph(BILLING_ISSUER, getSampleStyleSheet()['Normal'])
+    issuer = Paragraph(BILLJOBS_BILL_ISSUER, getSampleStyleSheet()['Normal'])
     issuer.wrapOn(pdf, width*0.25, 6*lh)
     issuer.drawOn(pdf, 20, nh-6*lh)
 
@@ -117,7 +117,7 @@ def generate_pdf(request, id):
     t_width, t_height = table.wrap(0,0)
     table.drawOn(pdf, 0, nh-t_height)
 
-    p = Paragraph(BILLING_PAYMENT_INFO, getSampleStyleSheet()['Normal'])
+    p = Paragraph(BILLJOBS_BILL_PAYMENT_INFO, getSampleStyleSheet()['Normal'])
     p.wrapOn(pdf, width*0.6, 100)
     p.drawOn(pdf, 0, 3*lh)
 
