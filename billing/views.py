@@ -8,8 +8,9 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
-from billing.settings import DEBUG_PDF, LOGO_PATH, BILLING_ISSUER, \
-        BILLING_PAYMENT_INFO
+from billing.settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
+        BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
+        BILLJOBS_BILL_ISSUER, BILLJOBS_BILL_PAYMENT_INFO
 from billing.models import Bill
 from io import BytesIO
 
@@ -33,7 +34,7 @@ def generate_pdf(request, id):
     height = height - 2*cm
 
     # if debug draw lines for document limit
-    if DEBUG_PDF is True:
+    if BILLJOBS_DEBUG_PDF is True:
         pdf.setStrokeColorRGB(1,0,0)
         pdf.line(0,0,width,0)
         pdf.line(0,0,0,height)
@@ -41,7 +42,8 @@ def generate_pdf(request, id):
         pdf.line(width,height,width,0)
 
     # Put logo on top of pdf original image size is 570px/250px
-    pdf.drawImage(LOGO_PATH, 0, height-75, width=138, height=75)
+    pdf.drawImage(BILLJOBS_BILL_LOGO_PATH, 0, height-BILLJOBS_BILL_LOGO_HEIGHT, 
+            width=BILLJOBS_BILL_LOGO_WIDTH, height=BILLJOBS_BILL_LOGO_HEIGHT)
     # billing information
     lh = 15 #define a line height
     pdf.setFillColorRGB(0.3,0.3,0.3)
@@ -63,7 +65,7 @@ def generate_pdf(request, id):
     # reset fill for text color
     pdf.setFillColorRGB(0.3,0.3,0.3)
     pdf.drawString(10, nh-lh, 'Émetteur')
-    issuer = Paragraph(BILLING_ISSUER, getSampleStyleSheet()['Normal'])
+    issuer = Paragraph(BILLJOBS_BILL_ISSUER, getSampleStyleSheet()['Normal'])
     issuer.wrapOn(pdf, width*0.25, 6*lh)
     issuer.drawOn(pdf, 20, nh-6*lh)
 
@@ -115,7 +117,7 @@ def generate_pdf(request, id):
     t_width, t_height = table.wrap(0,0)
     table.drawOn(pdf, 0, nh-t_height)
 
-    p = Paragraph(BILLING_PAYMENT_INFO, getSampleStyleSheet()['Normal'])
+    p = Paragraph(BILLJOBS_BILL_PAYMENT_INFO, getSampleStyleSheet()['Normal'])
     p.wrapOn(pdf, width*0.6, 100)
     p.drawOn(pdf, 0, 3*lh)
 
