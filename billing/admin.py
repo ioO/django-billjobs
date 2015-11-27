@@ -39,8 +39,8 @@ class BillAdmin(admin.ModelAdmin):
                 or username)
 
     def pdf_file_url(self, obj):
-        return '<a href="%s">%s.pdf</a>' % (reverse('generate_pdf', 
-            args=(obj.id,)), obj.number)
+        return '<a href="%s">%s.pdf</a>' % (reverse('generate-pdf', 
+            kwargs={'bill_id': obj.id}), obj.number)
 
     pdf_file_url.allow_tags = True
 
