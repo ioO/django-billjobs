@@ -8,7 +8,7 @@ BILLJOBS_DEBUG_PDF = settings.DEBUG
 BILLJOBS_BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 BILLJOBS_BILL_LOGO_PATH = getattr(settings, 'BILLJOBS_BILL_LOGO_PATH', BILLJOBS_BASE_DIR + '/static/images/logo-default.png')
-BILLJOBS_BILL_LOGO_WIDTH = getattr(settings, 'BILLJOBS_BILL_LOGO_WIDTH', 107)
+BILLJOBS_BILL_LOGO_WIDTH = getattr(settings, 'BILLJOBS_BILL_LOGO_WIDTH', 100)
 BILLJOBS_BILL_LOGO_HEIGHT = getattr(settings, 'BILLJOBS_BILL_LOGO_HEIGHT', 80)
 
 BILLING_ISSUER = """Your Coworking Space Name<br/>Building name<br/>
