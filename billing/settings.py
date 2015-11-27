@@ -3,25 +3,32 @@
 from django.conf import settings
 import os.path
 
-BILLJOBS_DEBUG_PDF = settings.DEBUG
-# Set app base dir
 BILLJOBS_BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BILLJOBS_DEFAULT = dict(
+        DEBUG = True,
+        LOGO_PATH = BILLJOBS_BASE_DIR + '/static/images/logo-default.png',
+        LOGO_WIDTH = 100,
+        LOGO_HEIGHT = 80,
+        ISSUER = """
+            Your Coworking Space Name<br/>Building name<br/>
+            Number & Street<br/>Postal Code Town
+            """,
+        PAYMENT_INFO = """
+            Add information about billing condition and payment information.
+            <br/>
+            You can use htlm in this setting.
+            """
+        )
 
-BILLJOBS_BILL_LOGO_PATH = getattr(settings, 'BILLJOBS_BILL_LOGO_PATH', BILLJOBS_BASE_DIR + '/static/images/logo-default.png')
-BILLJOBS_BILL_LOGO_WIDTH = getattr(settings, 'BILLJOBS_BILL_LOGO_WIDTH', 100)
-BILLJOBS_BILL_LOGO_HEIGHT = getattr(settings, 'BILLJOBS_BILL_LOGO_HEIGHT', 80)
 
-BILLING_ISSUER = """Your Coworking Space Name<br/>Building name<br/>
-                    21 Jump Street<br/>34000 Montpellier"""
-
-BILLING_PAYMENT_INFO = """
-    <b>Conditions de règlement:</b> à réception de la facture<br /><br/>
-    Règlement par chèque à l'ordre de <b>Cowork'in Montpellier</b> envoyé à<br/><br/>
-    Cowork'in Montpellier<br/>
-    19 rue de l'école de droit<br/>
-    34000 Montpellier<br/><br/>
-    Règlement par virement<br/><br/>
-    Code IBAN: FR76 4255 9000 3441 0200 2895 736<br/>
-    Code BIC/SWIFT: CCOPFRPPXXX
-    """
-
+BILLJOBS_DEBUG_PDF = getattr(settings, 'DEBUG', BILLJOBS_DEFAULT['DEBUG'])
+BILLJOBS_BILL_LOGO_PATH = getattr(settings, 'BILLJOBS_BILL_LOGO_PATH', 
+        BILLJOBS_DEFAULT['LOGO_PATH'])
+BILLJOBS_BILL_LOGO_WIDTH = getattr(settings, 'BILLJOBS_BILL_LOGO_WIDTH', 
+        BILLJOBS_DEFAULT['LOGO_WIDTH'])
+BILLJOBS_BILL_LOGO_HEIGHT = getattr(settings, 'BILLJOBS_BILL_LOGO_HEIGHT', 
+        BILLJOBS_DEFAULT['LOGO_HEIGHT'])
+BILLJOBS_BILL_ISSUER = getattr(settings, 'BILLJOBS_BILL_ISSUER', 
+        BILLJOBS_DEFAULT['ISSUER'])
+BILLJOBS_BILL_PAYMENT_INFO = getattr(settings, 'BILLJOBS_BILL_PAYMENT_INFO', 
+        BILLJOBS_DEFAULT['PAYMENT_INFO'])
