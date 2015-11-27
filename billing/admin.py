@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from billing.models import Bill, BillLine, Service, UserProfile
+from .models import Bill, BillLine, Service, UserProfile
 
 class BillLineInline(admin.TabularInline):
     model = BillLine
