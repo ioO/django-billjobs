@@ -8,11 +8,11 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
-from billing.settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
+from io import BytesIO
+from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_ISSUER, BILLJOBS_BILL_PAYMENT_INFO
-from billing.models import Bill
-from io import BytesIO
+from .models import Bill
 
 @login_required
 def generate_pdf(request, bill_id):
