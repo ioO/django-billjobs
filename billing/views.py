@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
@@ -14,12 +14,9 @@ from billing.settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
 from billing.models import Bill
 from io import BytesIO
 
-def redirect_home(request):
-    return redirect('/admin/')
-
 @login_required
-def generate_pdf(request, id):
-    bill = Bill.objects.get(id=id)
+def generate_pdf(request, bill_id):
+    bill = Bill.objects.get(id=bill_id)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="%s.pdf"' % bill.number
 
