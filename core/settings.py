@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DATABASES = {
     'default': {
@@ -17,7 +18,6 @@ DATABASES = {
         'NAME': 'develop.sqlite3',
     }
 }
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY = 'vVj14cKNh76tO1gzFh5yXG3WnKb8BMWN'
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'billing',
+    'billjobs',
     'debug_toolbar',
 )
 
