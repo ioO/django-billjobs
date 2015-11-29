@@ -6,14 +6,16 @@ A django billing app for coworking space.
 This app is designed to manage bills for the coworking space **Cowork'in Montpellier**.
 We intend to stay easy and lite. You can manage coworkers informations and their respective bills.
 
-No tax management.  There is no tax for non-profit organization in France. This application doesn't manage tax, it only 
-displays legal French informations and tax 0% on bills.
+**No tax management**. There is no tax for non-profit organization in France. This application doesn't manage tax, it 
+    only displays legal French informations and tax 0% on bills.
 
-###User and Group
+###Features
 
-User and Group management is provided by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
+All the features are managed throught [django admin.site](https://docs.djangoproject.com/en/1.8/ref/contrib/admin/)
 
-###Billing
+- User and Group management is provided by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
+- Billing management
+- Services management
 
 Billing application provides two features **bills** and **services**
 
@@ -31,10 +33,9 @@ Billjobs project uses [git flow](http://nvie.com/posts/a-successful-git-branchin
 **develop** branch is for development.
 **master** branch contains last release.
 
-Installation
-------------
+Release are prefixed by *v*
 
-### For development
+####Installation
 
 **Clone repository**
 
@@ -46,62 +47,46 @@ Installation
 
 **Create a virtualenv with python 3 binary**
 
-Billjobs was initially written with __python 2.7__ and move to __python 3.4__
+Billjobs was initially written with __python 2.7__ and move to __python 3.x__
+It works with __python 3.5__
 
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
-    mkvirtualenv billjobs --python=/path/to/python3.4
+    mkvirtualenv django-billjobs --python=/path/to/python3.5
+    add2virtualenv path/to/django-billjobs
 
 **Install dependencies**
 
-    pip install -r requirements.txt
+    pip install -r requirements_dev.txt
+
+**Sample settings**
+
+The *core/* folder contains sample settings for development. Use DJANGO_SETTINGS_MODULE environment variables.
+
+In your virtualenv *bin/postactivate*
+
+    export DJANGO_SETTINGS_MODULE=core.settings
+
+In your virtualenv *bin/postdeactivate*
+
+    unser DJANGO_SETTINGS_MODULE
+
+You can run server to test your development with :
+
+    django-admin runserver
 
 **Database**
 
 Development use sqlite3 engine.
 
-    ./manage.py syncdb
+    django-admin migrate
 
 You can use development fixtures located in *billing/fixtures/dev_data.json*
 
-    ./manage.py loaddata dev_data
+    django-admin loaddata billjobs/fixtures/dev_data.json
 
 **If you setup a super user it will be deleted by fixtures data.**
 A default super user is in fixtures.
 Login : bill
 Password : jobs
 
-###For testing
-
-Last stable release is master branch
-
-**Clone repository**
-
-    git clone https://github.com/ioO/billjobs.git
-
-**Create a virtualenv with python 3 binary**
-
-Billjobs was initially written with __python 2.7__ and move to __python 3.4__
-
-Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
-
-    mkvirtualenv billjobs --python=/path/to/python3.4
-
-**Install dependencies**
-
-    pip install -r requirements.txt
-
-All development dependencies are removed.
-
-**Database**
-
-Default database settings are sqlite3 engine.
-
-    ./manage.py syncdb
-
-Fixtures with initial data are removed.
-
-Licence
-=======
-
-This application is under [MIT License](http://en.wikipedia.org/wiki/MIT_License "MIT License") see *LICENSE.md* file.
