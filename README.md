@@ -81,7 +81,6 @@ You can use development fixtures
     django-admin loaddata billjobs/fixtures/dev_data.json
 
 **If you setup a super user it will be deleted by fixtures data.**
-A default super user is in fixtures.
-Login : bill
-Password : jobs
+- Login : bill
+- Password : jobs
 
