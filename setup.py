@@ -12,6 +12,10 @@ setup(
     version='0.2.2',
     packages=['billjobs'],
     include_package_data=True,
+    install_requires=[
+        "django >= 1.6, < 1.9",
+        "reportlab == 3",
+    ],
     license='X11 License',
     description='A django billing app for coworking space.',
     long_description=README,
