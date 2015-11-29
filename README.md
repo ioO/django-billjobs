@@ -10,23 +10,18 @@ We intend to stay easy and lite. You can manage coworkers informations and their
     only displays legal French informations and tax 0% on bills.
 
 ###Features
-
+i
 All the features are managed throught [django admin.site](https://docs.djangoproject.com/en/1.8/ref/contrib/admin/)
 
 - User and Group management is provided by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
 - Billing management
 - Services management
 
-Billing application provides two features **bills** and **services**
+###Installing
 
-Bills module allows you to list, create, modify or delete bills. You can generate a pdf and download it.
-You can change **services** default price. Total amount of bill is computed automatically after saving. Bill number is 
-also set automatically after saving.
+    pip install django-billjobs
 
-Service module allows you to list, create, modify or delete services.
-
-Organisation
-------------
+###Contributing
 
 Billjobs project uses [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
 
@@ -81,7 +76,7 @@ Development use sqlite3 engine.
 
     django-admin migrate
 
-You can use development fixtures located in *billing/fixtures/dev_data.json*
+You can use development fixtures
 
     django-admin loaddata billjobs/fixtures/dev_data.json
 
