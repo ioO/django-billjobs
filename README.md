@@ -10,7 +10,7 @@ We intend to stay easy and lite. You can manage coworkers informations and their
     only displays legal French informations and tax 0% on bills.
 
 ###Features
-i
+
 All the features are managed throught [django admin.site](https://docs.djangoproject.com/en/1.8/ref/contrib/admin/)
 
 - User and Group management is provided by [django auth](https://docs.djangoproject.com/en/dev/topics/auth/) module.
