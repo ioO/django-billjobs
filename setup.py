@@ -15,6 +15,7 @@ setup(
     install_requires=[
         "django >= 1.6, < 1.9",
         "reportlab == 3",
+        "Pillow",
     ],
     license='X11 License',
     description='A django billing app for coworking space.',
