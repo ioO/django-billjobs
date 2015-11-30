@@ -2,3 +2,4 @@ include LICENSE
 include README.md
 recursive-include billjobs/static *
 recursive-include billjobs/fixtures *
+recursive-include billjobs/locale *
