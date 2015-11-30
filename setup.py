@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-billjobs',
-    version='0.2.2',
+    version='0.2.3',
     packages=['billjobs'],
     include_package_data=True,
     install_requires=[
@@ -24,16 +24,22 @@ setup(
     author='Lionel Chanson',
     author_email='github@lionelchanson.fr',
     classifiers=[
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
-        'Intended Audience :: Coworking space',
-        'License :: X11 License',
+        'Framework :: Django',
+        'Framework :: Django :: 1.6',
+        'Framework :: Django :: 1.7',
+        'Framework :: Django :: 1.8',
+        'Intended Audience :: Other Audience',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        # Replace these appropriately if you are stuck on Python 2.
-        'Framework :: Django :: 1.8.x',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP',
     ],
 )
