@@ -22,13 +22,7 @@ class BillAdmin(admin.ModelAdmin):
         field = super(BillAdmin, self).formfield_for_foreignkey(
                                                 db_field, request, **kwargs)
         if db_field.rel.to == User:
-            field.label_from_instance = self.get_user_label
-        return field
-
-    def formfield_for_manytomany(self, db_field, request=None, **kwargs):
-        field = super(BillAdmin, self).formfield_for_manytomany(
-                                                db_field, request, **kwargs)
-        if db_field.rel.to == User:
+            field.initial = request.user.id
             field.label_from_instance = self.get_user_label
         return field
 
