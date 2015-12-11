@@ -20,8 +20,9 @@ All the features are managed throught [django admin.site](https://docs.djangopro
 
 Installing
 ----------
-
-    pip install django-billjobs
+```shell
+pip install django-billjobs
+```
 
 Contributing
 ------------
@@ -38,60 +39,69 @@ For now I am using a more simple workflow.
 
 Create a feature branch when you develop a new feature, a hotfix and at the end rebase it with **master** branch.
 
-    git checkout -b new_feature
-    # do your commits
-    git checkout master
-    git pull
-    git rebase master new_feature
-    git merge --no-ff new_feature
+```shell
+git checkout -b new_feature
+# do your commits
+git checkout master
+git pull
+git rebase master new_feature
+git merge --no-ff new_feature
+```
 
 ### Develop
 
 #### Clone repository
 
-    git clone https://github.com/ioO/billjobs.git
-
-
+```shell
+git clone https://github.com/ioO/billjobs.git
+```
 #### Create a virtualenv with python 3 binary
 
 Billjobs was initially written with **python 2.7** and move to **python 3.x**. It works with **python 3.5**
 
 Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/latest/ "Virtualenv")
 
-    mkvirtualenv django-billjobs --python=/path/to/python3.5
-    add2virtualenv path/to/django-billjobs
+```shell
+mkvirtualenv django-billjobs --python=/path/to/python3.5
+add2virtualenv path/to/django-billjobs
+```
 
 #### Install development dependencies
-
-    pip install -r requirements_dev.txt
+```shell
+pip install -r requirements_dev.txt
+```
 
 #### Sample settings
 
 The *core/* folder contains sample settings for development. Use DJANGO_SETTINGS_MODULE environment variables.
 
 In your virtualenv *bin/postactivate*
-
-    export DJANGO_SETTINGS_MODULE=core.settings
+```shell
+export DJANGO_SETTINGS_MODULE=core.settings
+```
 
 In your virtualenv *bin/postdeactivate*
-
-    unser DJANGO_SETTINGS_MODULE
+```shell
+unset DJANGO_SETTINGS_MODULE
+```
 
 You can run server to test your development with :
-
-    django-admin runserver
+```shell
+django-admin runserver
+```
 
 #### Database
 
 Development use sqlite3 engine.
-
-    django-admin migrate
+```shell
+django-admin migrate
+```
 
 You can use development fixtures
-
-    django-admin loaddata billjobs/fixtures/dev_data.json
+```shell
+django-admin loaddata billjobs/fixtures/dev_data.json
+```
 
 If you setup a super user it will be deleted by fixtures data.
 - Login : bill
 - Password : jobs
-
