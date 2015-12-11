@@ -12,7 +12,7 @@ class BillLineInline(admin.TabularInline):
 class BillAdmin(admin.ModelAdmin):
     readonly_fields = ('number', 'billing_date', 'amount')
     inlines = [BillLineInline]
-    list_display = ('__unicode__', 'coworker_name', 'amount', 'billing_date', 
+    list_display = ('__str__', 'coworker_name', 'amount', 'billing_date', 
             'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
     list_filter = ('isPaid', )
@@ -22,13 +22,7 @@ class BillAdmin(admin.ModelAdmin):
         field = super(BillAdmin, self).formfield_for_foreignkey(
                                                 db_field, request, **kwargs)
         if db_field.rel.to == User:
-            field.label_from_instance = self.get_user_label
-        return field
-
-    def formfield_for_manytomany(self, db_field, request=None, **kwargs):
-        field = super(BillAdmin, self).formfield_for_manytomany(
-                                                db_field, request, **kwargs)
-        if db_field.rel.to == User:
+            field.initial = request.user.id
             field.label_from_instance = self.get_user_label
         return field
 
@@ -71,7 +65,7 @@ class UserAdmin(UserAdmin):
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
-    list_display = ('__unicode__', 'price')
+    list_display = ('__str__', 'price')
 
 admin.site.register(Bill, BillAdmin)
 admin.site.register(Service, ServiceAdmin)
