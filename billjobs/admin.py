@@ -12,7 +12,7 @@ class BillLineInline(admin.TabularInline):
 class BillAdmin(admin.ModelAdmin):
     readonly_fields = ('number', 'billing_date', 'amount')
     inlines = [BillLineInline]
-    list_display = ('__unicode__', 'coworker_name', 'amount', 'billing_date', 
+    list_display = ('__str__', 'coworker_name', 'amount', 'billing_date', 
             'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
     list_filter = ('isPaid', )
@@ -71,7 +71,7 @@ class UserAdmin(UserAdmin):
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
-    list_display = ('__unicode__', 'price')
+    list_display = ('__str__', 'price')
 
 admin.site.register(Bill, BillAdmin)
 admin.site.register(Service, ServiceAdmin)
