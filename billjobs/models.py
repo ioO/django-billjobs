@@ -2,10 +2,12 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, pre_init, post_save, post_delete
+# TODO delete this import
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 import datetime
 
-
+@python_2_unicode_compatible
 class Bill(models.Model):
 
     user = models.ForeignKey(User, verbose_name=_('Coworker'))
@@ -21,7 +23,7 @@ class Bill(models.Model):
             verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.number
 
     def coworker_name(self):
@@ -31,7 +33,7 @@ class Bill(models.Model):
     class Meta:
         verbose_name = _('Bill')
 
-
+@python_2_unicode_compatible
 class Service(models.Model):
 
     reference = models.CharField(max_length=5, verbose_name=_('Reference'))
@@ -40,7 +42,7 @@ class Service(models.Model):
             verbose_name=_('Description'))
     price = models.FloatField(verbose_name=_('Price'))
 
-    def __unicode__(self):
+    def __str__(self):
         """ Return name as object representation """
         return self.name
 
