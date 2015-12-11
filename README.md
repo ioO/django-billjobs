@@ -1,4 +1,3 @@
-========
 Billjobs
 ========
 
@@ -11,7 +10,7 @@ lite.  You can manage coworkers informations and their respective bills.
 only displays legal French informations and tax 0% on bills.
 
 Features
-========
+--------
 
 All the features are managed throught [django admin.site](https://docs.djangoproject.com/en/1.8/ref/contrib/admin/)
 
@@ -20,17 +19,17 @@ All the features are managed throught [django admin.site](https://docs.djangopro
 - Services management
 
 Installing
-==========
+----------
 
     pip install django-billjobs
 
 Contributing
-============
+------------
 
 Wow you are awesome ! Thank you.
 
-Git workflow
-------------
+### Git workflow
+
 
 Previously we used [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
 **develop** branch is here for historical reason
@@ -39,25 +38,21 @@ For now I am using a more simple workflow.
 
 Create a feature branch when you develop a new feature, a hotfix and at the end rebase it with **master** branch.
 
-::
-  git checkout -b new_feature
-  # do your commits
-  git checkout master
-  git pull
-  git rebase master new_feature
-  git merge --no-ff new_feature
+    git checkout -b new_feature
+    # do your commits
+    git checkout master
+    git pull
+    git rebase master new_feature
+    git merge --no-ff new_feature
 
-Develop
--------
+### Develop
 
-Clone repository
-~~~~~~~~~~~~~~~~
-::
+#### Clone repository
+
     git clone https://github.com/ioO/billjobs.git
 
 
-Create a virtualenv with python 3 binary
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Create a virtualenv with python 3 binary
 
 Billjobs was initially written with **python 2.7** and move to **python 3.x**. It works with **python 3.5**
 
@@ -66,13 +61,11 @@ Read [virtualenv documentation](http://virtualenvwrapper.readthedocs.org/en/late
     mkvirtualenv django-billjobs --python=/path/to/python3.5
     add2virtualenv path/to/django-billjobs
 
-Install development dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Install development dependencies
 
     pip install -r requirements_dev.txt
 
-Sample settings
-~~~~~~~~~~~~~~~
+#### Sample settings
 
 The *core/* folder contains sample settings for development. Use DJANGO_SETTINGS_MODULE environment variables.
 
@@ -88,8 +81,7 @@ You can run server to test your development with :
 
     django-admin runserver
 
-Database
-~~~~~~~~
+#### Database
 
 Development use sqlite3 engine.
 
