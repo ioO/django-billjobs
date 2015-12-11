@@ -1,15 +1,17 @@
+========
 Billjobs
 ========
 
 A django billing app for coworking space.
 
-This app is designed to manage bills for the coworking space **Cowork'in Montpellier**.
-We intend to stay easy and lite. You can manage coworkers informations and their respective bills.
+This app is designed to manage bills for the coworking space **Cowork'in Montpellier**. We intend to stay easy and 
+lite.  You can manage coworkers informations and their respective bills.
 
 **No tax management**. There is no tax for non-profit organization in France. This application doesn't manage tax, it 
-    only displays legal French informations and tax 0% on bills.
+only displays legal French informations and tax 0% on bills.
 
-###Features
+Features
+--------
 
 All the features are managed throught [django admin.site](https://docs.djangoproject.com/en/1.8/ref/contrib/admin/)
 
@@ -17,16 +19,33 @@ All the features are managed throught [django admin.site](https://docs.djangopro
 - Billing management
 - Services management
 
-###Installing
+Installing
+----------
 
     pip install django-billjobs
 
-###Contributing
+Contributing
+------------
 
-Billjobs project uses [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
+Wow you are awesome ! Thank you.
 
-**develop** branch is for development.
-**master** branch contains last release.
+Git workflow
+~~~~~~~~~~~~
+
+Previously we used [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
+**develop** branch is here for historical reason
+
+For now I am using a more simple workflow.
+
+Create a feature branch when you develop a new feature, a hotfix and at the end rebase it with **master** branch.
+
+::
+  git checkout -b new_feature
+  # do your commits
+  git checkout master
+  git pull
+  git rebase master new_feature
+  git merge --no-ff new_feature
 
 Release are prefixed by *v*
 
