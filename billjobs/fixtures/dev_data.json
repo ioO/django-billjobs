@@ -70,6 +70,17 @@
         "description": "Accès à la salle de réunion pour 1 journée",
         "price": 140.0
     }
+},
+{
+   "model": "billjobs.service",
+    "pk": 4,
+    "fields": {
+        "reference": "OL001",
+        "name": "Ancien forfait",
+        "description": "Un ancien forfait pour le coworking",
+        "price": 150.0,
+        "is_available": 0
+    }
 }
 ]
 
