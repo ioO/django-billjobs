@@ -41,7 +41,7 @@ class Service(models.Model):
     description = models.CharField(max_length=1024, 
             verbose_name=_('Description'))
     price = models.FloatField(verbose_name=_('Price'))
-    is_available = models.BooleanField(verbose_name=('Is available ?'), 
+    is_available = models.BooleanField(verbose_name=_('Is available ?'), 
             default=True)
 
     def __str__(self):
