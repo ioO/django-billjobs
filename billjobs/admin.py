@@ -65,7 +65,9 @@ class UserAdmin(UserAdmin):
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
-    list_display = ('__str__', 'price')
+    list_display = ('__str__', 'price', 'is_available')
+    list_editable = ('is_available',)
+    list_filter = ('is_available',)
 
 admin.site.register(Bill, BillAdmin)
 admin.site.register(Service, ServiceAdmin)
