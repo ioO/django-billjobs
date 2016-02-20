@@ -26,13 +26,13 @@ Contributing
 
 Wow you are awesome ! Thank you.
 
-## Clone repository
+### Clone repository
 
 ```shell
 git clone https://github.com/ioO/billjobs.git
 ```
 
-## Create a virtualenv with python 3 binary
+### Create a virtualenv with python 3 binary
 
 Billjobs was initially written with **python 2.7** and move to **python 3.x**. It works with **python 3.5**
 
@@ -43,13 +43,13 @@ mkvirtualenv django-billjobs --python=/path/to/python3.5
 add2virtualenv path/to/django-billjobs
 ```
 
-## Install development dependencies
+### Install development dependencies
 
 ```shell
 pip install -r requirements_dev.txt
 ```
 
-## Sample settings
+### Sample settings
 
 The *core/* folder contains sample settings for development. Use **DJANGO_SETTINGS_MODULE** environment variables.
 
@@ -63,14 +63,14 @@ In your virtualenv *bin/postdeactivate*
 unset DJANGO_SETTINGS_MODULE
 ```
 
-## Database
+### Database
 
 Development use sqlite3 engine.
 ```shell
 django-admin migrate
 ```
 
-## Git workflow
+### Git workflow
 
 Previously we used [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
 **develop** branch is here for historical reason
@@ -84,11 +84,13 @@ git checkout -b new_feature
 # do your commits
 git checkout master
 git pull
-git rebase master new_feature
+git checkout new_feature
+git rebase master
+git checkout master
 git merge --no-ff new_feature
 ```
 
-## Fixtures
+### Fixtures
 
 You can use development fixtures
 ```shell
