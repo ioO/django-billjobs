@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-30 14:03+0000\n"
+"POT-Creation-Date: 2016-02-20 16:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,107 +18,110 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: billing/admin.py:57
+#: billjobs/admin.py:51
 msgid "Personal info"
 msgstr "Information personnelle"
 
-#: billing/admin.py:60
+#: billjobs/admin.py:54
 msgid "Permissions"
 msgstr "Permissions"
 
-#: billing/admin.py:65
+#: billjobs/admin.py:59
 msgid "Important dates"
 msgstr "Dates importantes"
 
-#: billing/models.py:11
+#: billjobs/models.py:13
 msgid "Coworker"
 msgstr "Coworker"
 
-#: billing/models.py:13
+#: billjobs/models.py:15
 msgid "Bill number"
 msgstr "Numéro de facture"
 
-#: billing/models.py:14 billing/models.py:19
+#: billjobs/models.py:16 billjobs/models.py:21
 msgid "This value is set automatically."
 msgstr "Cette valeur est définie automatiquement."
 
-#: billing/models.py:16
+#: billjobs/models.py:18
 msgid "Bill is paid ?"
 msgstr "Facture payée ?"
 
-#: billing/models.py:17
+#: billjobs/models.py:19
 msgid "Check this value when bill is paid"
 msgstr "Cocher quand la facture est payée"
 
-#: billing/models.py:18
+#: billjobs/models.py:20
 msgid "Date"
 msgstr "Date"
 
-#: billing/models.py:21
+#: billjobs/models.py:23
 msgid "Bill total amount"
 msgstr "Montant total de la facture"
 
-#: billing/models.py:22
+#: billjobs/models.py:24
 msgid "The amount is computed automatically."
 msgstr "Le montant est calculé automatiquement"
 
-#: billing/models.py:29
+#: billjobs/models.py:31
 msgid "Coworker name"
 msgstr "Coworker"
 
-#: billing/models.py:32
+#: billjobs/models.py:34
 msgid "Bill"
 msgstr "Facture"
 
-#: billing/models.py:37
+#: billjobs/models.py:39
 msgid "Reference"
 msgstr "Reférence"
 
-#: billing/models.py:38
+#: billjobs/models.py:40
 msgid "Name"
 msgstr "Nom"
 
-#: billing/models.py:40
+#: billjobs/models.py:42
 msgid "Description"
 msgstr "Description"
 
-#: billing/models.py:41
+#: billjobs/models.py:43
 msgid "Price"
 msgstr "Prix"
 
-#: billing/models.py:48
+#: billjobs/models.py:44
+msgid "Is available ?"
+msgstr "Disponible ?"
+
+#: billjobs/models.py:52
 msgid "Service"
 msgstr "Service"
 
-#: billing/models.py:54
+#: billjobs/models.py:58
 msgid "Quantity"
 msgstr "Quantité"
 
-#: billing/models.py:56
+#: billjobs/models.py:60
 msgid "This value is computed automatically"
 msgstr "Cette valeur est caclculée automatiquement"
 
-#: billing/models.py:57
+#: billjobs/models.py:61
 msgid "Total"
 msgstr "Total"
 
-#: billing/models.py:60
+#: billjobs/models.py:64
 msgid "Bill Line"
-msgstr "Numéro de facture"
+msgstr "Ligne de facturation"
 
-#: billing/models.py:61
+#: billjobs/models.py:65
 msgid "Bill Lines"
-msgstr "Numéro de facture"
+msgstr "Lignes de facturation"
 
-#: billing/models.py:68
+#: billjobs/models.py:72
 msgid "Billing Address"
 msgstr "Adresse de facturation"
 
-#: billing/models.py:71
+#: billjobs/models.py:75
 msgid "User Profile"
 msgstr "Profil utilisateur"
 
-#: billing/models.py:72
+#: billjobs/models.py:76
 msgid "User Profiles"
 msgstr "Profils utilisateur"
-
