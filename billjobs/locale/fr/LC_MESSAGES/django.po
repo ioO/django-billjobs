@@ -108,11 +108,11 @@ msgstr "Total"
 
 #: billjobs/models.py:64
 msgid "Bill Line"
-msgstr "Numéro de facture"
+msgstr "Ligne de facturation"
 
 #: billjobs/models.py:65
 msgid "Bill Lines"
-msgstr "Numéro de facture"
+msgstr "Lignes de facturation"
 
 #: billjobs/models.py:72
 msgid "Billing Address"
