@@ -1,3 +1,5 @@
+from django import forms
+from django.db.models import Q
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -5,9 +7,24 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from .models import Bill, BillLine, Service, UserProfile
 
+class BillLineInlineForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(BillLineInlineForm, self).__init__(*args, **kwargs)
+        if self.instance.id:
+            self.fields['service'].queryset = Service.objects.filter(Q(is_available=True) | Q(name=self.instance.service.name))
+            print(self.fields['service'].choices)
+        else:
+            self.fields['service'].queryset = Service.objects.filter(is_available=True)
+
+    class Meta:
+        model = BillLine
+        fields = ('service', 'quantity', 'total')
+
 class BillLineInline(admin.TabularInline):
     model = BillLine
     extra = 1
+    form = BillLineInlineForm
+
 
 class BillAdmin(admin.ModelAdmin):
     readonly_fields = ('number', 'billing_date', 'amount')
