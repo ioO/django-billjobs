@@ -51,7 +51,7 @@ pip install -r requirements_dev.txt
 
 ## Sample settings
 
-The *core/* folder contains sample settings for development. Use DJANGO_SETTINGS_MODULE environment variables.
+The *core/* folder contains sample settings for development. Use **DJANGO_SETTINGS_MODULE** environment variables.
 
 In your virtualenv *bin/postactivate*
 ```shell
@@ -61,11 +61,6 @@ export DJANGO_SETTINGS_MODULE=core.settings
 In your virtualenv *bin/postdeactivate*
 ```shell
 unset DJANGO_SETTINGS_MODULE
-```
-
-You can run server to test your development with :
-```shell
-django-admin runserver
 ```
 
 ## Database
@@ -80,7 +75,7 @@ django-admin migrate
 Previously we used [git flow](http://nvie.com/posts/a-successful-git-branching-model/)
 **develop** branch is here for historical reason
 
-For now I am using a more simple workflow.
+For now we are using a more simple workflow.
 
 Create a feature branch when you develop a new feature, a hotfix and at the end rebase it with **master** branch.
 
