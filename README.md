@@ -9,8 +9,8 @@ coworkers and their bills.
 **No tax management**. There is no tax for non-profit organization in France. This application doesn't manage tax, it 
     only displays legal French informations and tax 0% on bills.
 
-We use it at [Cowork'in Montpellier](www.coworkinmontpellier.org) and [Le village](http://www.levillage.co/), two 
-coworking spaces in South of France.
+We use it at [Cowork'in Montpellier](http://www.coworkinmontpellier.org) and [Le village](http://www.levillage.co/), 
+two coworking spaces in South of France.
 
 Features
 --------
