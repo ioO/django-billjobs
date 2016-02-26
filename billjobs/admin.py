@@ -18,7 +18,7 @@ class BillLineInlineForm(forms.ModelForm):
 
     class Meta:
         model = BillLine
-        fields = ('service', 'quantity', 'total')
+        fields = ('service', 'quantity', 'total', 'note')
 
 class BillLineInline(admin.TabularInline):
     model = BillLine
