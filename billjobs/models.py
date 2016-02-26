@@ -60,7 +60,9 @@ class BillLine(models.Model):
             help_text=_('This value is computed automatically'), 
             verbose_name=_('Total'))
     note = models.CharField(max_length=1024, verbose_name=_('Note'), 
-            blank=True)
+            blank=True, 
+            help_text=_('Write a simple note which will be added in your bill')
+            )
 
     class Meta:
         verbose_name = _('Bill Line')
