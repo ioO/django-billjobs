@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-20 16:28+0000\n"
+"POT-Creation-Date: 2016-02-26 11:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: billjobs/admin.py:51
+#: billjobs/admin.py:68
 msgid "Personal info"
 msgstr "Information personnelle"
 
-#: billjobs/admin.py:54
+#: billjobs/admin.py:71
 msgid "Permissions"
 msgstr "Permissions"
 
-#: billjobs/admin.py:59
+#: billjobs/admin.py:76
 msgid "Important dates"
 msgstr "Dates importantes"
 
@@ -106,22 +106,30 @@ msgstr "Cette valeur est caclculée automatiquement"
 msgid "Total"
 msgstr "Total"
 
+#: billjobs/models.py:62
+msgid "Note"
+msgstr "Note"
+
 #: billjobs/models.py:64
+msgid "Write a simple note which will be added in your bill"
+msgstr "Ecrivez une note qui sera ajoutée dans la facture"
+
+#: billjobs/models.py:68
 msgid "Bill Line"
 msgstr "Ligne de facturation"
 
-#: billjobs/models.py:65
+#: billjobs/models.py:69
 msgid "Bill Lines"
 msgstr "Lignes de facturation"
 
-#: billjobs/models.py:72
+#: billjobs/models.py:76
 msgid "Billing Address"
 msgstr "Adresse de facturation"
 
-#: billjobs/models.py:75
+#: billjobs/models.py:79
 msgid "User Profile"
 msgstr "Profil utilisateur"
 
-#: billjobs/models.py:76
+#: billjobs/models.py:80
 msgid "User Profiles"
 msgstr "Profils utilisateur"
