@@ -88,11 +88,16 @@ def generate_pdf(request, bill_id):
     data = [['Désignation', 'Prix unit. HT', 'Quantité', 'Total HT']]
 
     for line in bill.billline_set.all():
-        description = '%s - %s\n%s' % (line.service.reference, line.service.name, line.service.description)
+        description = '%s - %s\n%s' % (line.service.reference, 
+                line.service.name, line.service.description)
+        if line.note :
+            description = '%s\n%s' % (description, line.note)
+
         line = (description, line.service.price, line.quantity, line.total)
         data.append(line)
 
-    data.append(('TVA non applicable art-293B du CGI', '', 'Total HT', '%s €' % bill.amount))
+    data.append(('TVA non applicable art-293B du CGI', '', 'Total HT', 
+        '%s €' % bill.amount))
     data.append(('', '', 'TVA 0%', '0'))
     data.append(('', '', 'Total TTC', '%s €' % bill.amount))
 
