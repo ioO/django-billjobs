@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
     README = readme.read()
 
 # allow setup.py to be run from any path
@@ -13,7 +13,7 @@ setup(
     packages=['billjobs'],
     include_package_data=True,
     install_requires=[
-        "django >= 1.6, < 1.9",
+        "django >= 1.8, < 1.9",
         "reportlab == 3",
         "Pillow",
     ],
@@ -24,12 +24,11 @@ setup(
     author='Lionel Chanson',
     author_email='github@lionelchanson.fr',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.6',
-        'Framework :: Django :: 1.7',
         'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.9',
         'Intended Audience :: Other Audience',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
