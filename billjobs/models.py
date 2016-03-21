@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save, pre_init, post_save, post_delete
 # TODO delete this import
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from .settings import BILLJOBS_BILL_ISSUER
 import datetime
 
 @python_2_unicode_compatible
@@ -22,7 +23,8 @@ class Bill(models.Model):
     amount = models.FloatField(blank=True, default=0, 
             verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
-    issuer_address = models.CharField(max_length=1024, blank=False)
+    issuer_address = models.CharField(max_length=1024, blank=False, 
+            default=BILLJOBS_BILL_ISSUER)
 
     def __str__(self):
         return self.number
