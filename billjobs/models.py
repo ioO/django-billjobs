@@ -22,6 +22,7 @@ class Bill(models.Model):
     amount = models.FloatField(blank=True, default=0, 
             verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
+    issuer_address = models.CharField(max_length=1024, blank=False)
 
     def __str__(self):
         return self.number
