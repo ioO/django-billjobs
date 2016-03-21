@@ -28,6 +28,7 @@ class BillLineInline(admin.TabularInline):
 
 class BillAdmin(admin.ModelAdmin):
     readonly_fields = ('number', 'billing_date', 'amount')
+    exclude = ('issuer_address',)
     inlines = [BillLineInline]
     list_display = ('__str__', 'coworker_name', 'amount', 'billing_date', 
             'isPaid', 'pdf_file_url')
