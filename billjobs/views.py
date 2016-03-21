@@ -11,7 +11,7 @@ from reportlab.platypus import Table, Paragraph
 from io import BytesIO
 from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
-        BILLJOBS_BILL_ISSUER, BILLJOBS_BILL_PAYMENT_INFO
+        BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
 
 @login_required
@@ -62,7 +62,7 @@ def generate_pdf(request, bill_id):
     # reset fill for text color
     pdf.setFillColorRGB(0.3,0.3,0.3)
     pdf.drawString(10, nh-lh, 'Émetteur')
-    issuer = Paragraph(BILLJOBS_BILL_ISSUER, getSampleStyleSheet()['Normal'])
+    issuer = Paragraph(bill.issuer_address, getSampleStyleSheet()['Normal'])
     issuer.wrapOn(pdf, width*0.25, 6*lh)
     issuer.drawOn(pdf, 20, nh-6*lh)
 
