@@ -1,5 +1,0 @@
-Django
-django-debug-toolbar
-Pillow
-reportlab
-sqlparse

@@ -45,8 +45,21 @@ add2virtualenv path/to/django-billjobs
 
 ### Install development dependencies
 
+Please consider to use [pip-tools](https://github.com/nvie/pip-tools). Managing python package is a headache, pip-tools 
+help to keep it simple.
+```
+# requirements.in
+Django
+...
+# Add package here
+```
+
 ```shell
-pip install -r requirements_dev.txt
+# create requirements.txt
+$ pip-compile requirements.in
+
+# install new package, remove older, upgrade
+$ pip-sync requirements.txt
 ```
 
 ### Sample settings
