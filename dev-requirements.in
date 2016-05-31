@@ -1,2 +1,5 @@
+Django
+Reportlab
 pip-tools
 setuptools
+django-debug-toolbar
