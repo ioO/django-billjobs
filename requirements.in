@@ -1,5 +1,6 @@
-Django
-Reportlab
-pip-tools
+Django==1.10
+Reportlab==3.3.0
+pip-tools==1.7.0
+pip-review
 setuptools
-django-debug-toolbar
+django-debug-toolbar==1.5
