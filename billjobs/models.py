@@ -25,6 +25,7 @@ class Bill(models.Model):
             help_text=_('The amount is computed automatically.'))
     issuer_address = models.CharField(max_length=1024, blank=False, 
             default=BILLJOBS_BILL_ISSUER)
+    billing_address = models.CharField(max_length=1024, blank=False)
 
     def __str__(self):
         return self.number
@@ -35,6 +36,11 @@ class Bill(models.Model):
 
     class Meta:
         verbose_name = _('Bill')
+
+    def save(self, *args, **kwargs):
+        self.billing_address = self.user.billing_address
+        super(Bill,self).save(*args,kwargs)
+
 
 @python_2_unicode_compatible
 class Service(models.Model):
@@ -70,7 +76,6 @@ class BillLine(models.Model):
     class Meta:
         verbose_name = _('Bill Line')
         verbose_name_plural = _('Bill Lines')
-
 
 class UserProfile(models.Model):
     """ extend User class """
