@@ -1,7 +1,11 @@
 from django.test import TestCase, Client
+from django.contrib.auth.models import User
+from billjobs.models import Bill, Service
+from billjobs.settings import BILLJOBS_BILL_ISSUER
 
 class BillingTestCase(TestCase):
     ''' Test billing creation and modification '''
+    fixtures = ['dev_data.json']
 
     def setUp(self):
         self.client = Client()
@@ -15,4 +19,11 @@ class BillingTestCase(TestCase):
         #response = self.client.get('/admin/billjobs/bill/add/', follow_redirect=True)
         #self.assertEqual(response.status_code, 200)
         self.assertTrue(True)
+
+    def test_create_bill(self):
+        user = User.objects.get(username='bill')
+        bill = Bill(user=user)
+        self.assertEqual(bill.user.username, 'bill')
+        self.assertEqual(bill.issuer_address, BILLJOBS_BILL_ISSUER)
+        self.assertEqual(bill.billing_address, user.billing_address)
 
