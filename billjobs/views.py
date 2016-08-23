@@ -72,7 +72,7 @@ def generate_pdf(request, bill_id):
     customer.setTextOrigin(width/2+20, nh-3*lh)
     # create text with \n and remove \r
     text = '%s %s\n%s' % (bill.user.first_name, bill.user.last_name, 
-                bill.user.userprofile.billing_address.replace('\r',''))
+                bill.billing_address.replace('\r',''))
     # get each line
     for line in text.split('\n'):
         customer.textOut(line)
