@@ -8,11 +8,10 @@ class BillingTestCase(TestCase):
     fixtures = ['dev_data.json']
 
     def setUp(self):
-        self.client = Client()
-        self.client.login(username='bill', password='jobs')
+        self.user = User.objects.get(username='bill')
 
     def tearDown(self):
-        self.client.logout()
+        pass
 
     def test_create_bill_with_one_line(self):
         ''' Test when user is created a bill with a single service '''
@@ -21,11 +20,16 @@ class BillingTestCase(TestCase):
         self.assertTrue(True)
 
     def test_create_bill(self):
-        user = User.objects.get(username='bill')
-        bill = Bill(user=user)
+        bill = Bill(user=self.user)
         bill.save()
-        self.assertEqual(bill.user.username, 'bill')
+        self.assertEqual(bill.user.username, self.user.username)
         self.assertEqual(bill.issuer_address, BILLJOBS_BILL_ISSUER)
         self.assertEqual(
-                bill.billing_address, user.userprofile.billing_address)
+                bill.billing_address, self.user.userprofile.billing_address)
 
+    def test_user_change_billing_address(self):
+        ''' Test when user is changing is billing address
+            Previous bill is with old address
+            New bill is with new address
+        '''
+        pass
