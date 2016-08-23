@@ -25,7 +25,7 @@ class Bill(models.Model):
             help_text=_('The amount is computed automatically.'))
     issuer_address = models.CharField(max_length=1024, blank=False, 
             default=BILLJOBS_BILL_ISSUER)
-    billing_address = models.CharField(max_length=1024, blank=False)
+    billing_address = models.CharField(max_length=1024, blank=True)
 
     def __str__(self):
         return self.number

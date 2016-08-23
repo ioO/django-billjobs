@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bill',
             name='billing_address',
-            field=models.CharField(max_length=1024),
+            field=models.CharField(max_length=1024, blank=True),
         ),
         migrations.RunPython(add_billing_address),
     ]
