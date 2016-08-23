@@ -32,4 +32,15 @@ class BillingTestCase(TestCase):
             Previous bill is with old address
             New bill is with new address
         '''
-        pass
+        bill = Bill(user=self.user)
+        previous_billing_address = self.user.userprofile.billing_address
+        bill.save()
+        # user change billing_address
+        self.user.userprofile.billing_address = '1 new street\n34000 Town'
+        self.user.save()
+        new_billing_address = self.user.userprofile.billing_address
+        # user create a new bill
+        new_bill = Bill(user=self.user)
+        new_bill.save()
+        self.assertEqual(bill.billing_address, previous_billing_address)
+        self.assertEqual(new_bill.billing_address, new_billing_address)
