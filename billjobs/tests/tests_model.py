@@ -23,7 +23,9 @@ class BillingTestCase(TestCase):
     def test_create_bill(self):
         user = User.objects.get(username='bill')
         bill = Bill(user=user)
+        bill.save()
         self.assertEqual(bill.user.username, 'bill')
         self.assertEqual(bill.issuer_address, BILLJOBS_BILL_ISSUER)
-        self.assertEqual(bill.billing_address, user.billing_address)
+        self.assertEqual(
+                bill.billing_address, user.userprofile.billing_address)
 
