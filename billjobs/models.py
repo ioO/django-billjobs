@@ -38,7 +38,8 @@ class Bill(models.Model):
         verbose_name = _('Bill')
 
     def save(self, *args, **kwargs):
-        self.billing_address = self.user.userprofile.billing_address
+        if not self.billing_address:
+            self.billing_address = self.user.userprofile.billing_address
         super(Bill,self).save(*args,kwargs)
 
 
