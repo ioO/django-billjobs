@@ -44,3 +44,18 @@ class BillingTestCase(TestCase):
         new_bill.save()
         self.assertEqual(bill.billing_address, previous_billing_address)
         self.assertEqual(new_bill.billing_address, new_billing_address)
+
+    def test_save_bill_do_not_change_billing_address(self):
+        ''' Test when user change his billing address and modify an old bill
+            it doesn't change the billing address
+        '''
+        bill = Bill(user=self.user)
+        previous_billing_address = self.user.userprofile.billing_address
+        bill.save()
+        # user change billing_address
+        self.user.userprofile.billing_address = '1 new street\n34000 Town'
+        self.user.save()
+        # bill is changing
+        bill.amount = 100
+        bill.save()
+        self.assertEqual(bill.billing_address, previous_billing_address)
