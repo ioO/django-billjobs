@@ -4,8 +4,15 @@ from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
 from billjobs.admin import UserAdmin
 
+class MockRequest(object):
+            pass
+
 class EmailExportTestCase(TestCase):
     """ Tests for email account export """
+
+    def setUp(self):
+        self.site = AdminSite()
+        self.query_set = User.objects.all()
 
     def test_method_is_avaible(self):
         """ Test admin can select the action in dropdown list """
@@ -21,10 +28,11 @@ class EmailExportTestCase(TestCase):
                 'Export email of selected users')
 
     def test_action_return_http_response(self):
-        class MockRequest(object):
-            pass
-        site = AdminSite()
-        user_admin = UserAdmin(User, site)
-        query_set = User.objects.all()
-        response = user_admin.export_email(request=MockRequest(), queryset=query_set)
+        user_admin = UserAdmin(User, self.site)
+        response = user_admin.export_email(request=MockRequest(), queryset=self.query_set)
         self.assertIsInstance(response, HttpResponse)
+
+    def test_action_return_csv(self):
+        user_admin = UserAdmin(User, self.site)
+        response = user_admin.export_email(request=MockRequest(), queryset=self.query_set)
+        self.assertEqual(response.get('Content-Type'), 'text/csv')
