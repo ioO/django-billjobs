@@ -1,5 +1,7 @@
 from django.test import TestCase
+from django.http import HttpResponse
 from django.contrib.admin.sites import AdminSite
+from django.contrib.auth.models import User
 from billjobs.admin import UserAdmin
 
 class EmailExportTestCase(TestCase):
@@ -17,3 +19,12 @@ class EmailExportTestCase(TestCase):
         """ Test method has a short description """
         self.assertEqual(UserAdmin.export_email.short_description, 
                 'Export email of selected users')
+
+    def test_action_return_http_response(self):
+        class MockRequest(object):
+            pass
+        site = AdminSite()
+        user_admin = UserAdmin(User, site)
+        query_set = User.objects.all()
+        response = user_admin.export_email(request=MockRequest(), queryset=query_set)
+        self.assertIsInstance(response, HttpResponse)
