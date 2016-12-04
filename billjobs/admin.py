@@ -85,7 +85,7 @@ class UserAdmin(UserAdmin):
 
     def export_email(self, request, queryset):
         """ Export emails of selected account """
-        return HttpResponse()
+        return HttpResponse(content_type='text/csv')
     export_email.short_description = 'Export email of selected users'
 
 class ServiceAdmin(admin.ModelAdmin):
