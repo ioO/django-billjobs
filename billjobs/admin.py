@@ -1,4 +1,6 @@
+import csv
 from django import forms
+from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -80,6 +82,18 @@ class UserAdmin(UserAdmin):
                 })
             )
     list_display = ('username', 'get_full_name', 'email')
+    actions = ['export_email']
+
+    def export_email(self, request, queryset):
+        """ Export emails of selected account """
+        response = HttpResponse(content_type='text/csv')
+
+        writer = csv.writer(response)
+        for email in queryset.values_list('email'):
+            writer.writerow(email)
+
+        return response
+    export_email.short_description = _('Export email of selected users')
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
