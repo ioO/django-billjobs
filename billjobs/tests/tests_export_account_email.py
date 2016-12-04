@@ -12,3 +12,8 @@ class EmailExportTestCase(TestCase):
     def test_method_is_model_admin_action(self):
         """ Test method is an custom action for user admin """
         self.assertTrue('export_email' in UserAdmin.actions)
+
+    def test_action_has_a_short_description(self):
+        """ Test method has a short description """
+        self.assertEqual(UserAdmin.export_email.short_description, 
+                'Export email of selected users')
