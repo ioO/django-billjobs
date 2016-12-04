@@ -93,7 +93,7 @@ class UserAdmin(UserAdmin):
             writer.writerow(email)
 
         return response
-    export_email.short_description = 'Export email of selected users'
+    export_email.short_description = _('Export email of selected users')
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
