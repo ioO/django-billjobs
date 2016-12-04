@@ -80,6 +80,7 @@ class UserAdmin(UserAdmin):
                 })
             )
     list_display = ('username', 'get_full_name', 'email')
+    actions = ['export_email']
 
     def export_email(self, request, queryset):
         """ Export emails of selected account """
