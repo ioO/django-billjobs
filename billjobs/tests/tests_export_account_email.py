@@ -15,7 +15,7 @@ class EmailExportTestCase(TestCase):
         self.query_set = User.objects.all()
 
     def test_method_is_avaible(self):
-        """ Test admin can select the action in dropdown list """
+        """ Test UserAdmin class has method export_email """
         self.assertTrue(hasattr(UserAdmin, 'export_email'))
 
     def test_method_is_model_admin_action(self):
@@ -24,15 +24,19 @@ class EmailExportTestCase(TestCase):
 
     def test_action_has_a_short_description(self):
         """ Test method has a short description """
-        self.assertEqual(UserAdmin.export_email.short_description, 
+        self.assertEqual(UserAdmin.export_email.short_description,
                 'Export email of selected users')
 
     def test_action_return_http_response(self):
+        """ Test method return an HttpResponse """
         user_admin = UserAdmin(User, self.site)
-        response = user_admin.export_email(request=MockRequest(), queryset=self.query_set)
+        response = user_admin.export_email(request=MockRequest(),
+                queryset=self.query_set)
         self.assertIsInstance(response, HttpResponse)
 
     def test_action_return_csv(self):
+        """ Test method return text/csv as http response content type """
         user_admin = UserAdmin(User, self.site)
-        response = user_admin.export_email(request=MockRequest(), queryset=self.query_set)
+        response = user_admin.export_email(request=MockRequest(),
+                queryset=self.query_set)
         self.assertEqual(response.get('Content-Type'), 'text/csv')
