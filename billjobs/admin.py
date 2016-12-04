@@ -81,6 +81,10 @@ class UserAdmin(UserAdmin):
             )
     list_display = ('username', 'get_full_name', 'email')
 
+    def export_email(self, request, queryset):
+        """ Export emails of selected account """
+        pass
+
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
     list_display = ('__str__', 'price', 'is_available')
