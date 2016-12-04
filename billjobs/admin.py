@@ -1,4 +1,5 @@
 from django import forms
+from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -84,7 +85,7 @@ class UserAdmin(UserAdmin):
 
     def export_email(self, request, queryset):
         """ Export emails of selected account """
-        pass
+        return HttpResponse()
     export_email.short_description = 'Export email of selected users'
 
 class ServiceAdmin(admin.ModelAdmin):
