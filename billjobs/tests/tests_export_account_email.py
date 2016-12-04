@@ -1,3 +1,5 @@
+import csv
+import io
 from django.test import TestCase
 from django.http import HttpResponse
 from django.contrib.admin.sites import AdminSite
@@ -9,6 +11,8 @@ class MockRequest(object):
 
 class EmailExportTestCase(TestCase):
     """ Tests for email account export """
+
+    fixtures = ['account_test.yaml']
 
     def setUp(self):
         self.site = AdminSite()
@@ -40,3 +44,14 @@ class EmailExportTestCase(TestCase):
         response = user_admin.export_email(request=MockRequest(),
                 queryset=self.query_set)
         self.assertEqual(response.get('Content-Type'), 'text/csv')
+
+    def test_action_return_csv_content(self):
+        """ Test method return csv content """
+        user_admin = UserAdmin(User, self.site)
+        response = user_admin.export_email(request=MockRequest(),
+                queryset=self.query_set)
+        output = io.StringIO()
+        writer = csv.writer(output)
+        for email in User.objects.values_list('email'):
+            writer.writerow(email)
+        self.assertEqual(response.content.decode(), output.getvalue())
