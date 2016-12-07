@@ -1,0 +1,21 @@
+language: python
+python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  # PyPy versions
+  - "pypy"  # PyPy2 2.5.0
+  - "pypy3" # Pypy3 2.4.0
+env:
+  - DJANGO_VERSION=1.6
+  - DJANGO_VERSION=1.7
+  - DJANGO_VERSION=1.8
+  - DJANGO_VERSION=1.9
+  - DJANGO_VERSION=1.10
+install:
+  - pip install -r requirements.txt -q $DJANGO_VERSION
+# command to run tests
+script: django-admin test
+
