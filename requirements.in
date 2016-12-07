@@ -2,5 +2,6 @@ Django==1.10.3
 reportlab==3.3.0
 pip-tools==1.7.0
 pip-review==0.5
+PyYAML==3.12
 setuptools
 django-debug-toolbar==1.6

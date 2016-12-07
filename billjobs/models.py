@@ -40,7 +40,7 @@ class Bill(models.Model):
     def save(self, *args, **kwargs):
         if not self.billing_address:
             self.billing_address = self.user.userprofile.billing_address
-        super(Bill,self).save(*args,kwargs)
+        super(Bill,self).save(*args,**kwargs)
 
 
 @python_2_unicode_compatible
