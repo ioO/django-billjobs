@@ -13,10 +13,12 @@ pillow==3.2.0             # via reportlab
 pip-review==0.5
 pip-tools==1.7.0
 pyparsing==2.1.10         # via packaging
+PyYAML==3.12
 reportlab==3.3.0
 six==1.10.0               # via packaging, pip-tools
 sqlparse==0.2.1           # via django-debug-toolbar
 
-# The following packages are considered to be unsafe in a requirements file:
+# The following packages are commented out because they are
+# considered to be unsafe in a requirements file:
 # pip                       # via reportlab
 # setuptools
