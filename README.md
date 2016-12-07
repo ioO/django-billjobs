@@ -1,7 +1,8 @@
 Billjobs
 ========
 
-A django billing app for coworking space.
+[![Build 
+Status](https://travis-ci.org/ioO/django-billjobs.svg?branch=master)](https://travis-ci.org/ioO/django-billjobs)
 
 We intend to keep things as simple as we can and with an easy user experience. This apps is designed to manage 
 coworkers and their bills.
