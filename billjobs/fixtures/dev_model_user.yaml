@@ -1,0 +1,39 @@
+---
+- model: auth.user
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
+    last_login: null
+    is_superuser: true
+    username: bill
+    first_name: Bill
+    last_name: Jobs
+    email: bill@billjobs.org
+    is_staff: true
+    is_active: true
+
+- model: auth.user
+  pk: 2
+  fields:
+    password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
+    last_login: null
+    is_superuser: true
+    username: steve
+    first_name: Steve
+    last_name: Gates
+    email: steve@billjobs.org
+    is_staff: true
+    is_active: true
+
+- model: auth.user
+  pk: 3
+  fields:
+    password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
+    last_login: null
+    is_superuser: true
+    username: bill.jobs
+    first_name: Bill
+    last_name: Jobs
+    email: bill@billjobs.org
+    is_staff: true
+    is_active: true

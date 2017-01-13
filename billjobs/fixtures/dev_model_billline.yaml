@@ -1,0 +1,28 @@
+---
+- model: billjobs.billline
+  pk: 1
+  fields:
+    bill: 1
+    service: 1
+    quantity: 1
+
+- model: billjobs.billline
+  pk: 2
+  fields:
+    bill: 2
+    service: 2
+    quantity: 1
+
+- model: billjobs.billline
+  pk: 3
+  fields:
+    bill: 3
+    service: 3
+    quantity: 2
+
+- model: billjobs.billline
+  pk: 4
+  fields:
+    bill: 3
+    service: 4
+    quantity: 1

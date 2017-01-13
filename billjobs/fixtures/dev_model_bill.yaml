@@ -1,0 +1,24 @@
+---
+- model: billjobs.bill
+  pk: 1
+  fields:
+    billing_date: 2014-04-02
+    isPaid: false
+    user: 1
+    number: F201404001
+
+- model: billjobs.bill
+  pk: 2
+  fields:
+    billing_date: 2014-05-05
+    isPaid: false
+    user: 2
+    number: F201405002
+
+- model: billjobs.bill
+  pk: 3
+  fields:
+    billing_date: 2015-01-03
+    isPaid: false
+    user: 3
+    number: F201501003

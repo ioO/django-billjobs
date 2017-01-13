@@ -1,0 +1,34 @@
+---
+- model: billjobs.service
+  pk: 1
+  fields:
+    reference: FT001
+    name: Full Time
+    description: Full time access for one month
+    price: 180.0
+
+- model: billjobs.service
+  pk: 2
+  fields:
+    reference: MT001
+    name: Mid Time
+    description: Mid time access for one month
+    price: 100.0
+
+
+- model: billjobs.service
+  pk: 3
+  fields:
+    reference: SR001
+    name: Meeting 1 day
+    description: 1 day pass for meeting room
+    price: 140.0
+
+- model: billjobs.service
+  pk: 4
+  fields:
+    reference: OL001
+    name: Full Time
+    description: First Full Time access for one month
+    price: 150.0
+    is_available: 0

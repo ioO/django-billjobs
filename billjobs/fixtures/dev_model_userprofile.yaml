@@ -1,0 +1,18 @@
+---
+- model: billjobs.userprofile
+  pk: 1
+  fields:
+    user: 1
+    billing_address: "4 rue Auguste Comte\r\n34000 Montpellier"
+
+- model: billjobs.userprofile
+  pk: 2
+  fields:
+    user: 2
+    billing_address: "19 rue de l'école de droit\r\n34000 Montpellier"
+
+- model: billjobs.userprofile
+  pk: 3
+  fields:
+    user: 3
+    billing_address: "7 rue Cart\r\n30000 Nîmes"
