@@ -17,8 +17,8 @@
 
 
 - model: billjobs.service
-pk: 3
-fields:
+  pk: 3
+  fields:
     reference: SR001
     name: Meeting 1 day
     description: 1 day pass for meeting room
