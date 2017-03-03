@@ -48,8 +48,9 @@ class Service(models.Model):
 
     reference = models.CharField(max_length=5, verbose_name=_('Reference'))
     name = models.CharField(max_length=128, verbose_name=_('Name'))
-    description = models.CharField(max_length=1024, 
-            verbose_name=_('Description'))
+    description = models.CharField(max_length=256,
+            verbose_name=_('Description'),
+            help_text=_('Write service description limited to 256 characters'))
     price = models.FloatField(verbose_name=_('Price'))
     is_available = models.BooleanField(verbose_name=_('Is available ?'), 
             default=True)
