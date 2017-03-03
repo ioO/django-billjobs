@@ -5,7 +5,7 @@ from billjobs.settings import BILLJOBS_BILL_ISSUER
 
 class BillingTestCase(TestCase):
     ''' Test billing creation and modification '''
-    fixtures = ['dev_data.json']
+    fixtures = ['dev_model_010_user.yaml', 'dev_model_020_userprofile.yaml']
 
     def setUp(self):
         self.user = User.objects.get(username='bill')
