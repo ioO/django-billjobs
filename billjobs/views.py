@@ -13,6 +13,7 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
+from textwrap import wrap
 
 @login_required
 def generate_pdf(request, bill_id):
@@ -71,7 +72,7 @@ def generate_pdf(request, bill_id):
     customer = pdf.beginText()
     customer.setTextOrigin(width/2+20, nh-3*lh)
     # create text with \n and remove \r
-    text = '%s %s\n%s' % (bill.user.first_name, bill.user.last_name, 
+    text = '%s %s\n%s' % (bill.user.first_name, bill.user.last_name,
                 bill.billing_address.replace('\r',''))
     # get each line
     for line in text.split('\n'):
@@ -82,16 +83,19 @@ def generate_pdf(request, bill_id):
     # rect(x,y,width,height)
     pdf.rect(width/2, nh-8*lh, width/2, 6.4*lh, fill=0)
 
-    # define new heght
+    # define new height
     nh = nh - 10*lh
 
     data = [['Désignation', 'Prix unit. HT', 'Quantité', 'Total HT']]
 
     for line in bill.billline_set.all():
-        description = '%s - %s\n%s' % (line.service.reference, 
-                line.service.name, line.service.description)
+        description = '%s - %s\n%s' % (line.service.reference,
+                line.service.name,
+                '\n'.join(wrap(line.service.description,62)))
+
         if line.note :
-            description = '%s\n%s' % (description, line.note)
+            description = '%s\n%s' % (description,
+                    '\n'.join(wrap(line.note,62)))
 
         line = (description, line.service.price, line.quantity, line.total)
         data.append(line)
