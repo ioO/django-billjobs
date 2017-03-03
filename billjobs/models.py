@@ -52,7 +52,7 @@ class Service(models.Model):
             verbose_name=_('Description'),
             help_text=_('Write service description limited to 256 characters'))
     price = models.FloatField(verbose_name=_('Price'))
-    is_available = models.BooleanField(verbose_name=_('Is available ?'), 
+    is_available = models.BooleanField(verbose_name=_('Is available ?'),
             default=True)
 
     def __str__(self):
