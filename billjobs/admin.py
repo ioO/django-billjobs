@@ -62,10 +62,10 @@ class BillAdmin(admin.ModelAdmin):
     coworker_name_link.short_description = _('Coworker name')
 
     def pdf_file_url(self, obj):
-        return '<a href="%s">%s.pdf</a>' % (reverse('generate-pdf',
-            kwargs={'bill_id': obj.id}), obj.number)
-
-    pdf_file_url.allow_tags = True
+        return format_html(
+                '<a href="{}">{}.pdf</a>',
+                reverse('generate-pdf', args=(obj.id,)),
+                obj.number)
 
 
 class UserProfileAdmin(admin.StackedInline):
