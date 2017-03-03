@@ -4,21 +4,22 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
+appdirs==1.4.2            # via setuptools
 click==6.6                # via pip-tools
 django-debug-toolbar==1.6
-Django==1.10.3            # via django-debug-toolbar
+Django==1.10.6            # via django-debug-toolbar
 first==2.0.1              # via pip-tools
-packaging==16.8           # via pip-review
+packaging==16.8           # via pip-review, setuptools
 pillow==3.2.0             # via reportlab
-pip-review==0.5
-pip-tools==1.7.0
+pip-review==0.5.2
+pip-tools==1.8.0
 pyparsing==2.1.10         # via packaging
 PyYAML==3.12
 reportlab==3.3.0
-six==1.10.0               # via packaging, pip-tools
+six==1.10.0               # via packaging, pip-tools, setuptools
 sqlparse==0.2.1           # via django-debug-toolbar
 
 # The following packages are commented out because they are
 # considered to be unsafe in a requirements file:
-# pip                       # via reportlab
+# pip                       # via pip-review, reportlab
 # setuptools
