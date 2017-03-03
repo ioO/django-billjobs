@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from .models import Bill, BillLine, Service, UserProfile
 
@@ -54,7 +55,8 @@ class BillAdmin(admin.ModelAdmin):
 
     def coworker_name_link(self, obj):
         ''' Create a link to user admin edit view '''
-        return '<a href="%s">%s</a>' % (
+        return format_html(
+                '<a href="{}">{}</a>',
                 reverse('admin:auth_user_change', args=(obj.id,)),
                 obj.coworker_name())
 
@@ -62,7 +64,6 @@ class BillAdmin(admin.ModelAdmin):
         return '<a href="%s">%s.pdf</a>' % (reverse('generate-pdf',
             kwargs={'bill_id': obj.id}), obj.number)
 
-    coworker_name_link.allow_tags = True
     pdf_file_url.allow_tags = True
 
 
