@@ -59,6 +59,7 @@ class BillAdmin(admin.ModelAdmin):
                 '<a href="{}">{}</a>',
                 reverse('admin:auth_user_change', args=(obj.id,)),
                 obj.coworker_name())
+    coworker_name_link.short_description = _('Coworker name')
 
     def pdf_file_url(self, obj):
         return '<a href="%s">%s.pdf</a>' % (reverse('generate-pdf',
