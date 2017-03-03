@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from django.db.utils import IntegrityError
 from billjobs.models import Bill, Service
 from billjobs.settings import BILLJOBS_BILL_ISSUER
 
@@ -59,3 +60,13 @@ class BillingTestCase(TestCase):
         bill.amount = 100
         bill.save()
         self.assertEqual(bill.billing_address, previous_billing_address)
+
+class ServiceTestCase(TestCase):
+    ''' Test CRUD for Service model '''
+
+    def test_create_service_without_price_raise_constraint(self):
+        service = Service()
+        service.reference = 'TEST'
+        service.name = 'Service test'
+        with self.assertRaises(IntegrityError):
+            service.save()
