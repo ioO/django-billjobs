@@ -32,7 +32,7 @@ class BillAdmin(admin.ModelAdmin):
     readonly_fields = ('number', 'billing_date', 'amount')
     exclude = ('issuer_address', 'billing_address')
     inlines = [BillLineInline]
-    list_display = ('__str__', 'coworker_name', 'amount', 'billing_date', 
+    list_display = ('__str__', 'coworker_name_link', 'amount', 'billing_date',
             'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
     list_filter = ('isPaid', )
@@ -52,10 +52,17 @@ class BillAdmin(admin.ModelAdmin):
         return (name and name != username and '%s (%s)' % (name, username)
                 or username)
 
+    def coworker_name_link(self, obj):
+        ''' Create a link to user admin edit view '''
+        return '<a href="%s">%s</a>' % (
+                reverse('admin:auth_user_change', args=(obj.id,)),
+                obj.coworker_name())
+
     def pdf_file_url(self, obj):
-        return '<a href="%s">%s.pdf</a>' % (reverse('generate-pdf', 
+        return '<a href="%s">%s.pdf</a>' % (reverse('generate-pdf',
             kwargs={'bill_id': obj.id}), obj.number)
 
+    coworker_name_link.allow_tags = True
     pdf_file_url.allow_tags = True
 
 
