@@ -4,16 +4,11 @@ from billjobs.models import Bill, UserProfile
 
 class BillingAdminListViewTestCase(TestCase):
     ''' Test billing model admin view '''
+    fixtures=['test_billing_admin.yaml']
 
     def test_coworker_name_link_to_user(self):
-        admin = User.objects.create_superuser(
-                username='admin', password='123', email='admin@billjobs.org',
-                first_name = 'Bill', last_name = 'Jobs')
-        profile = UserProfile(user=admin, billing_address='street')
-        profile.save()
-        invoice = Bill()
-        invoice.user = admin
-        invoice.save()
+        ''' Test link to user view in BillAdmin list view '''
+        admin = User.objects.get(pk=1)
         self.client.force_login(admin)
         response = self.client.get('/admin/billjobs/bill/')
         self.assertEqual(response.status_code, 200)
