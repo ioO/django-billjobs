@@ -66,7 +66,7 @@ class BillAdmin(admin.ModelAdmin):
                 '<a href="{}">{}.pdf</a>',
                 reverse('generate-pdf', args=(obj.id,)),
                 obj.number)
-
+    pdf_file_url.short_description=_('Download invoice')
 
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
