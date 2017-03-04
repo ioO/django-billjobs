@@ -39,8 +39,7 @@ Clone repository
 Create a virtualenv with python 3 binary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Billjobs was initially written with **python 2.7** and move to **python
-3.x**. It works with **python 3.5**
+Billjobs works from **python 3.4 to 3.6**.
 
 Read `virtualenv
 documentation <http://virtualenvwrapper.readthedocs.org/en/latest/>`__
