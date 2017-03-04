@@ -1,0 +1,31 @@
+---
+- model: auth.user
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
+    last_login: null
+    is_superuser: true
+    username: bill
+    first_name: Bill
+    last_name: Jobs
+    email: bill@billjobs.org
+    is_staff: true
+    is_active: true
+
+- model: billjobs.userprofile
+  pk: 1
+  fields:
+    user: 1
+    billing_address: "4 rue Auguste Comte\r\n34000 Montpellier"
+
+- model: billjobs.bill
+  pk: 1
+  fields:
+    billing_date: 2014-04-02
+    isPaid: false
+    user: 1
+    number: F201404001
+
+
+
+
