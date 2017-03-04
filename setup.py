@@ -13,7 +13,7 @@ setup(
     packages=['billjobs'],
     include_package_data=True,
     install_requires=[
-        "django >= 1.8",
+        "django > 1.8",
         "reportlab == 3.3.0",
         "pillow == 3.2.0",
     ],
