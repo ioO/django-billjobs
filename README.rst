@@ -1,6 +1,9 @@
 ========
 Billjobs
 ========
+.. image:: https://travis-ci.org/ioO/django-billjobs.svg?branch=master
+   :alt: Travis Build Status
+   :target: https://travis-ci.org/ioO/django-billjobs
 
 A django billing app for coworking space.
 
