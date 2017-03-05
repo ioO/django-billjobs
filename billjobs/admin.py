@@ -57,7 +57,7 @@ class BillAdmin(admin.ModelAdmin):
         ''' Create a link to user admin edit view '''
         return format_html(
                 '<a href="{}">{}</a>',
-                reverse('admin:auth_user_change', args=(obj.id,)),
+                reverse('admin:auth_user_change', args=(obj.user.id,)),
                 obj.coworker_name())
     coworker_name_link.short_description = _('Coworker name')
 
