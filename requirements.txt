@@ -8,7 +8,7 @@ appdirs==1.4.2            # via setuptools
 args==0.1.0               # via clint
 click==6.6                # via pip-tools
 clint==0.5.1              # via twine
-django-debug-toolbar==1.6
+django-debug-toolbar==1.7
 django==1.10.6
 first==2.0.1              # via pip-tools
 packaging==16.8           # via pip-review, setuptools
