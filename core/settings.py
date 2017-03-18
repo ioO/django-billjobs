@@ -39,9 +39,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'billjobs',
     'rest_framework',
+    'debug_toolbar',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
