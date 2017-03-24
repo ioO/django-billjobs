@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APIClient, APIRequestFactory, \
         force_authenticate
-from billjobs.views import UserAdmin
+from billjobs.views import UserAdmin, UserAdminDetail
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
@@ -20,4 +20,11 @@ class UserAdminAPI(TestCase):
         force_authenticate(request, user=self.admin)
         view = UserAdmin.as_view()
         response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_admin_retrieve_user(self):
+        request = self.factory.get('/billjobs/users/')
+        force_authenticate(request, user=self.admin)
+        view = UserAdminDetail.as_view()
+        response = view(request, pk=1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
