@@ -159,3 +159,4 @@ class UserAdminAPI(TestCase):
         response = view(request)
         print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
