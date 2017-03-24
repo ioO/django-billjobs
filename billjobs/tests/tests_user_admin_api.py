@@ -74,8 +74,15 @@ class UserAdminAPI(TestCase):
         force_authenticate(request, user=self.admin)
         view = UserAdmin.as_view()
         response = view(request)
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-
-
+    def test_admin_create_user_get_400(self):
+        request = self.factory.post('/billjobs/users/',
+                json.dumps({
+                    'email': 'new@jobs.org',
+                    'password': 'foobar'}),
+                content_type='application/json')
+        force_authenticate(request, user=self.admin)
+        view = UserAdmin.as_view()
+        response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
