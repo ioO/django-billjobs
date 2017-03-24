@@ -99,6 +99,7 @@ class UserAdminAPI(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+<<<<<<< HEAD
     def test_anonymous_can_not_create_user(self):
         request = self.factory.post('/billjobs/users/',
                 json.dumps({
@@ -126,3 +127,10 @@ class UserAdminAPI(TestCase):
         self.client.force_authenticate(user=self.admin)
         response = self.client.delete('/billjobs/users/3/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+=======
+    def test_anonymous_do_not_retrieve_user(self):
+        request = self.factory.get('/billjobs/users/')
+        view = UserAdmin.as_view()
+        response = view(request, pk=1)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+>>>>>>> Test anonymous user do not retrieve user
