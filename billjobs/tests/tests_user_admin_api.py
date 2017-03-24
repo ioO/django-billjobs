@@ -14,6 +14,7 @@ class UserAdminAPI(TestCase):
         self.client = APIClient()
         self.factory = APIRequestFactory()
         self.admin = User.objects.get(pk=1)
+        self.user = User.objects.get(pk=2)
 
     def test_admin_list_user(self):
         request = self.factory.get('/billjobs/users/')
@@ -40,3 +41,19 @@ class UserAdminAPI(TestCase):
         view = UserAdmin.as_view()
         response = view(request, pk=1)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_do_not_list_user(self):
+        request = self.factory.get('/billjobs/users/')
+        force_authenticate(request, user=self.user)
+        view = UserAdmin.as_view()
+        response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_do_not_retrieve_user(self):
+        request = self.factory.get('/billjobs/users/')
+        force_authenticate(request, user=self.user)
+        view = UserAdminDetail.as_view()
+        response = view(request, pk=1)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
