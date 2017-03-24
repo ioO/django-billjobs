@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient, APIRequestFactory, \
         force_authenticate
 from billjobs.views import UserAdmin, UserAdminDetail
+import json
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
@@ -62,5 +63,19 @@ class UserAdminAPI(TestCase):
         view = UserAdminDetail.as_view()
         response = view(request, pk=1)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_admin_create_user(self):
+        request = self.factory.post('/billjobs/users/',
+                json.dumps({
+                    'username': 'new_user',
+                    'email': 'new@jobs.org',
+                    'password': 'foobar'}),
+                content_type='application/json')
+        force_authenticate(request, user=self.admin)
+        view = UserAdmin.as_view()
+        response = view(request)
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
 
