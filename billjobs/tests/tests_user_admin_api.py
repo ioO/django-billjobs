@@ -34,3 +34,9 @@ class UserAdminAPI(TestCase):
         view = UserAdmin.as_view()
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_anonymous_do_not_retrieve_user(self):
+        request = self.factory.get('/billjobs/users/')
+        view = UserAdmin.as_view()
+        response = view(request, pk=1)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
