@@ -2,9 +2,6 @@ from django.conf.urls import url, include
 from rest_framework.authtoken.views import obtain_auth_token
 from . import views
 
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-
 urlpatterns = [
     url(r'^generate_pdf/(?P<bill_id>\d+)$', views.generate_pdf,
         name='generate-pdf'),
