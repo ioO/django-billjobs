@@ -24,7 +24,8 @@ SECRET_KEY = 'vVj14cKNh76tO1gzFh5yXG3WnKb8BMWN'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+INTERNAL_IPS = ['127.0.0.1']
 
 DEBUG = True
 
@@ -39,9 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'billjobs',
     'rest_framework',
+    'debug_toolbar',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
