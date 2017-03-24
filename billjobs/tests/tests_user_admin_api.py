@@ -30,6 +30,13 @@ class UserAdminAPI(TestCase):
         response = view(request, pk=1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_admin_get_404_if_no_user_pk(self):
+        request = self.factory.get('/billjobs/users')
+        force_authenticate(request, user=self.admin)
+        view = UserAdminDetail.as_view()
+        response = view(request, pk=123)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_anonymous_do_not_list_user(self):
         request = self.factory.get('/billjobs/users/')
         view = UserAdmin.as_view()
