@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status, generics
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -15,8 +18,16 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserAdminSerializer
 from textwrap import wrap
+
+class UserAdmin(generics.ListCreateAPIView):
+    """
+    API endpoint that allows admin to list or create users
+    """
+    queryset = User.objects.all()
+    serializer_class = UserAdminSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
