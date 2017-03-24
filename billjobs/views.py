@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
@@ -35,7 +35,10 @@ class UserAdminDetail(APIView):
     API endpoint that allows admin to retrieve, update, delete a user
     """
     def get(self, request, pk, format=None):
-        user = User.objects.get(pk=pk)
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
         serializer = UserAdminSerializer(user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
