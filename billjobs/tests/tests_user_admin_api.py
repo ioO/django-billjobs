@@ -99,4 +99,16 @@ class UserAdminAPI(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+    def test_anonymous_can_not_create_user(self):
+        request = self.factory.post('/billjobs/users/',
+                json.dumps({
+                    'username': 'new_user',
+                    'email': 'new@jobs.org',
+                    'password': 'foobar'}),
+                content_type='application/json')
+        view = UserAdmin.as_view()
+        response = view(request)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
 
