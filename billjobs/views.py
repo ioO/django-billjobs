@@ -3,10 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -21,20 +20,24 @@ from .models import Bill
 from .serializers import UserSerializer, UserAdminSerializer
 from textwrap import wrap
 
-class UserAdmin(generics.ListCreateAPIView):
+class UserAdmin(APIView):
     """
     API endpoint that allows admin to list or create users
     """
-    queryset = User.objects.all()
-    serializer_class = UserAdminSerializer
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserAdminSerializer(users, context={'request': request},
+                many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-class UserViewSet(viewsets.ModelViewSet):
+class UserAdminDetail(APIView):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows admin to retrieve, update, delete a user
     """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+    def get(self, request, pk, format=None):
+        user = User.objects.get(pk=pk)
+        serializer = UserAdminSerializer(user, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 @login_required
 def generate_pdf(request, bill_id):
