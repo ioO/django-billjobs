@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'billjobs',
     'rest_framework',
+    'rest_framework.authtoken',
     'debug_toolbar',
 )
 
