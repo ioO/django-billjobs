@@ -110,4 +110,9 @@ class UserAdminAPI(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_admin_update_user(self):
+        data = {'username': 'bill'}
+        self.client.force_authenticate(user=self.admin)
+        response = self.client.post('/billjobs/users/1/', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
