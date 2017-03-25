@@ -4,6 +4,7 @@
   fields:
     username: bill
     email: bill@billjobs.org
+    password: jobs
     is_staff: True
 
 - model: auth.user
