@@ -42,13 +42,13 @@ class UserAdminAPI(TestCase):
         request = self.factory.get('/billjobs/users/')
         view = UserAdmin.as_view()
         response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_anonymous_do_not_retrieve_user(self):
         request = self.factory.get('/billjobs/users/')
         view = UserAdmin.as_view()
         response = view(request, pk=1)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_user_do_not_list_user(self):
         request = self.factory.get('/billjobs/users/')
@@ -108,7 +108,6 @@ class UserAdminAPI(TestCase):
                 content_type='application/json')
         view = UserAdmin.as_view()
         response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
