@@ -50,6 +50,18 @@ class UserAdminDetail(APIView):
         serializer = UserAdminSerializer(user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def post(self, request, pk, format=None):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+        serializer = UserAdminSerializer(user, data=request.data,
+                context={'request': request}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @login_required
 def generate_pdf(request, bill_id):
     bill = Bill.objects.get(id=bill_id)
