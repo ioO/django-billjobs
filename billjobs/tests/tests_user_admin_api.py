@@ -121,3 +121,8 @@ class UserAdminAPI(TestCase):
         response = self.client.post('/billjobs/api-token-auth/', data,
                 format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_admin_delete_user(self):
+        self.client.force_authenticate(user=self.admin)
+        response = self.client.delete('/billjobs/users/3/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
