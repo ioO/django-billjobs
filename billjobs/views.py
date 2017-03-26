@@ -50,7 +50,7 @@ class UserAdminDetail(APIView):
         serializer = UserAdminSerializer(user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, pk, format=None):
+    def put(self, request, pk, format=None):
         try:
             user = User.objects.get(pk=pk)
         except User.DoesNotExist:
