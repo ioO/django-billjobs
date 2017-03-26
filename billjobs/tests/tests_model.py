@@ -1,8 +1,24 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
+from rest_framework.authtoken.models import Token
 from billjobs.models import Bill, Service
 from billjobs.settings import BILLJOBS_BILL_ISSUER
+
+class UserModelTestCase(TestCase):
+    """
+    Test User Model for billjobs
+    """
+
+    def test_token_is_created(self):
+        """
+        Test signal create a token for each new user
+        """
+        user = User(username='Taken', email='taken@billjobs.org',
+                password='billjobs')
+        user.save()
+        token = Token.objects.get(user=user)
+        self.assertIsNotNone(token)
 
 class BillingTestCase(TestCase):
     ''' Test billing creation and modification '''

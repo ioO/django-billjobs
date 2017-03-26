@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -21,20 +20,55 @@ from .models import Bill
 from .serializers import UserSerializer, UserAdminSerializer
 from textwrap import wrap
 
-class UserAdmin(generics.ListCreateAPIView):
+class UserAdmin(APIView):
     """
     API endpoint that allows admin to list or create users
     """
-    queryset = User.objects.all()
-    serializer_class = UserAdminSerializer
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserAdminSerializer(users, context={'request': request},
+                many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def post(self, request, format=None):
+        serializer = UserAdminSerializer(data=request.data,
+                context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserAdminDetail(APIView):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows admin to retrieve, update, delete a user
     """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+    def get(self, request, pk, format=None):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+        serializer = UserAdminSerializer(user, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, pk, format=None):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+        serializer = UserAdminSerializer(user, data=request.data,
+                context={'request': request}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @login_required
 def generate_pdf(request, bill_id):
