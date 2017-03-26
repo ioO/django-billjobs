@@ -113,7 +113,7 @@ class UserAdminAPI(TestCase):
     def test_admin_update_user(self):
         data = {'username': 'bill'}
         self.client.force_authenticate(user=self.admin)
-        response = self.client.post('/billjobs/users/1/', data, format='json')
+        response = self.client.put('/billjobs/users/1/', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_admin_auth_token(self):
