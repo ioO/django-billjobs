@@ -44,8 +44,6 @@ in your django settings file::
 
    getting_started
 
-
-
 Indices and tables
 ==================
 
