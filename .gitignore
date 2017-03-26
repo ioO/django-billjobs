@@ -3,3 +3,4 @@
 develop.sqlite3
 dist/
 django_billjobs.egg-info/
+docs/build/*
