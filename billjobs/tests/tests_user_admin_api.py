@@ -6,6 +6,34 @@ from rest_framework.test import APIClient, APIRequestFactory, \
 from billjobs.views import UserAdmin, UserAdminDetail
 import json
 
+class UserAdminAPIStatus(TestCase):
+    """
+    Test API response status code
+    """
+
+    fixtures=['account_test.yaml']
+
+    def setUp(self):
+        pass
+
+def APIAuthentification(TestCase):
+    """
+    Test API user authentication
+    """
+    fixtures=['test_user.yaml']
+
+    def setUp(self):
+        pass
+
+def APIPermission(TestCase):
+    """
+    Test API user level permission to endpoints
+    """
+    fixtures=['test_user.yaml']
+
+    def setUp(self):
+        pass
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
