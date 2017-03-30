@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework import status
@@ -16,16 +17,27 @@ class UserAdminAPIStatus(TestCase):
     def setUp(self):
         pass
 
-def APIAuthentification(TestCase):
+class APITokenAuthentication(TestCase):
     """
-    Test API user authentication
+    Test API token authentication
     """
-    fixtures=['test_user.yaml']
+    fixtures=['test_api_user.yaml']
 
     def setUp(self):
-        pass
+        self.admin = User.objects.get(pk=1)
+        self.user = User.objects.get(pk=2)
+        self.client = APIClient()
 
-def APIPermission(TestCase):
+    def test_admin_token_auth(self):
+        """
+        Test admin token auth return a valid token
+        """
+        url = reverse('api-token-auth')
+        data = {'username': self.admin, 'password': 'jobs' }
+        response = self.client.post(url, data)
+        self.assertTrue(len(response.data['token']), 20)
+
+class APIPermission(TestCase):
     """
     Test API user level permission to endpoints
     """
