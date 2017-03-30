@@ -12,7 +12,7 @@ class UserAdminAPIStatus(TestCase):
     Test API response status code
     """
 
-    fixtures=['account_test.yaml']
+    fixtures=['test_api_user.yaml']
 
     def setUp(self):
         pass
@@ -51,14 +51,14 @@ class APITokenAuthentication(TestCase):
         """
         data = {'username': 'invalid', 'password': 'jobs'}
         response = self.client.post(self.url, data)
-        self.assertIn('Unable to log in with provided credentials.', 
+        self.assertIn('Unable to log in with provided credentials.',
                 response.data['non_field_errors'] )
 
 class APIPermission(TestCase):
     """
     Test API user level permission to endpoints
     """
-    fixtures=['test_user.yaml']
+    fixtures=['test_api_user.yaml']
 
     def setUp(self):
         pass
@@ -66,7 +66,7 @@ class APIPermission(TestCase):
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
-    fixtures=['account_test.yaml']
+    fixtures=['test_api_user.yaml']
 
     def setUp(self):
         self.client = APIClient()
