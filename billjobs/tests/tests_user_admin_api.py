@@ -45,6 +45,15 @@ class APITokenAuthentication(TestCase):
         response = self.client.post(self.url, data)
         self.assertTrue(len(response.data['token']), 20)
 
+    def test_invalid_user_get_token_error(self):
+        """
+        Test an invalid user do not get a token
+        """
+        data = {'username': 'invalid', 'password': 'jobs'}
+        response = self.client.post(self.url, data)
+        self.assertIn('Unable to log in with provided credentials.', 
+                response.data['non_field_errors'] )
+
 class APIPermission(TestCase):
     """
     Test API user level permission to endpoints
