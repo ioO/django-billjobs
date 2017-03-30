@@ -27,14 +27,22 @@ class APITokenAuthentication(TestCase):
         self.admin = User.objects.get(pk=1)
         self.user = User.objects.get(pk=2)
         self.client = APIClient()
+        self.url = reverse('api-token-auth')
 
     def test_admin_token_auth(self):
         """
         Test admin token auth return a valid token
         """
-        url = reverse('api-token-auth')
-        data = {'username': self.admin, 'password': 'jobs' }
-        response = self.client.post(url, data)
+        data = {'username': self.admin.username, 'password': 'jobs' }
+        response = self.client.post(self.url, data)
+        self.assertTrue(len(response.data['token']), 20)
+
+    def test_user_token_auth(self):
+        """
+        Test user api-token-auth return a valid token
+        """
+        data = {'username': self.user.username, 'password': 'jobs' }
+        response = self.client.post(self.url, data)
         self.assertTrue(len(response.data['token']), 20)
 
 class APIPermission(TestCase):
