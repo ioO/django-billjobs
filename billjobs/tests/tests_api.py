@@ -227,3 +227,24 @@ class APIUserPermission(TestCase):
         response = self.client.delete(reverse('user-detail', args=(3,)))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+class APIAdminPermission(TestCase):
+    """
+    Test API admin level permission to endpoints
+    """
+
+    fixtures = ['test_api_user.yaml']
+
+    def setUp(self):
+        self.admin = User.objects.get(pk=1)
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.admin)
+
+    def test_api_user_get_is_accessible(self):
+        """
+        Test api user endpoint with GET method is accessible by admin
+        An admin can list user
+        """
+        response = self.client.get(reverse('user'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
