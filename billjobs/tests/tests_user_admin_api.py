@@ -22,10 +22,18 @@ class UserAdminAPIStatusCode(TestCase):
 
     def test_user_admin_get_is_200(self):
         """
-        Test api user admin endpoints is HTTP_200_OK
+        Test api user admin endpoints with GET method is HTTP_200_OK
         """
         response = self.client.get(reverse('user'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_admin_post_is_201(self):
+        """
+        Test api user admin endpoints with POST method is HTTP_200_OK
+        """
+        data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
+        response = self.client.post(reverse('user'), data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
@@ -88,7 +96,7 @@ class UserAdminAPI(TestCase):
         response = self.client.put('/billjobs/users/1/', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-#    def test_admin_delete_user(self):
-#        self.client.force_authenticate(user=self.admin)
-#        response = self.client.delete('/billjobs/users/3/')
-#        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    def test_admin_delete_user(self):
+        self.client.force_authenticate(user=self.admin)
+        response = self.client.delete('/billjobs/users/3/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
