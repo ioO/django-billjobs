@@ -44,6 +44,16 @@ class UserAdminAPIStatusCode(TestCase):
         response = self.client.post(reverse('user'), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+class UserAdminDetailAPIStatusCode(TestCase):
+    """
+    Test user admin detail api response status code
+    """
+
+    def setUp(self):
+        self.admin = User.objects.get(pk=1)
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.admin)
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
