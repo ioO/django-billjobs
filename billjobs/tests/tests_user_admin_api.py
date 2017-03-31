@@ -25,7 +25,7 @@ class UserAdminAPIStatusCode(TestCase):
         """
         Test api user admin endpoints with GET method is HTTP_200_OK
         """
-        response = self.client.get(reverse('user'))
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_admin_post_is_201(self):
@@ -33,7 +33,7 @@ class UserAdminAPIStatusCode(TestCase):
         Test api user admin endpoints with POST method is HTTP_201_CREATED
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
-        response = self.client.post(reverse('user'), data)
+        response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_admin_post_is_400(self):
@@ -42,7 +42,7 @@ class UserAdminAPIStatusCode(TestCase):
         when input data are incorrect
         """
         data = {'username': 'foo'}
-        response = self.client.post(reverse('user'), data)
+        response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_user_admin_put_is_405(self):
