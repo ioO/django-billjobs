@@ -256,3 +256,10 @@ class APIAdminPermission(TestCase):
         response = self.client.post(reverse('user'), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_api_user_detail_get_is_accessible(self):
+        """
+        Test api user detail endpoint with GET method is accessible by admin
+        Admin can access user instance information
+        """
+        response = self.client.get(reverse('user-detail', args=(2,)))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
