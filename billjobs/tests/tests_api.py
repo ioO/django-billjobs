@@ -101,3 +101,13 @@ class APIAnonymousPermission(TestCase):
         """
         response = self.client.post(reverse('rest_framework:login'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_api_auth_token_post_is_public(self):
+        """
+        Test api token POST method is public
+        Method return 400 with bad credentials, we test response status code is
+        not 403
+        """
+        response = self.client.post(reverse('api-token-auth'))
+        self.assertNotEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
