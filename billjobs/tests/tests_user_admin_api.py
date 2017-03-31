@@ -35,6 +35,15 @@ class UserAdminAPIStatusCode(TestCase):
         response = self.client.post(reverse('user'), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_user_admin_post_is_400(self):
+        """
+        Test api user admin endpoints with POST method is HTTP_400_BAD_REQUEST
+        when input data are incorrect
+        """
+        data = {'username': 'foo'}
+        response = self.client.post(reverse('user'), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
