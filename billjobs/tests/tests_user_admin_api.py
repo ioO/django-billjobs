@@ -29,7 +29,7 @@ class UserAdminAPIStatusCode(TestCase):
 
     def test_user_admin_post_is_201(self):
         """
-        Test api user admin endpoints with POST method is HTTP_200_OK
+        Test api user admin endpoints with POST method is HTTP_201_CREATED
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
         response = self.client.post(reverse('user'), data)
