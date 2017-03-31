@@ -91,7 +91,10 @@ class APIPermission(TestCase):
         self.user = User.objects.get(pk=2)
         self.client = APIClient()
 
-    def tests_api_auth_is_public(self):
+    def tests_api_auth_get_is_public(self):
+        """
+        Test api login GET method is public
+        """
         response = self.client.get(reverse('rest_framework:login'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
