@@ -263,3 +263,12 @@ class APIAdminPermission(TestCase):
         """
         response = self.client.get(reverse('user-detail', args=(2,)))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_api_user_detail_put_is_accessible(self):
+        """
+        Test api user detail endpoint with PUT method is accessible by admin
+        Admin can update user instance
+        """
+        data = {'firstname': 'foobar'}
+        response = self.client.put(reverse('user-detail', args=(2,)), data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
