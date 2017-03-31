@@ -247,4 +247,12 @@ class APIAdminPermission(TestCase):
         response = self.client.get(reverse('user'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_api_user_post_is_accessible(self):
+        """
+        Test api user endpoint with POST method is accessible by admin
+        An admin can create a user
+        """
+        data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.foo'}
+        response = self.client.post(reverse('user'), data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
