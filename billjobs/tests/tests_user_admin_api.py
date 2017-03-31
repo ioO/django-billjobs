@@ -40,20 +40,6 @@ class UserAdminAPI(TestCase):
         response = view(request, pk=123)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_user_do_not_list_user(self):
-        request = self.factory.get('/billjobs/users/')
-        force_authenticate(request, user=self.user)
-        view = UserAdmin.as_view()
-        response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_user_do_not_retrieve_user(self):
-        request = self.factory.get('/billjobs/users/')
-        force_authenticate(request, user=self.user)
-        view = UserAdminDetail.as_view()
-        response = view(request, pk=1)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
     def test_admin_create_user(self):
         request = self.factory.post('/billjobs/users/',
                 json.dumps({
@@ -76,29 +62,6 @@ class UserAdminAPI(TestCase):
         view = UserAdmin.as_view()
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_user_can_not_create_user(self):
-        request = self.factory.post('/billjobs/users/',
-                json.dumps({
-                    'username': 'new_user',
-                    'email': 'new@jobs.org',
-                    'password': 'foobar'}),
-                content_type='application/json')
-        force_authenticate(request, user=self.user)
-        view = UserAdmin.as_view()
-        response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_anonymous_can_not_create_user(self):
-        request = self.factory.post('/billjobs/users/',
-                json.dumps({
-                    'username': 'new_user',
-                    'email': 'new@jobs.org',
-                    'password': 'foobar'}),
-                content_type='application/json')
-        view = UserAdmin.as_view()
-        response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_admin_update_user(self):
         data = {'username': 'bill'}
