@@ -118,3 +118,13 @@ class APIAnonymousPermission(TestCase):
         """
         response = self.client.get(reverse('user'))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_api_user_post_is_not_public(self):
+        """
+        Test api user endpoint with POST method is not public
+        Anonymous user can not create a user
+        """
+        response = self.client.post(reverse('user'))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
