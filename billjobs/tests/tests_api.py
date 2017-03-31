@@ -142,3 +142,12 @@ class APIAnonymousPermission(TestCase):
         """
         response = self.client.post(reverse('user-detail', args=(1,)), {'password': 'inject'})
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_api_user_detail_delete_is_not_public(self):
+        """
+        Test api user detail endpoint with DELETE method is not public
+        Anonymous user can not delete an user instance
+        """
+        response = self.client.delete(reverse('user-detail', args=(1,)))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
