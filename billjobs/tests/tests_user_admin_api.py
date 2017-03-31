@@ -19,6 +19,7 @@ class UserAdminAPIStatusCode(TestCase):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
+        self.url = reverse('user')
 
     def test_user_admin_get_is_200(self):
         """
@@ -43,6 +44,16 @@ class UserAdminAPIStatusCode(TestCase):
         data = {'username': 'foo'}
         response = self.client.post(reverse('user'), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_user_admin_put_is_405(self):
+        """
+        Test api user admin endpoints with DELETE return
+        HTTP_405_METHOD_NOT_ALLOWED
+        """
+        data = {'username': 'foo'}
+        response = self.client.put(self.url, data)
+        self.assertEqual(response.status_code,
+                status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class UserAdminDetailAPIStatusCode(TestCase):
     """
