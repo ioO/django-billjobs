@@ -80,25 +80,22 @@ class APITokenAuthentication(TestCase):
         self.assertIn('Unable to log in with provided credentials.',
                 response.data['non_field_errors'] )
 
-class APIPermission(TestCase):
+class APIAnonymousPermission(TestCase):
     """
-    Test API user level permission to endpoints
+    Test API anonymous level permission to endpoints
     """
-    fixtures=['test_api_user.yaml']
 
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.user = User.objects.get(pk=2)
         self.client = APIClient()
 
-    def tests_api_auth_get_is_public(self):
+    def test_api_auth_get_is_public(self):
         """
         Test api login GET method is public
         """
         response = self.client.get(reverse('rest_framework:login'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def tests_api_auth_post_is_public(self):
+    def test_api_auth_post_is_public(self):
         """
         Test api login POST method is public
         """
