@@ -26,3 +26,10 @@
     bill: 3
     service: 4
     quantity: 1
+
+- model: billjobs.billline
+  pk: 5
+  fields:
+    bill: 4
+    service: 1
+    quantity: 1
