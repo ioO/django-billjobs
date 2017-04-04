@@ -37,3 +37,16 @@
     email: bill@billjobs.org
     is_staff: true
     is_active: true
+
+- model: auth.user
+  pk: 4
+  fields:
+    password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
+    last_login: null
+    is_superuser: true
+    username: sam
+    first_name: Samuel
+    last_name: Jackson
+    email: sam@billjobs.org
+    is_staff: true
+    is_active: true
