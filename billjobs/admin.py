@@ -5,7 +5,9 @@ from django.db.models import Q
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
 from django.core.urlresolvers import reverse
+from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from .models import Bill, BillLine, Service, UserProfile
@@ -68,8 +70,30 @@ class BillAdmin(admin.ModelAdmin):
                 obj.number)
     pdf_file_url.short_description=_('Download invoice')
 
+class RequiredInlineFormSet(BaseInlineFormSet):
+    """
+    Generates an inline formset that is required
+    """
+
+    def _construct_form(self, i, **kwargs):
+        """
+        Override the method to change the form attribute empty_permitted
+        """
+        form = super(RequiredInlineFormSet, self)._construct_form(i, **kwargs)
+        form.empty_permitted = False
+        return form
+
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
+    formset = RequiredInlineFormSet
+
+class UserForm(UserChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileAdmin, )
@@ -92,6 +116,7 @@ class UserAdmin(UserAdmin):
             )
     list_display = ('username', 'get_full_name', 'email')
     actions = ['export_email']
+    form = UserForm
 
     def export_email(self, request, queryset):
         """ Export emails of selected account """
