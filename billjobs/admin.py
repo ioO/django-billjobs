@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
 from django.core.urlresolvers import reverse
 from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
@@ -86,6 +87,14 @@ class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
     formset = RequiredInlineFormSet
 
+class UserForm(UserChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
 class UserAdmin(UserAdmin):
     inlines = (UserProfileAdmin, )
     fieldsets = (
@@ -107,6 +116,7 @@ class UserAdmin(UserAdmin):
             )
     list_display = ('username', 'get_full_name', 'email')
     actions = ['export_email']
+    form = UserForm
 
     def export_email(self, request, queryset):
         """ Export emails of selected account """
