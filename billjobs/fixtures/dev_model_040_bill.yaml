@@ -22,3 +22,11 @@
     isPaid: false
     user: 3
     number: F201501003
+
+- model: billjobs.bill
+  pk: 4
+  fields:
+    billing_date: 2017-04-04
+    isPaid: true
+    user: 4
+    number: F201704004

@@ -37,7 +37,7 @@ class BillAdmin(admin.ModelAdmin):
             'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
     list_filter = ('isPaid', )
-    search_fields = ('user__first_name', 'user__last_name', 'number')
+    search_fields = ('user__first_name', 'user__last_name', 'number', 'amount')
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         field = super(BillAdmin, self).formfield_for_foreignkey(
