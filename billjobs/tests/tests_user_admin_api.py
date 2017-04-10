@@ -6,6 +6,7 @@ from rest_framework.test import APIClient, APIRequestFactory, \
         force_authenticate
 from billjobs.views import UserAdmin, UserAdminDetail
 import json
+import io
 
 class UserAdminAPIStatusCode(TestCase):
     """
@@ -144,6 +145,28 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code,
                 status.HTTP_405_METHOD_NOT_ALLOWED)
+
+class UserAdminAPIResponseContent(TestCase):
+    """
+    Test response content returned by endpoints
+    """
+
+    fixtures = ['test_api_user.yaml']
+
+    def setUp(self):
+        self.admin = User.objects.get(pk=1)
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.admin)
+        self.url = reverse('user')
+
+    def test_user_admin_get_list(self):
+        """
+        Test api user admin endpoints with GET method return a list
+        Fixtures data contain 3 users, we expect a list of 3 user in json
+        """
+        response = self.client.get(self.url)
+        json_data = json.load(io.StringIO(response.content.decode()))
+        self.assertEqual(len(json_data), 3)
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
