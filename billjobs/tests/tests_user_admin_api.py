@@ -47,11 +47,20 @@ class UserAdminAPIStatusCode(TestCase):
 
     def test_user_admin_put_is_405(self):
         """
-        Test api user admin endpoints with DELETE return
+        Test api user admin endpoints with PUT return
         HTTP_405_METHOD_NOT_ALLOWED
         """
         data = {'username': 'foo'}
         response = self.client.put(self.url, data)
+        self.assertEqual(response.status_code,
+                status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_user_admin_delete_is_405(self):
+        """
+        Test api user admin endpoints with DELETE return
+        HTTP_405_METHOD_NOT_ALLOWED
+        """
+        response = self.client.delete(self.url)
         self.assertEqual(response.status_code,
                 status.HTTP_405_METHOD_NOT_ALLOWED)
 
