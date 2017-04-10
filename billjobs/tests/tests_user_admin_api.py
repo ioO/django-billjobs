@@ -127,6 +127,14 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
+    def test_user_detail_delete_is_404_with_bad_pk(self):
+        """
+        Test api user detail endpoints with DELETE return HTTP_404_NOT_FOUND
+        when user pk does not exist
+        """
+        response = self.client.delete(reverse('user-detail', args=[1234]))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
