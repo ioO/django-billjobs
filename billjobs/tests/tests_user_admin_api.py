@@ -109,6 +109,17 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.put(reverse('user-detail', args=[1234]), data)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_user_detail_put_is_400_with_wrong_data(self):
+        """
+        Test api user detail endpoints with PUT return HTTP_400_BAD_REQUEST
+        with wrong data in json (here username already exists)
+        """
+        data = {'username': 'bill', 'last_name': 'bar',
+                'not_a_field': 'hello'}
+        response = self.client.put(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
