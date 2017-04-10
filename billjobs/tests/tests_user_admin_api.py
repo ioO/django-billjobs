@@ -135,6 +135,16 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.delete(reverse('user-detail', args=[1234]))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_user_detail_post_is_405(self):
+        """
+        Test api user detail endpoints with POST return
+        HTTP_405_METHOD_NOT_ALLOWED
+        """
+        data = {'first_name': 'foo'}
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code,
+                status.HTTP_405_METHOD_NOT_ALLOWED)
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
