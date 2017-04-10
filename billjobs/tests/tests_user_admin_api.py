@@ -92,6 +92,13 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.get(reverse('user-detail', args=[1234]))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_user_detail_put_is_200(self):
+        """
+        Test api user detail endpoints with PUT method return HTTP_200_OK
+        """
+        data = {'username': 'foo', 'last_name': 'bar'}
+        response = self.client.put(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
