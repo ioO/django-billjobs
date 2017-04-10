@@ -69,10 +69,20 @@ class UserAdminDetailAPIStatusCode(TestCase):
     Test user admin detail api response status code
     """
 
+    fixtures=['test_api_user.yaml']
+
     def setUp(self):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
+        self.url = reverse('user-detail', args=[2])
+
+    def test_user_detail_get_is_200(self):
+        """
+        Test api user detail endpoints with GET return HTTP_200_OK
+        """
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
