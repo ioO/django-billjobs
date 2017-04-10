@@ -100,6 +100,15 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.put(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_user_detail_put_is_404_with_bad_pk(self):
+        """
+        Test api user detail endpoints with PUT return HTTP_404_NOT_FOUND
+        when user pk does not exist
+        """
+        data = {'username': 'foo', 'last_name': 'bar'}
+        response = self.client.put(reverse('user-detail', args=[1234]), data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
