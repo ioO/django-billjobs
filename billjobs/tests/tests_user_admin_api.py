@@ -119,6 +119,13 @@ class UserAdminDetailAPIStatusCode(TestCase):
         response = self.client.put(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_user_detail_delete_is_204(self):
+        """
+        Test api user detail endpoints with DELETE method return
+        HTTP_204_NO_CONTENT
+        """
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
