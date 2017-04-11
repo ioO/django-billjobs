@@ -183,6 +183,19 @@ class UserAdminAPIResponseContent(TestCase):
         self.assertEqual(json_data['username'], 'foo')
         self.assertEqual(json_data['email'], 'foo@bar.org')
 
+    def test_user_admin_post_return_required_field(self):
+        """
+        Test api user admin endpoint with POST method return errors
+        and required fields
+        """
+        data = {'first_name': 'foobar'}
+        response = self.client.post(self.url, data)
+        json_data = json.load(io.StringIO(response.content.decode()))
+        for key in ('username', 'password'):
+            self.assertTrue(key in json_data.keys())
+        self.assertIn('This field is required.', json_data['username'])
+        self.assertIn('This field is required.', json_data['password'])
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
