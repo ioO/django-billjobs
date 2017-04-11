@@ -240,3 +240,13 @@ class UserDetailAdminAPIResponseContent(TestCase):
         self.assertEqual(json_data['username'], 'jobs')
         self.assertEqual(json_data['email'], 'jobs@billjobs.org')
 
+    def test_user_detail_put_return_error_when_duplicate_username(self):
+        """
+        Test api user detail endpoint with PUT method return an error when
+        an username already exists
+        information
+        """
+        data = {'username': 'bill'}
+        json_data = get_json(self.client.put(self.url, data))
+        self.assertIn('A user with that username already exists.',
+                json_data['username'])
