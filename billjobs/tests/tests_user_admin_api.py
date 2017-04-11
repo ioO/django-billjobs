@@ -250,3 +250,4 @@ class UserDetailAdminAPIResponseContent(TestCase):
         json_data = get_json(self.client.put(self.url, data))
         self.assertIn('A user with that username already exists.',
                 json_data['username'])
+
