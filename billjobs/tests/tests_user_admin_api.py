@@ -199,4 +199,34 @@ class UserAdminAPIResponseContent(TestCase):
         self.assertIn('This field is required.', json_data['username'])
         self.assertIn('This field is required.', json_data['password'])
 
+class UserDetailAdminAPIResponseContent(TestCase):
+    """
+    Test user detail api response content
+    """
 
+    fixtures = ['test_api_user.yaml']
+
+    def setUp(self):
+        self.admin = User.objects.get(pk=1)
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.admin)
+        self.url = reverse('user-detail', args=[2])
+
+    def get_json(self, response):
+        """
+        Return a json from a response content
+        """
+        return json.load(io.StringIO(response.content.decode()))
+
+    def test_user_detail_admin_get_user_information(self):
+        """
+        Test api user admin detail endpoint with GET method return user
+        information
+        """
+        json_data = self.get_json(self.client.get(self.url))
+        for key in ('url', 'password', 'last_login', 'is_superuser',
+                'username', 'first_name', 'last_name', 'email', 'is_staff',
+                'is_active', 'date_joined', 'groups', 'user_permissions'):
+            self.assertTrue(key in json_data.keys())
+        self.assertEqual(json_data['username'], 'jobs')
+        self.assertEqual(json_data['email'], 'jobs@billjobs.org')
