@@ -159,13 +159,18 @@ class UserAdminAPIResponseContent(TestCase):
         self.client.force_authenticate(user=self.admin)
         self.url = reverse('user')
 
+    def get_json(self, response):
+        """
+        Return a json from a response content
+        """
+        return json.load(io.StringIO(response.content.decode()))
+
     def test_user_admin_get_list(self):
         """
         Test api user admin endpoints with GET method return a list
         Fixtures data contain 3 users, we expect a list of 3 user in json
         """
-        response = self.client.get(self.url)
-        json_data = json.load(io.StringIO(response.content.decode()))
+        json_data = self.get_json(self.client.get(self.url))
         self.assertEqual(len(json_data), 3)
 
     def test_user_admin_post_return_user_information(self):
@@ -174,8 +179,7 @@ class UserAdminAPIResponseContent(TestCase):
         user information
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
-        response = self.client.post(self.url, data)
-        json_data = json.load(io.StringIO(response.content.decode()))
+        json_data = self.get_json(self.client.post(self.url, data))
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
@@ -189,8 +193,7 @@ class UserAdminAPIResponseContent(TestCase):
         and required fields
         """
         data = {'first_name': 'foobar'}
-        response = self.client.post(self.url, data)
-        json_data = json.load(io.StringIO(response.content.decode()))
+        json_data = self.get_json(self.client.post(self.url, data))
         for key in ('username', 'password'):
             self.assertTrue(key in json_data.keys())
         self.assertIn('This field is required.', json_data['username'])
