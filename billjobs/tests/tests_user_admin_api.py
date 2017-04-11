@@ -224,3 +224,19 @@ class UserDetailAdminAPIResponseContent(TestCase):
             self.assertTrue(key in json_data.keys())
         self.assertEqual(json_data['username'], 'jobs')
         self.assertEqual(json_data['email'], 'jobs@billjobs.org')
+
+    def test_user_detail_put_return_information(self):
+        """
+        Test api user detail endpoint with PUT method return user with new
+        information
+        """
+        data = {'last_name': 'bar'}
+        json_data = get_json(self.client.put(self.url, data))
+        for key in ('url', 'password', 'last_login', 'is_superuser',
+                'username', 'first_name', 'last_name', 'email', 'is_staff',
+                'is_active', 'date_joined', 'groups', 'user_permissions'):
+            self.assertTrue(key in json_data.keys())
+        self.assertEqual(json_data['last_name'], 'bar')
+        self.assertEqual(json_data['username'], 'jobs')
+        self.assertEqual(json_data['email'], 'jobs@billjobs.org')
+
