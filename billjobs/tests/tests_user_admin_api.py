@@ -168,6 +168,19 @@ class UserAdminAPIResponseContent(TestCase):
         json_data = json.load(io.StringIO(response.content.decode()))
         self.assertEqual(len(json_data), 3)
 
+    def test_user_admin_post_return_user_information(self):
+        """
+        Test api user admin endpoints with POST method return json with
+        user information
+        """
+        data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
+        response = self.client.post(self.url, data)
+        json_data = json.load(io.StringIO(response.content.decode()))
+        for key in ('url', 'password', 'last_login', 'is_superuser',
+                'username', 'first_name', 'last_name', 'email', 'is_staff',
+                'is_active', 'date_joined', 'groups', 'user_permissions'):
+            self.assertTrue(key in json_data.keys())
+
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
 
