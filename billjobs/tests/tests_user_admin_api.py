@@ -180,6 +180,8 @@ class UserAdminAPIResponseContent(TestCase):
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
             self.assertTrue(key in json_data.keys())
+        self.assertEqual(json_data['username'], 'foo')
+        self.assertEqual(json_data['email'], 'foo@bar.org')
 
 class UserAdminAPI(TestCase):
     """ Test User Admin API REST endpoint """
