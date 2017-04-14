@@ -17,28 +17,28 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
-from .serializers import UserSerializer, UserAdminSerializer
+from .serializers import UserSerializer
 from textwrap import wrap
 
-class UserAdmin(APIView):
+class UserAPI(APIView):
     """
     API endpoint that allows admin to list or create users
     """
     def get(self, request, format=None):
         users = User.objects.all()
-        serializer = UserAdminSerializer(users, context={'request': request},
+        serializer = UserSerializer(users, context={'request': request},
                 many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
-        serializer = UserAdminSerializer(data=request.data,
+        serializer = UserSerializer(data=request.data,
                 context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserAdminDetail(APIView):
+class UserDetailAPI(APIView):
     """
     API endpoint that allows admin to retrieve, update, delete a user
     """
@@ -47,7 +47,7 @@ class UserAdminDetail(APIView):
             user = User.objects.get(pk=pk)
         except User.DoesNotExist:
             raise Http404
-        serializer = UserAdminSerializer(user, context={'request': request})
+        serializer = UserSerializer(user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
@@ -55,7 +55,7 @@ class UserAdminDetail(APIView):
             user = User.objects.get(pk=pk)
         except User.DoesNotExist:
             raise Http404
-        serializer = UserAdminSerializer(user, data=request.data,
+        serializer = UserSerializer(user, data=request.data,
                 context={'request': request}, partial=True)
         if serializer.is_valid():
             serializer.save()
