@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APIClient, APIRequestFactory, \
         force_authenticate
-from billjobs.views import UserAdmin, UserAdminDetail
+from billjobs.views import UserAPI, UserDetailAPI
 import json
 import io
 

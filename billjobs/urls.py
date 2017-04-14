@@ -6,8 +6,8 @@ api_patterns = [
         url(r'^auth/',
             include('rest_framework.urls', namespace='rest_framework')),
         url(r'^token-auth/', obtain_auth_token, name='api-token-auth'),
-        url(r'^users/$', views.UserAdmin.as_view(), name='users-api'),
-        url(r'^users/(?P<pk>[0-9]+)/$', views.UserAdminDetail.as_view(),
+        url(r'^users/$', views.UserAPI.as_view(), name='users-api'),
+        url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetailAPI.as_view(),
             name='users-detail-api'),
         ]
 
