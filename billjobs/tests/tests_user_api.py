@@ -26,7 +26,7 @@ class UserAdminAPIStatusCode(TestCase):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
-        self.url = reverse('user')
+        self.url = reverse('users-api')
 
     def test_user_admin_get_is_200(self):
         """
@@ -82,7 +82,7 @@ class UserAdminDetailAPIStatusCode(TestCase):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
-        self.url = reverse('user-detail', args=[2])
+        self.url = reverse('users-detail-api', args=[2])
 
     def test_user_detail_get_is_200(self):
         """
@@ -96,7 +96,7 @@ class UserAdminDetailAPIStatusCode(TestCase):
         Test api user detail endpoints with GET return HTTP_404_NOT_FOUND
         when user pk does not exist
         """
-        response = self.client.get(reverse('user-detail', args=[1234]))
+        response = self.client.get(reverse('users-detail-api', args=[1234]))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_put_is_200(self):
@@ -113,7 +113,7 @@ class UserAdminDetailAPIStatusCode(TestCase):
         when user pk does not exist
         """
         data = {'username': 'foo', 'last_name': 'bar'}
-        response = self.client.put(reverse('user-detail', args=[1234]), data)
+        response = self.client.put(reverse('users-detail-api', args=[1234]), data)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_put_is_400_with_wrong_data(self):
@@ -139,7 +139,7 @@ class UserAdminDetailAPIStatusCode(TestCase):
         Test api user detail endpoints with DELETE return HTTP_404_NOT_FOUND
         when user pk does not exist
         """
-        response = self.client.delete(reverse('user-detail', args=[1234]))
+        response = self.client.delete(reverse('users-detail-api', args=[1234]))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_post_is_405(self):
@@ -163,7 +163,7 @@ class UserAdminAPIResponseContent(TestCase):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
-        self.url = reverse('user')
+        self.url = reverse('users-api')
 
     def test_user_admin_get_list(self):
         """
@@ -210,7 +210,7 @@ class UserDetailAdminAPIResponseContent(TestCase):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
-        self.url = reverse('user-detail', args=[2])
+        self.url = reverse('users-detail-api', args=[2])
 
     def test_user_detail_admin_get_user_information(self):
         """
