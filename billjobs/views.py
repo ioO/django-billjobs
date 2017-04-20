@@ -18,12 +18,15 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
 from .serializers import UserSerializer
+from .permissions import CustomUserAPIPermission
 from textwrap import wrap
 
 class UserAPI(APIView):
     """
     API endpoint that allows admin to list or create users
     """
+    permission_classes = (CustomUserAPIPermission,)
+
     def get(self, request, format=None):
         users = User.objects.all()
         serializer = UserSerializer(users, context={'request': request},

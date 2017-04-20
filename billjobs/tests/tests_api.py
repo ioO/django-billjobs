@@ -119,13 +119,16 @@ class APIAnonymousPermission(TestCase):
         response = self.client.get(reverse('users-api'))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_api_user_post_is_not_public(self):
+    def test_api_user_post_is_public(self):
         """
-        Test api user endpoint with POST method is not public
-        Anonymous user can not create a user
+        Test api user endpoint with POST method is public
+        Anonymous user can create an account
         """
-        response = self.client.post(reverse('users-api'))
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        data = {'username': 'gate', 'password': 'steve',
+                'email': 'steve@gate.org'
+                }
+        response = self.client.post(reverse('users-api'), data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_api_user_detail_get_is_not_public(self):
         """
@@ -171,13 +174,16 @@ class APIUserPermission(TestCase):
         response = self.client.get(reverse('users-api'))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_api_user_post_is_forbidden(self):
+    def test_api_user_post_is_public(self):
         """
-        Test api user endpoint with POST method is forbidden for user
-        User can not create a user
+        Test api user endpoint with POST method is accessible
+        User can create another account
         """
-        response = self.client.post(reverse('users-api'))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        data = {'username': 'gate', 'password': 'steve',
+                'email': 'steve@gate.org'
+                }
+        response = self.client.post(reverse('users-api'), data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_api_user_detail_get_is_forbidden(self):
         """
