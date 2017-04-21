@@ -43,6 +43,7 @@ in your django settings file::
    :caption: Contents:
 
    getting_started
+   contributing
 
 Indices and tables
 ==================
@@ -50,3 +51,16 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+Features
+--------
+
+All the features are managed throught `django
+admin.site <https://docs.djangoproject.com/en/1.8/ref/contrib/admin/>`__
+
+-  User and Group management is provided by `django
+   auth <https://docs.djangoproject.com/en/dev/topics/auth/>`__ module.
+-  Billing management
+-  Services management
+
