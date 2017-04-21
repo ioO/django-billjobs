@@ -6,8 +6,8 @@ Billjobs
    :target: https://travis-ci.org/ioO/django-billjobs
 
 .. image:: https://readthedocs.org/projects/django-billjobs/badge/?version=latest
-:target: http://django-billjobs.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+   :target: http://django-billjobs.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 A django billing app for coworking space.
 
