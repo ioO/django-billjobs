@@ -9,3 +9,4 @@ django-debug-toolbar==1.7
 twine
 sphinx
 sphinx-autobuild
+sphinx_rtd_theme
