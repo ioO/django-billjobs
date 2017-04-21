@@ -206,7 +206,7 @@ class APIUserPermission(TestCase):
         Test api user detail endpoint with POST method is forbidden
         User can not update his user instance
         """
-        response = self.client.post(reverse('users-detail-api', args=(2,)), {'password': 'inject'})
+        response = self.client.put(reverse('users-detail-api', args=(2,)), {'password': 'inject'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_api_user_detail_put_other_user_is_forbidden(self):
@@ -214,7 +214,7 @@ class APIUserPermission(TestCase):
         Test api user detail endpoint with POST method is forbidden
         User can not update other user instance
         """
-        response = self.client.post(reverse('users-detail-api', args=(3,)), {'password': 'inject'})
+        response = self.client.put(reverse('users-detail-api', args=(3,)), {'password': 'inject'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_api_user_detail_delete_is_forbidden(self):
