@@ -18,7 +18,7 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
 from .serializers import UserSerializer
-from .permissions import CustomUserAPIPermission
+from .permissions import CustomUserAPIPermission, CustomUserDetailAPIPermission
 from textwrap import wrap
 
 class UserAPI(APIView):
@@ -45,19 +45,23 @@ class UserDetailAPI(APIView):
     """
     API endpoint that allows admin to retrieve, update, delete a user
     """
-    def get(self, request, pk, format=None):
+    permission_classes = (CustomUserDetailAPIPermission,)
+
+    def get_object(self, pk):
         try:
             user = User.objects.get(pk=pk)
+            self.check_object_permissions(self.request, user)
+            return user
         except User.DoesNotExist:
             raise Http404
+
+    def get(self, request, pk, format=None):
+        user = self.get_object(pk)
         serializer = UserSerializer(user, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
-        try:
-            user = User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            raise Http404
+        user = self.get_object(pk)
         serializer = UserSerializer(user, data=request.data,
                 context={'request': request}, partial=True)
         if serializer.is_valid():
@@ -66,10 +70,7 @@ class UserDetailAPI(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        try:
-            user = User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            raise Http404
+        user = self.get_object(pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
