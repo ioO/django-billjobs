@@ -185,13 +185,13 @@ class APIUserPermission(TestCase):
         response = self.client.post(reverse('users-api'), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_api_user_detail_get_is_forbidden(self):
+    def test_api_user_detail_get_is_ok(self):
         """
-        Test api user detail endpoint with GET method is forbidden for user
-        User can not retrieves his user information
+        Test api user detail endpoint with GET method is ok
+        User can retrieve his own information
         """
         response = self.client.get(reverse('users-detail-api', args=(2,)))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_user_detail_get_other_user_is_forbidden(self):
         """
@@ -201,13 +201,13 @@ class APIUserPermission(TestCase):
         response = self.client.get(reverse('users-detail-api', args=(1,)))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_api_user_detail_put_is_forbidden(self):
+    def test_api_user_detail_put_is_ok(self):
         """
-        Test api user detail endpoint with POST method is forbidden
-        User can not update his user instance
+        Test api user detail endpoint with POST method is ok
+        User can update his user instance
         """
         response = self.client.put(reverse('users-detail-api', args=(2,)), {'password': 'inject'})
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_user_detail_put_other_user_is_forbidden(self):
         """
@@ -217,13 +217,13 @@ class APIUserPermission(TestCase):
         response = self.client.put(reverse('users-detail-api', args=(3,)), {'password': 'inject'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_api_user_detail_delete_is_forbidden(self):
+    def test_api_user_detail_delete_is_ok(self):
         """
-        Test api user detail endpoint with DELETE method is forbidden
-        User can not delete his user instance
+        Test api user detail endpoint with DELETE method is ok
+        User can delete his user instance
         """
         response = self.client.delete(reverse('users-detail-api', args=(2,)))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_api_user_detail_delete_other_user_is_forbidden(self):
         """
