@@ -1,5 +1,5 @@
 Django==1.11
-djangorestframework
+djangorestframework==3.6.2
 reportlab==3.4.0
 pip-tools==1.9.0
 pip-review==0.5.2
