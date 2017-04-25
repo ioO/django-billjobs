@@ -24,7 +24,8 @@ SECRET_KEY = 'vVj14cKNh76tO1gzFh5yXG3WnKb8BMWN'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+INTERNAL_IPS = ['127.0.0.1']
 
 DEBUG = True
 
@@ -38,6 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'billjobs',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,6 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -95,3 +100,13 @@ TEMPLATES = [
         }
     },
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+        ),
+    'PAGE_SIZE': 10
+}

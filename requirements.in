@@ -1,8 +1,12 @@
-Django==1.10.6
-reportlab==3.3.0
-pip-tools==1.8.0
+Django==1.11
+djangorestframework
+reportlab==3.4.0
+pip-tools==1.9.0
 pip-review==0.5.2
 PyYAML==3.12
 setuptools
 django-debug-toolbar==1.7
 twine
+Sphinx==1.5.5
+sphinx-autobuild
+sphinx_rtd_theme

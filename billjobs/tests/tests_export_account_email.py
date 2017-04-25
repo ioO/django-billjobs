@@ -12,7 +12,7 @@ class MockRequest(object):
 class EmailExportTestCase(TestCase):
     """ Tests for email account export """
 
-    fixtures = ['account_test.yaml']
+    fixtures = ['test_api_user.yaml']
 
     def setUp(self):
         self.site = AdminSite()

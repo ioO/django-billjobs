@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save, pre_init, post_save, post_delete
 # TODO delete this import
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+from rest_framework.authtoken.models import Token
 from .settings import BILLJOBS_BILL_ISSUER
 import datetime
 
@@ -140,4 +141,9 @@ def set_bill_amount(sender, instance, **kwargs):
 
     if sender is not Bill:
         bill.save()
+
+@receiver(post_save, sender=User)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
