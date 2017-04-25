@@ -12,7 +12,7 @@ babel==2.4.0              # via sphinx
 click==6.6                # via pip-tools
 clint==0.5.1              # via twine
 django-debug-toolbar==1.7
-django==1.10.6
+Django==1.11              # via django-debug-toolbar
 djangorestframework==3.6.2
 docutils==0.13.1          # via sphinx
 first==2.0.1              # via pip-tools
@@ -24,21 +24,21 @@ packaging==16.8           # via pip-review, setuptools
 pathtools==0.1.2          # via sphinx-autobuild, watchdog
 pillow==3.2.0             # via reportlab
 pip-review==0.5.2
-pip-tools==1.8.0
+pip-tools==1.9.0
 pkginfo==1.4.1            # via twine
 port_for==0.3.1           # via sphinx-autobuild
 pygments==2.2.0           # via sphinx
 pyparsing==2.1.10         # via packaging
-pytz==2016.10             # via babel
+pytz==2016.10             # via babel, django
 pyyaml==3.12
-reportlab==3.3.0
+reportlab==3.4.0
 requests-toolbelt==0.7.1  # via twine
 requests==2.13.0          # via requests-toolbelt, sphinx, twine
 six==1.10.0               # via livereload, packaging, pip-tools, setuptools, sphinx
 snowballstemmer==1.2.1    # via sphinx
 sphinx-autobuild==0.6.0
 sphinx-rtd-theme==0.2.4
-sphinx==1.5.3
+Sphinx==1.5.5
 sqlparse==0.2.1           # via django-debug-toolbar
 tornado==4.4.2            # via livereload, sphinx-autobuild
 twine==1.8.1
