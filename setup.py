@@ -9,12 +9,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-billjobs',
-    version='0.6.2',
+    version='1.0.0',
     packages=['billjobs'],
     include_package_data=True,
     install_requires=[
-        "django > 1.8",
-        "reportlab == 3.3.0",
+        "django > 1.9",
+        "reportlab == 3.4.0",
+        "djangorestframework == 3.6.2",
     ],
     license='X11 License',
     description='A django billing app for coworking space.',
@@ -26,8 +27,8 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.11',
         'Intended Audience :: Other Audience',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
