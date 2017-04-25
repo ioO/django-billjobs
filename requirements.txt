@@ -12,7 +12,7 @@ babel==2.4.0              # via sphinx
 click==6.6                # via pip-tools
 clint==0.5.1              # via twine
 django-debug-toolbar==1.7
-Django==1.11              # via django-debug-toolbar
+django==1.11
 djangorestframework==3.6.2
 docutils==0.13.1          # via sphinx
 first==2.0.1              # via pip-tools
@@ -38,12 +38,11 @@ six==1.10.0               # via livereload, packaging, pip-tools, setuptools, sp
 snowballstemmer==1.2.1    # via sphinx
 sphinx-autobuild==0.6.0
 sphinx-rtd-theme==0.2.4
-Sphinx==1.5.5
+sphinx==1.5.5
 sqlparse==0.2.1           # via django-debug-toolbar
 tornado==4.4.2            # via livereload, sphinx-autobuild
 twine==1.8.1
 watchdog==0.8.3           # via sphinx-autobuild
 
 # The following packages are considered to be unsafe in a requirements file:
-# pip                       # via pip-review, reportlab
-# setuptools
+setuptools==35.0.1
