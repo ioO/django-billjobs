@@ -20,8 +20,8 @@ French informations and tax 0% on bills.
 We use it at `Cowork'in Montpellier <http://www.coworkinmontpellier.org>`__ and `Le village <http://www.levillage.co/>`__, 
 and `Sète en Commun <https://www.facebook.com/Setencommun/>`__ three coworking spaces in South of France
 
-  * [Documentation](http://django-billjobs.readthedocs.io/en/latest/)
-  * [Issue Tracking](https://github.com/ioO/django-billjobs/issues)
+  * `Documentation <http://django-billjobs.readthedocs.io/en/latest/>`__
+  * `Issue Tracking <https://github.com/ioO/django-billjobs/issues>`__
 
 Requirements
 ------------
