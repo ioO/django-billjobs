@@ -118,6 +118,7 @@ class APIAnonymousPermission(GenericAPIStatusCode):
     def setUp(self):
         self.client = APIClient()
         self.url_login = reverse('rest_framework:login')
+        self.url_users = reverse('users-api')
 
     def test_api_auth_get_is_public(self):
         """
@@ -147,8 +148,9 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         Test api user endpoint with GET method is not public
         Anonymous user can not list user
         """
-        response = self.client.get(reverse('users-api'))
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_users, None, status.HTTP_401_UNAUTHORIZED
+                )
 
     def test_api_user_post_is_public(self):
         """
