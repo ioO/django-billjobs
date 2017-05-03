@@ -34,6 +34,12 @@ class GenericAPIStatusCode(TestCase):
         elif method == 'POST':
             response = self.client.post(url, data, format='json')
 
+        elif method == 'PUT':
+            response = self.client.put(url, data, format='json')
+
+        elif method == 'DELETE':
+            response = self.client.delete(url, format='json')
+
         self.assertEqual(response.status_code, status_code)
 
 class APITokenAuthenticationStatusCode(GenericAPIStatusCode):
@@ -119,6 +125,7 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         self.client = APIClient()
         self.url_login = reverse('rest_framework:login')
         self.url_users = reverse('users-api')
+        self.url_users_detail = reverse('users-detail-api', args=(1,))
 
     def test_api_auth_get_is_public(self):
         """
@@ -160,32 +167,39 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         data = {'username': 'gate', 'password': 'steve',
                 'email': 'steve@gate.org'
                 }
-        response = self.client.post(reverse('users-api'), data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'POST', self.url_users, data, status.HTTP_201_CREATED)
 
     def test_api_user_detail_get_is_not_public(self):
         """
         Test api user detail endpoint with GET method is not public
         Anonymous user can not retrieve user information
         """
-        response = self.client.get(reverse('users-detail-api', args=(1,)))
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_users_detail, None,
+                status.HTTP_401_UNAUTHORIZED
+                )
 
     def test_api_user_detail_put_is_not_public(self):
         """
-        Test api user detail endpoint with POST method is not public
+        Test api user detail endpoint with PUT method is not public
         Anonymous user can not update a user instance
         """
-        response = self.client.post(reverse('users-detail-api', args=(1,)), {'password': 'inject'})
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        data = {'password': 'inject'}
+        GenericAPIStatusCode.status_code_is(
+                self, 'PUT', self.url_users_detail, None,
+                status.HTTP_401_UNAUTHORIZED
+                )
 
     def test_api_user_detail_delete_is_not_public(self):
         """
         Test api user detail endpoint with DELETE method is not public
         Anonymous user can not delete an user instance
         """
-        response = self.client.delete(reverse('users-detail-api', args=(1,)))
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'DELETE', self.url_users_detail, None,
+                status.HTTP_401_UNAUTHORIZED
+                )
 
 class APIUserPermission(TestCase):
     """
