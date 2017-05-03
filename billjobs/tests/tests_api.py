@@ -28,7 +28,10 @@ class GenericAPIStatusCode(TestCase):
         -------
         The test failed or not.
         """
-        if method == 'POST':
+        if method == 'GET':
+            response = self.client.get(url, format='json')
+
+        elif method == 'POST':
             response = self.client.post(url, data, format='json')
 
         self.assertEqual(response.status_code, status_code)
