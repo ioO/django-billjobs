@@ -117,13 +117,14 @@ class APIAnonymousPermission(GenericAPIStatusCode):
 
     def setUp(self):
         self.client = APIClient()
+        self.url_login = reverse('rest_framework:login')
 
     def test_api_auth_get_is_public(self):
         """
         Test api login GET method is public
         """
-        response = self.client.get(reverse('rest_framework:login'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_login, None, status.HTTP_200_OK)
 
     def test_api_auth_post_is_public(self):
         """
