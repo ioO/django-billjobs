@@ -201,7 +201,7 @@ class APIAnonymousPermission(GenericAPIStatusCode):
                 status.HTTP_401_UNAUTHORIZED
                 )
 
-class APIUserPermission(TestCase):
+class APIUserPermission(GenericAPIStatusCode):
     """
     Test API user level permission to endpoints
     """
@@ -212,14 +212,16 @@ class APIUserPermission(TestCase):
         self.user = User.objects.get(pk=2)
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
+        self.url_users = reverse('users-api')
+        self.url_users_detail = reverse('users-detail-api', args=(1,))
 
     def test_api_user_get_is_forbidden(self):
         """
         Test api user endpoint with GET method is forbidden for user
         User can not list user
         """
-        response = self.client.get(reverse('users-api'))
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_users, None, status.HTTP_403_FORBIDDEN)
 
     def test_api_user_post_is_public(self):
         """
