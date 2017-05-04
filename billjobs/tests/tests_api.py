@@ -17,7 +17,12 @@ class GenericAPIStatusCode(TestCase):
         self.admin = User.objects.get(pk=1)
         self.user = User.objects.get(pk=2)
         self.client = APIClient()
-        self.url_users = reverse('users-api')
+        self.endpoints = {
+                'api-token-auth': self.endpoint_url('api-token-auth'),
+                'users': self.endpoint_url('users-api'),
+                'users-detail': self.endpoint_url(
+                    'users-detail-api', args=(1,))
+                }
         self.url_users_detail = reverse('users-detail-api', args=(1,))
 
     def force_authenticate(self, user):
@@ -26,9 +31,30 @@ class GenericAPIStatusCode(TestCase):
 
         Parameters
         ----------
-        user : django.contrib.models.User instance
+        user : Object
+            A django.contrib.models.User instance
         """
         self.client.force_authenticate(user=user)
+
+    def endpoint_url(self, urlname, args=None):
+        """
+        Return url endpoint
+
+        Parameters
+        ----------
+        urlname : string
+            The name of the pattern in urls.py
+        args: list
+            A list of arguments for the url
+
+        Returns
+        -------
+        The uri for the test client
+        """
+        if args is not None:
+            return reverse(urlname, args=args)
+        else:
+            return reverse(urlname)
 
     def status_code_is(self, method, url, data, status_code):
         """
@@ -71,7 +97,7 @@ class APITokenAuthenticationStatusCode(GenericAPIStatusCode):
 
     def setUp(self):
         GenericAPIStatusCode.setUp(self)
-        self.url = reverse('api-token-auth')
+        self.url = self.endpoints['api-token-auth']
 
     def test_admin_auth_token(self):
         """
@@ -103,7 +129,7 @@ class APITokenAuthentication(GenericAPIStatusCode):
     """
     def setUp(self):
         GenericAPIStatusCode.setUp(self)
-        self.url = reverse('api-token-auth')
+        self.url = self.endpoints['api-token-auth']
 
     def test_admin_token_auth(self):
         """
@@ -138,6 +164,8 @@ class APIAnonymousPermission(GenericAPIStatusCode):
     def setUp(self):
         GenericAPIStatusCode.setUp(self)
         self.url_login = reverse('rest_framework:login')
+        self.url_users = self.endpoints['users']
+        self.url_users_detail = self.endpoints['users-detail']
 
     def test_api_auth_get_is_public(self):
         """
@@ -221,6 +249,8 @@ class APIUserPermission(GenericAPIStatusCode):
     def setUp(self):
         GenericAPIStatusCode.setUp(self)
         GenericAPIStatusCode.force_authenticate(self, self.user)
+        self.url_users = self.endpoints['users']
+        self.url_users_detail = self.endpoints['users-detail']
 
     def test_api_user_get_is_forbidden(self):
         """
@@ -305,6 +335,8 @@ class APIAdminPermission(GenericAPIStatusCode):
     def setUp(self):
         GenericAPIStatusCode.setUp(self)
         GenericAPIStatusCode.force_authenticate(self, self.admin)
+        self.url_users = self.endpoints['users']
+        self.url_users_detail = self.endpoints['users-detail']
 
     def test_api_user_get_is_accessible(self):
         """
