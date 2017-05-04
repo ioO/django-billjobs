@@ -301,14 +301,16 @@ class APIAdminPermission(TestCase):
         self.admin = User.objects.get(pk=1)
         self.client = APIClient()
         self.client.force_authenticate(user=self.admin)
+        self.url_users = reverse('users-api')
+        self.url_users_detail = reverse('users-detail-api', args=(1,))
 
     def test_api_user_get_is_accessible(self):
         """
         Test api user endpoint with GET method is accessible by admin
         An admin can list user
         """
-        response = self.client.get(reverse('users-api'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_users, None, status.HTTP_200_OK)
 
     def test_api_user_post_is_accessible(self):
         """
@@ -316,30 +318,33 @@ class APIAdminPermission(TestCase):
         An admin can create a user
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.foo'}
-        response = self.client.post(reverse('users-api'), data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'POST', self.url_users, data, status.HTTP_201_CREATED)
 
     def test_api_user_detail_get_is_accessible(self):
         """
         Test api user detail endpoint with GET method is accessible by admin
         Admin can access user instance information
         """
-        response = self.client.get(reverse('users-detail-api', args=(2,)))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        url = reverse('users-detail-api', args=(2,))
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_users_detail, None, status.HTTP_200_OK)
 
     def test_api_user_detail_put_is_accessible(self):
         """
         Test api user detail endpoint with PUT method is accessible by admin
         Admin can update user instance
         """
+        url = reverse('users-detail-api', args=(2,))
         data = {'firstname': 'foobar'}
-        response = self.client.put(reverse('users-detail-api', args=(2,)), data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        GenericAPIStatusCode.status_code_is(
+                self, 'PUT', url, data, status.HTTP_200_OK)
 
     def test_api_user_detail_put_is_accessible(self):
         """
         Test api user detail endpoint with DELETE method is accessible by admin
         Admin can delete a user instance
         """
-        response = self.client.delete(reverse('users-detail-api', args=(2,)))
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        url = reverse('users-detail-api', args=(2,))
+        GenericAPIStatusCode.status_code_is(
+                self, 'DELETE', url, None, status.HTTP_204_NO_CONTENT)
