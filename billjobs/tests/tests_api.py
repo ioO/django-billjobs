@@ -8,6 +8,27 @@ class GenericAPIStatusCode(TestCase):
     """
     A generic class to test status code returned by API
     """
+    fixtures=['test_api_user.yaml']
+
+    def setUp(self):
+        """
+        Common vars for tests
+        """
+        self.admin = User.objects.get(pk=1)
+        self.user = User.objects.get(pk=2)
+        self.client = APIClient()
+        self.url_users = reverse('users-api')
+        self.url_users_detail = reverse('users-detail-api', args=(1,))
+
+    def force_authenticate(self, user):
+        """
+        Force authenticate of client with user
+
+        Parameters
+        ----------
+        user : django.contrib.models.User instance
+        """
+        self.client.force_authenticate(user=user)
 
     def status_code_is(self, method, url, data, status_code):
         """
@@ -47,13 +68,10 @@ class APITokenAuthenticationStatusCode(GenericAPIStatusCode):
     Test API Token Authentication response status code
     """
 
-    fixtures=['test_api_user.yaml']
 
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.user = User.objects.get(pk=2)
+        GenericAPIStatusCode.setUp(self)
         self.url = reverse('api-token-auth')
-        self.client = APIClient()
 
     def test_admin_auth_token(self):
         """
@@ -79,16 +97,12 @@ class APITokenAuthenticationStatusCode(GenericAPIStatusCode):
         GenericAPIStatusCode.status_code_is(
                 self, 'POST', self.url, data, status.HTTP_400_BAD_REQUEST)
 
-class APITokenAuthentication(TestCase):
+class APITokenAuthentication(GenericAPIStatusCode):
     """
     Test API token authentication
     """
-    fixtures=['test_api_user.yaml']
-
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.user = User.objects.get(pk=2)
-        self.client = APIClient()
+        GenericAPIStatusCode.setUp(self)
         self.url = reverse('api-token-auth')
 
     def test_admin_token_auth(self):
@@ -122,10 +136,8 @@ class APIAnonymousPermission(GenericAPIStatusCode):
     """
 
     def setUp(self):
-        self.client = APIClient()
+        GenericAPIStatusCode.setUp(self)
         self.url_login = reverse('rest_framework:login')
-        self.url_users = reverse('users-api')
-        self.url_users_detail = reverse('users-detail-api', args=(1,))
 
     def test_api_auth_get_is_public(self):
         """
@@ -206,14 +218,9 @@ class APIUserPermission(GenericAPIStatusCode):
     Test API user level permission to endpoints
     """
 
-    fixtures = ['test_api_user.yaml']
-
     def setUp(self):
-        self.user = User.objects.get(pk=2)
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.user)
-        self.url_users = reverse('users-api')
-        self.url_users_detail = reverse('users-detail-api', args=(1,))
+        GenericAPIStatusCode.setUp(self)
+        GenericAPIStatusCode.force_authenticate(self, self.user)
 
     def test_api_user_get_is_forbidden(self):
         """
@@ -290,19 +297,14 @@ class APIUserPermission(GenericAPIStatusCode):
         GenericAPIStatusCode.status_code_is(
                 self, 'DELETE', url, None, status.HTTP_403_FORBIDDEN)
 
-class APIAdminPermission(TestCase):
+class APIAdminPermission(GenericAPIStatusCode):
     """
     Test API admin level permission to endpoints
     """
 
-    fixtures = ['test_api_user.yaml']
-
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.admin)
-        self.url_users = reverse('users-api')
-        self.url_users_detail = reverse('users-detail-api', args=(1,))
+        GenericAPIStatusCode.setUp(self)
+        GenericAPIStatusCode.force_authenticate(self, self.admin)
 
     def test_api_user_get_is_accessible(self):
         """
