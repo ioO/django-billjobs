@@ -40,8 +40,8 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         Test api user admin endpoints with POST method is HTTP_201_CREATED
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'POST', self.url, data, status.HTTP_201_CREATED)
 
     def test_user_admin_post_is_400(self):
         """
@@ -49,8 +49,8 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         when input data are incorrect
         """
         data = {'username': 'foo'}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        GenericAPIStatusCode.status_code_is(
+                self, 'POST', self.url, data, status.HTTP_400_BAD_REQUEST)
 
     def test_user_admin_put_is_405(self):
         """
@@ -58,9 +58,9 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         HTTP_405_METHOD_NOT_ALLOWED
         """
         data = {'username': 'foo'}
-        response = self.client.put(self.url, data)
-        self.assertEqual(response.status_code,
-                status.HTTP_405_METHOD_NOT_ALLOWED)
+        GenericAPIStatusCode.status_code_is(
+                self, 'PUT', self.url, data, status.HTTP_405_METHOD_NOT_ALLOWED
+                )
 
     def test_user_admin_delete_is_405(self):
         """
@@ -68,7 +68,8 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         HTTP_405_METHOD_NOT_ALLOWED
         """
         response = self.client.delete(self.url)
-        self.assertEqual(response.status_code,
+        GenericAPIStatusCode.status_code_is(
+                self, 'DELETE', self.url, None,
                 status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class UserAdminDetailAPIStatusCode(TestCase):
