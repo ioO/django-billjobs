@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.test import APIClient, APIRequestFactory, \
         force_authenticate
 from billjobs.views import UserAPI, UserDetailAPI
+from billjobs.tests.generics import GenericAPIStatusCode
 import json
 import io
 
@@ -14,26 +15,25 @@ def get_json(response):
         """
         return json.load(io.StringIO(response.content.decode()))
 
-class UserAdminAPIStatusCode(TestCase):
+class UserAdminAPIStatusCode(GenericAPIStatusCode):
     """
     Test status code returned by endpoints
-    Status code related to permission are tested in APIPermission class
+    Status code related to permission are tested in tests_api.py
     """
 
     fixtures = ['test_api_user.yaml']
 
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.admin)
-        self.url = reverse('users-api')
+        GenericAPIStatusCode.setUp(self)
+        GenericAPIStatusCode.force_authenticate(self, self.admin)
+        self.url = self.endpoints['users']
 
     def test_user_admin_get_is_200(self):
         """
         Test api user admin endpoints with GET method is HTTP_200_OK
         """
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url, None, status.HTTP_200_OK)
 
     def test_user_admin_post_is_201(self):
         """
