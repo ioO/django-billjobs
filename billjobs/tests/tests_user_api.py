@@ -72,7 +72,7 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
                 self, 'DELETE', self.url, None,
                 status.HTTP_405_METHOD_NOT_ALLOWED)
 
-class UserAdminDetailAPIStatusCode(TestCase):
+class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
     """
     Test user admin detail api response status code
     """
@@ -80,42 +80,48 @@ class UserAdminDetailAPIStatusCode(TestCase):
     fixtures=['test_api_user.yaml']
 
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.admin)
-        self.url = reverse('users-detail-api', args=[2])
+        GenericAPIStatusCode.setUp(self)
+        GenericAPIStatusCode.force_authenticate(self, user=self.admin)
+        self.url = GenericAPIStatusCode.endpoint_url(
+                self, 'users-detail-api', args=(2,))
+        self.url_bad_user = GenericAPIStatusCode.endpoint_url(
+                self, 'users-detail-api', args=(1234,))
 
     def test_user_detail_get_is_200(self):
         """
         Test api user detail endpoints with GET return HTTP_200_OK
         """
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url, None, status.HTTP_200_OK)
 
     def test_user_detail_get_is_404_with_bad_pk(self):
         """
         Test api user detail endpoints with GET return HTTP_404_NOT_FOUND
-        when user pk does not exist
+        when user pk does not exist.
+        Use a customized url with a user pk that doesn't exist
         """
-        response = self.client.get(reverse('users-detail-api', args=[1234]))
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        GenericAPIStatusCode.status_code_is(
+                self, 'GET', self.url_bad_user, None, status.HTTP_404_NOT_FOUND
+                )
 
     def test_user_detail_put_is_200(self):
         """
         Test api user detail endpoints with PUT method return HTTP_200_OK
         """
         data = {'username': 'foo', 'last_name': 'bar'}
-        response = self.client.put(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        GenericAPIStatusCode.status_code_is(
+                self, 'PUT', self.url, data, status.HTTP_200_OK)
 
     def test_user_detail_put_is_404_with_bad_pk(self):
         """
         Test api user detail endpoints with PUT return HTTP_404_NOT_FOUND
         when user pk does not exist
+        Use a customized url with a user pk that doesn't exist
         """
         data = {'username': 'foo', 'last_name': 'bar'}
-        response = self.client.put(reverse('users-detail-api', args=[1234]), data)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        GenericAPIStatusCode.status_code_is(
+                self, 'PUT', self.url_bad_user, data, status.HTTP_404_NOT_FOUND
+                )
 
     def test_user_detail_put_is_400_with_wrong_data(self):
         """
@@ -124,24 +130,25 @@ class UserAdminDetailAPIStatusCode(TestCase):
         """
         data = {'username': 'bill', 'last_name': 'bar',
                 'not_a_field': 'hello'}
-        response = self.client.put(self.url, data)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        GenericAPIStatusCode.status_code_is(
+                self, 'PUT', self.url, data, status.HTTP_400_BAD_REQUEST)
 
     def test_user_detail_delete_is_204(self):
         """
         Test api user detail endpoints with DELETE method return
         HTTP_204_NO_CONTENT
         """
-        response = self.client.delete(self.url)
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        GenericAPIStatusCode.status_code_is(
+                self, 'DELETE', self.url, None, status.HTTP_204_NO_CONTENT)
 
     def test_user_detail_delete_is_404_with_bad_pk(self):
         """
         Test api user detail endpoints with DELETE return HTTP_404_NOT_FOUND
         when user pk does not exist
         """
-        response = self.client.delete(reverse('users-detail-api', args=[1234]))
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        GenericAPIStatusCode.status_code_is(
+                self, 'DELETE', self.url_bad_user, None,
+                status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_post_is_405(self):
         """
@@ -149,8 +156,8 @@ class UserAdminDetailAPIStatusCode(TestCase):
         HTTP_405_METHOD_NOT_ALLOWED
         """
         data = {'first_name': 'foo'}
-        response = self.client.post(self.url, data)
-        self.assertEqual(response.status_code,
+        GenericAPIStatusCode.status_code_is(
+                self, 'POST', self.url, data,
                 status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class UserAdminAPIResponseContent(TestCase):
