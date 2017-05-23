@@ -158,7 +158,7 @@ class UserAdminAPIResponseContent(GenericAPIResponseContent):
         Test api user admin endpoints with GET method return a list
         Fixtures data contain 3 users, we expect a list of 3 user in json
         """
-        json_data = super().get_json(self.client.get(self.url))
+        json_data = super().get_json('GET', self.url)
         self.assertEqual(len(json_data), 3)
 
     def test_user_admin_post_return_user_information(self):
@@ -167,7 +167,7 @@ class UserAdminAPIResponseContent(GenericAPIResponseContent):
         user information
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
-        json_data = super().get_json(self.client.post(self.url, data))
+        json_data = super().get_json('POST', self.url, data)
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
@@ -181,7 +181,7 @@ class UserAdminAPIResponseContent(GenericAPIResponseContent):
         and required fields
         """
         data = {'first_name': 'foobar'}
-        json_data = super().get_json(self.client.post(self.url, data))
+        json_data = super().get_json('POST', self.url, data)
         for key in ('username', 'password'):
             self.assertTrue(key in json_data.keys())
         self.assertIn('This field is required.', json_data['username'])
@@ -204,7 +204,7 @@ class UserDetailAdminAPIResponseContent(GenericAPIResponseContent):
         Test api user admin detail endpoint with GET method return user
         information
         """
-        json_data = super().get_json(self.client.get(self.url))
+        json_data = super().get_json('GET', self.url)
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
@@ -218,7 +218,7 @@ class UserDetailAdminAPIResponseContent(GenericAPIResponseContent):
         information
         """
         data = {'last_name': 'bar'}
-        json_data = super().get_json(self.client.put(self.url, data))
+        json_data = super().get_json('PUT', self.url, data)
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
@@ -234,7 +234,7 @@ class UserDetailAdminAPIResponseContent(GenericAPIResponseContent):
         information
         """
         data = {'username': 'bill'}
-        json_data = super().get_json(self.client.put(self.url, data))
+        json_data = super().get_json('PUT', self.url, data)
         self.assertIn('A user with that username already exists.',
                 json_data['username'])
 
