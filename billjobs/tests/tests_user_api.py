@@ -24,24 +24,22 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
     fixtures = ['test_api_user.yaml']
 
     def setUp(self):
-        GenericAPIStatusCode.setUp(self)
-        GenericAPIStatusCode.force_authenticate(self, self.admin)
+        super().setUp()
+        super().force_authenticate(self.admin)
         self.url = self.endpoints['users']
 
     def test_user_admin_get_is_200(self):
         """
         Test api user admin endpoints with GET method is HTTP_200_OK
         """
-        GenericAPIStatusCode.status_code_is(
-                self, 'GET', self.url, None, status.HTTP_200_OK)
+        super().status_code_is('GET', self.url, None, status.HTTP_200_OK)
 
     def test_user_admin_post_is_201(self):
         """
         Test api user admin endpoints with POST method is HTTP_201_CREATED
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'POST', self.url, data, status.HTTP_201_CREATED)
+        super().status_code_is('POST', self.url, data, status.HTTP_201_CREATED)
 
     def test_user_admin_post_is_400(self):
         """
@@ -49,8 +47,8 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         when input data are incorrect
         """
         data = {'username': 'foo'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'POST', self.url, data, status.HTTP_400_BAD_REQUEST)
+        super().status_code_is(
+                'POST', self.url, data, status.HTTP_400_BAD_REQUEST)
 
     def test_user_admin_put_is_405(self):
         """
@@ -58,9 +56,8 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         HTTP_405_METHOD_NOT_ALLOWED
         """
         data = {'username': 'foo'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'PUT', self.url, data, status.HTTP_405_METHOD_NOT_ALLOWED
-                )
+        super().status_code_is(
+                'PUT', self.url, data, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_user_admin_delete_is_405(self):
         """
@@ -68,9 +65,8 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
         HTTP_405_METHOD_NOT_ALLOWED
         """
         response = self.client.delete(self.url)
-        GenericAPIStatusCode.status_code_is(
-                self, 'DELETE', self.url, None,
-                status.HTTP_405_METHOD_NOT_ALLOWED)
+        super().status_code_is(
+                'DELETE', self.url, None, status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
     """
@@ -80,19 +76,18 @@ class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
     fixtures=['test_api_user.yaml']
 
     def setUp(self):
-        GenericAPIStatusCode.setUp(self)
-        GenericAPIStatusCode.force_authenticate(self, user=self.admin)
-        self.url = GenericAPIStatusCode.endpoint_url(
-                self, 'users-detail-api', args=(2,))
-        self.url_bad_user = GenericAPIStatusCode.endpoint_url(
-                self, 'users-detail-api', args=(1234,))
+        super().setUp()
+        super().force_authenticate(user=self.admin)
+        self.url = super().endpoint_url(
+                'users-detail-api', args=(2,))
+        self.url_bad_user = super().endpoint_url(
+                'users-detail-api', args=(1234,))
 
     def test_user_detail_get_is_200(self):
         """
         Test api user detail endpoints with GET return HTTP_200_OK
         """
-        GenericAPIStatusCode.status_code_is(
-                self, 'GET', self.url, None, status.HTTP_200_OK)
+        super().status_code_is('GET', self.url, None, status.HTTP_200_OK)
 
     def test_user_detail_get_is_404_with_bad_pk(self):
         """
@@ -100,17 +95,15 @@ class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
         when user pk does not exist.
         Use a customized url with a user pk that doesn't exist
         """
-        GenericAPIStatusCode.status_code_is(
-                self, 'GET', self.url_bad_user, None, status.HTTP_404_NOT_FOUND
-                )
+        super().status_code_is(
+                'GET', self.url_bad_user, None, status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_put_is_200(self):
         """
         Test api user detail endpoints with PUT method return HTTP_200_OK
         """
         data = {'username': 'foo', 'last_name': 'bar'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'PUT', self.url, data, status.HTTP_200_OK)
+        super().status_code_is('PUT', self.url, data, status.HTTP_200_OK)
 
     def test_user_detail_put_is_404_with_bad_pk(self):
         """
@@ -119,9 +112,8 @@ class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
         Use a customized url with a user pk that doesn't exist
         """
         data = {'username': 'foo', 'last_name': 'bar'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'PUT', self.url_bad_user, data, status.HTTP_404_NOT_FOUND
-                )
+        super().status_code_is(
+                'PUT', self.url_bad_user, data, status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_put_is_400_with_wrong_data(self):
         """
@@ -130,25 +122,24 @@ class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
         """
         data = {'username': 'bill', 'last_name': 'bar',
                 'not_a_field': 'hello'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'PUT', self.url, data, status.HTTP_400_BAD_REQUEST)
+        super().status_code_is(
+                'PUT', self.url, data, status.HTTP_400_BAD_REQUEST)
 
     def test_user_detail_delete_is_204(self):
         """
         Test api user detail endpoints with DELETE method return
         HTTP_204_NO_CONTENT
         """
-        GenericAPIStatusCode.status_code_is(
-                self, 'DELETE', self.url, None, status.HTTP_204_NO_CONTENT)
+        super().status_code_is(
+                'DELETE', self.url, None, status.HTTP_204_NO_CONTENT)
 
     def test_user_detail_delete_is_404_with_bad_pk(self):
         """
         Test api user detail endpoints with DELETE return HTTP_404_NOT_FOUND
         when user pk does not exist
         """
-        GenericAPIStatusCode.status_code_is(
-                self, 'DELETE', self.url_bad_user, None,
-                status.HTTP_404_NOT_FOUND)
+        super().status_code_is(
+                'DELETE', self.url_bad_user, None, status.HTTP_404_NOT_FOUND)
 
     def test_user_detail_post_is_405(self):
         """
@@ -156,9 +147,8 @@ class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
         HTTP_405_METHOD_NOT_ALLOWED
         """
         data = {'first_name': 'foo'}
-        GenericAPIStatusCode.status_code_is(
-                self, 'POST', self.url, data,
-                status.HTTP_405_METHOD_NOT_ALLOWED)
+        super().status_code_is(
+                'POST', self.url, data, status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class UserAdminAPIResponseContent(TestCase):
     """
