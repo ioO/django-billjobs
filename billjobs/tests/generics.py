@@ -100,10 +100,36 @@ class GenericAPIResponseContent(GenericAPI):
     A generic class to test response content from api
     """
 
-    def get_json(self, response):
+    def get_json(self, method, url, data=None):
         """
-        Return a json from a response content
+        Get a json from a response
+
+        Parameters
+        ----------
+        method : string
+            The http method to use for the request
+        url : string
+            The target url for the request
+        data : dict
+            A dictionary of data to add in request (POST, PUT)
+
+        Return
+        ------
+        A deserialized json in python
         """
+        if method == 'GET':
+            response = self.client.get(url, format='json')
+
+        elif method == 'POST':
+            response = self.client.post(url, data, format='json')
+
+        elif method == 'PUT':
+            response = self.client.put(url, data, format='json')
+
+        elif method == 'DELETE':
+            response = self.client.delete(url, format='json')
+
+
         return json.load(io.StringIO(response.content.decode()))
 
 
