@@ -120,6 +120,12 @@ class GenericAPIResponseContent(GenericAPI):
     A generic class to test response content from api
     """
 
+    def setUp(self):
+        super().setUp()
+        self.user_keys = ('url', 'password', 'last_login', 'is_superuser',
+                'username', 'first_name', 'last_name', 'email', 'is_staff',
+                'is_active', 'date_joined', 'groups', 'user_permissions')
+
     def get_json(self, method, url, data=None):
         """
         Get a json from a response
