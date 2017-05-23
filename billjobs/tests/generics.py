@@ -57,14 +57,9 @@ class GenericAPI(TestCase):
         else:
             return reverse(urlname)
 
-class GenericAPIStatusCode(GenericAPI):
-    """
-    A generic class to test status code returned by API
-    """
-
-    def status_code_is(self, method, url, data, status_code):
+    def get_response(self, method, url, data=None):
         """
-        Assert that the response.status_code and status_code are equal.
+        Get a response from client
 
         Parameters
         ----------
@@ -74,12 +69,10 @@ class GenericAPIStatusCode(GenericAPI):
             The target url for the request
         data : dict
             A dictionary of data to add in request (POST, PUT)
-        status_code : int
-            The integer representing the status code (2xx, 3xx, 4xx, 5xx)
 
         Returns
         -------
-        The test failed or not.
+        A response from APIClient()
         """
         if method == 'GET':
             response = self.client.get(url, format='json')
@@ -93,6 +86,15 @@ class GenericAPIStatusCode(GenericAPI):
         elif method == 'DELETE':
             response = self.client.delete(url, format='json')
 
+        return response
+
+class GenericAPIStatusCode(GenericAPI):
+    """
+    A generic class to test status code returned by API
+    """
+
+    def status_code_is(self, method, url, data, status_code):
+        response = super().get_response(method, url, data)
         self.assertEqual(response.status_code, status_code)
 
 class GenericAPIResponseContent(GenericAPI):
