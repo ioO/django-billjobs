@@ -55,7 +55,6 @@ class GenericAPI(TestCase):
         else:
             return reverse(urlname)
 
-
 class GenericAPIStatusCode(GenericAPI):
     """
     A generic class to test status code returned by API
@@ -93,3 +92,8 @@ class GenericAPIStatusCode(GenericAPI):
             response = self.client.delete(url, format='json')
 
         self.assertEqual(response.status_code, status_code)
+
+class GenericAPIResponseContent(GenericAPI):
+    """
+    A generic class to test response content from api
+    """
