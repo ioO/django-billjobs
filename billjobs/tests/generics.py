@@ -137,19 +137,7 @@ class GenericAPIResponseContent(GenericAPI):
         ------
         A deserialized json in python
         """
-        if method == 'GET':
-            response = self.client.get(url, format='json')
-
-        elif method == 'POST':
-            response = self.client.post(url, data, format='json')
-
-        elif method == 'PUT':
-            response = self.client.put(url, data, format='json')
-
-        elif method == 'DELETE':
-            response = self.client.delete(url, format='json')
-
-
+        response = super().get_response(method, url, data)
         return json.load(io.StringIO(response.content.decode()))
 
 
