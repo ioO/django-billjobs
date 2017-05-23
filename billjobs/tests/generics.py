@@ -3,9 +3,9 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 
-class GenericAPIStatusCode(TestCase):
+class GenericAPI(TestCase):
     """
-    A generic class to test status code returned by API
+    A generic class for API test
     """
     fixtures=['test_api_user.yaml']
 
@@ -54,6 +54,12 @@ class GenericAPIStatusCode(TestCase):
             return reverse(urlname, args=args)
         else:
             return reverse(urlname)
+
+
+class GenericAPIStatusCode(GenericAPI):
+    """
+    A generic class to test status code returned by API
+    """
 
     def status_code_is(self, method, url, data, status_code):
         """
