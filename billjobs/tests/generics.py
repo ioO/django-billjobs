@@ -94,6 +94,24 @@ class GenericAPIStatusCode(GenericAPI):
     """
 
     def status_code_is(self, method, url, data, status_code):
+        """
+        Assert that the response.status_code and status_code are equal.
+
+        Parameters
+        ----------
+        method : string
+            The http method to use for the request
+        url : string
+            The target url for the request
+        data : dict
+            A dictionary of data to add in request (POST, PUT)
+        status_code : int
+            The integer representing the status code (2xx, 3xx, 4xx, 5xx)
+
+        Returns
+        -------
+        The test failed or not.
+        """
         response = super().get_response(method, url, data)
         self.assertEqual(response.status_code, status_code)
 
