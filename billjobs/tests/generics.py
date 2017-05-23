@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
+import json
+import io
 
 class GenericAPI(TestCase):
     """
@@ -20,7 +22,7 @@ class GenericAPI(TestCase):
                 'api-token-auth': self.endpoint_url('api-token-auth'),
                 'users': self.endpoint_url('users-api'),
                 'users-detail': self.endpoint_url(
-                    'users-detail-api', args=(1,))
+                    'users-detail-api', args=(3,))
                 }
         self.url_users_detail = reverse('users-detail-api', args=(1,))
 
@@ -97,3 +99,11 @@ class GenericAPIResponseContent(GenericAPI):
     """
     A generic class to test response content from api
     """
+
+    def get_json(self, response):
+        """
+        Return a json from a response content
+        """
+        return json.load(io.StringIO(response.content.decode()))
+
+

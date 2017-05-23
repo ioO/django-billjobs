@@ -5,15 +5,8 @@ from rest_framework import status
 from rest_framework.test import APIClient, APIRequestFactory, \
         force_authenticate
 from billjobs.views import UserAPI, UserDetailAPI
-from billjobs.tests.generics import GenericAPIStatusCode
-import json
-import io
-
-def get_json(response):
-        """
-        Return a json from a response content
-        """
-        return json.load(io.StringIO(response.content.decode()))
+from billjobs.tests.generics import GenericAPIStatusCode, \
+        GenericAPIResponseContent
 
 class UserAdminAPIStatusCode(GenericAPIStatusCode):
     """
@@ -150,25 +143,22 @@ class UserAdminDetailAPIStatusCode(GenericAPIStatusCode):
         super().status_code_is(
                 'POST', self.url, data, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-class UserAdminAPIResponseContent(TestCase):
+class UserAdminAPIResponseContent(GenericAPIResponseContent):
     """
     Test response content returned by endpoints
     """
 
-    fixtures = ['test_api_user.yaml']
-
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.admin)
-        self.url = reverse('users-api')
+        super().setUp()
+        super().force_authenticate(user=self.admin)
+        self.url = self.endpoints['users']
 
     def test_user_admin_get_list(self):
         """
         Test api user admin endpoints with GET method return a list
         Fixtures data contain 3 users, we expect a list of 3 user in json
         """
-        json_data = get_json(self.client.get(self.url))
+        json_data = super().get_json(self.client.get(self.url))
         self.assertEqual(len(json_data), 3)
 
     def test_user_admin_post_return_user_information(self):
@@ -177,7 +167,7 @@ class UserAdminAPIResponseContent(TestCase):
         user information
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
-        json_data = get_json(self.client.post(self.url, data))
+        json_data = super().get_json(self.client.post(self.url, data))
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
@@ -191,13 +181,13 @@ class UserAdminAPIResponseContent(TestCase):
         and required fields
         """
         data = {'first_name': 'foobar'}
-        json_data = get_json(self.client.post(self.url, data))
+        json_data = super().get_json(self.client.post(self.url, data))
         for key in ('username', 'password'):
             self.assertTrue(key in json_data.keys())
         self.assertIn('This field is required.', json_data['username'])
         self.assertIn('This field is required.', json_data['password'])
 
-class UserDetailAdminAPIResponseContent(TestCase):
+class UserDetailAdminAPIResponseContent(GenericAPIResponseContent):
     """
     Test user detail api response content
     """
@@ -205,23 +195,22 @@ class UserDetailAdminAPIResponseContent(TestCase):
     fixtures = ['test_api_user.yaml']
 
     def setUp(self):
-        self.admin = User.objects.get(pk=1)
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.admin)
-        self.url = reverse('users-detail-api', args=[2])
+        super().setUp()
+        super().force_authenticate(user=self.admin)
+        self.url = self.endpoints['users-detail']
 
     def test_user_detail_admin_get_user_information(self):
         """
         Test api user admin detail endpoint with GET method return user
         information
         """
-        json_data = get_json(self.client.get(self.url))
+        json_data = super().get_json(self.client.get(self.url))
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
             self.assertTrue(key in json_data.keys())
-        self.assertEqual(json_data['username'], 'jobs')
-        self.assertEqual(json_data['email'], 'jobs@billjobs.org')
+        self.assertEqual(json_data['username'], 'steve')
+        self.assertEqual(json_data['email'], 'steve@billjobs.org')
 
     def test_user_detail_put_return_information(self):
         """
@@ -229,14 +218,14 @@ class UserDetailAdminAPIResponseContent(TestCase):
         information
         """
         data = {'last_name': 'bar'}
-        json_data = get_json(self.client.put(self.url, data))
+        json_data = super().get_json(self.client.put(self.url, data))
         for key in ('url', 'password', 'last_login', 'is_superuser',
                 'username', 'first_name', 'last_name', 'email', 'is_staff',
                 'is_active', 'date_joined', 'groups', 'user_permissions'):
             self.assertTrue(key in json_data.keys())
         self.assertEqual(json_data['last_name'], 'bar')
-        self.assertEqual(json_data['username'], 'jobs')
-        self.assertEqual(json_data['email'], 'jobs@billjobs.org')
+        self.assertEqual(json_data['username'], 'steve')
+        self.assertEqual(json_data['email'], 'steve@billjobs.org')
 
     def test_user_detail_put_return_error_when_duplicate_username(self):
         """
@@ -245,7 +234,7 @@ class UserDetailAdminAPIResponseContent(TestCase):
         information
         """
         data = {'username': 'bill'}
-        json_data = get_json(self.client.put(self.url, data))
+        json_data = super().get_json(self.client.put(self.url, data))
         self.assertIn('A user with that username already exists.',
                 json_data['username'])
 
