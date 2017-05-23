@@ -168,9 +168,7 @@ class UserAdminAPIResponseContent(GenericAPIResponseContent):
         """
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.org'}
         json_data = super().get_json('POST', self.url, data)
-        for key in ('url', 'password', 'last_login', 'is_superuser',
-                'username', 'first_name', 'last_name', 'email', 'is_staff',
-                'is_active', 'date_joined', 'groups', 'user_permissions'):
+        for key in self.user_keys:
             self.assertTrue(key in json_data.keys())
         self.assertEqual(json_data['username'], 'foo')
         self.assertEqual(json_data['email'], 'foo@bar.org')
@@ -219,9 +217,7 @@ class UserDetailAdminAPIResponseContent(GenericAPIResponseContent):
         """
         data = {'last_name': 'bar'}
         json_data = super().get_json('PUT', self.url, data)
-        for key in ('url', 'password', 'last_login', 'is_superuser',
-                'username', 'first_name', 'last_name', 'email', 'is_staff',
-                'is_active', 'date_joined', 'groups', 'user_permissions'):
+        for key in self.user_keys:
             self.assertTrue(key in json_data.keys())
         self.assertEqual(json_data['last_name'], 'bar')
         self.assertEqual(json_data['username'], 'steve')
