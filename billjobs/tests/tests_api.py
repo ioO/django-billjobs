@@ -212,6 +212,7 @@ class APIUserPermission(GenericAPIStatusCode):
         self.url_users = self.endpoints['users']
         self.url_users_detail = self.endpoints['users-detail']
         self.url_groups = self.endpoints['groups']
+        self.url_groups_detail = self.endpoints['groups-detail']
 
     def test_api_user_get_is_forbidden(self):
         """
@@ -255,6 +256,15 @@ class APIUserPermission(GenericAPIStatusCode):
         User can retrieve his own information
         """
         url = reverse('users-detail-api', args=(2,))
+        super().status_code_is(
+                'GET', url, None, status.HTTP_200_OK)
+
+    def test_api_group_detail_get_is_ok(self):
+        """
+        Test api group detail endpoint with GET method is ok
+        User can retrieve his own group information
+        """
+        url = reverse('groups-detail-api', args=(1,))
         super().status_code_is(
                 'GET', url, None, status.HTTP_200_OK)
 
