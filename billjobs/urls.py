@@ -10,6 +10,8 @@ api_patterns = [
         url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetailAPI.as_view(),
             name='users-detail-api'),
         url(r'^groups/$', views.GroupAPI.as_view(), name='groups-api'),
+        url(r'^groups/(?P<pk>[0-9]+)/$', views.GroupDetailAPI.as_view(),
+            name='groups-detail-api'),
         ]
 
 urlpatterns = [
