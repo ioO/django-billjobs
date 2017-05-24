@@ -209,6 +209,15 @@ class APIUserPermission(GenericAPIStatusCode):
         super().status_code_is(
                 'POST', self.url_users, data, status.HTTP_201_CREATED)
 
+    def test_api_group_post_is_forbidden(self):
+        """
+        Test api group endpoint with POST method is forbidden
+        User cannot create a group
+        """
+        data = {'name': 'user-group'}
+        super().status_code_is(
+                'POST', self.url_groups, data, status.HTTP_403_FORBIDDEN)
+
     def test_api_user_detail_get_is_ok(self):
         """
         Test api user detail endpoint with GET method is ok
