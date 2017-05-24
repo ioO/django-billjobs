@@ -19,6 +19,8 @@ class CustomGroupAPIPermission(permissions.BasePermission):
                 request.user.is_staff or
                 is_authenticated(request.user)
                 )
+        elif request.method == 'POST':
+            return request.user and request.user.is_staff
 
 class CustomUserAPIPermission(permissions.BasePermission):
     """
