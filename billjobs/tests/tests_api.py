@@ -110,6 +110,14 @@ class APIAnonymousPermission(GenericAPIStatusCode):
                 'GET', self.url_users, None, status.HTTP_401_UNAUTHORIZED
                 )
 
+    def test_api_group_get_is_not_public(self):
+        """
+        Test api group endpoint with GET method is not public
+        Anonymous user can not list group
+        """
+        super().status_code_is(
+                'GET', self.url_groups, None, status.HTTP_401_UNAUTHORIZED)
+
     def test_api_user_post_is_public(self):
         """
         Test api user endpoint with POST method is public
@@ -120,6 +128,15 @@ class APIAnonymousPermission(GenericAPIStatusCode):
                 }
         super().status_code_is(
                 'POST', self.url_users, data, status.HTTP_201_CREATED)
+
+    def test_api_group_post_is_not_public(self):
+        """
+        Test api group endpoint with POST method is not public
+        Anonymous user cannot create a group
+        """
+        data = {'name': 'user-group'}
+        super().status_code_is(
+                'POST', self.url_groups, data, status.HTTP_401_UNAUTHORIZED)
 
     def test_api_user_detail_get_is_not_public(self):
         """
@@ -151,24 +168,6 @@ class APIAnonymousPermission(GenericAPIStatusCode):
                 'DELETE', self.url_users_detail, None,
                 status.HTTP_401_UNAUTHORIZED
                 )
-
-    def test_api_group_get_is_not_public(self):
-        """
-        Test api group endpoint with GET method is not public
-        Anonymous user can not list group
-        """
-        super().status_code_is(
-                'GET', self.url_groups, None, status.HTTP_401_UNAUTHORIZED)
-
-    def test_api_group_post_is_not_public(self):
-        """
-        Test api group endpoint with POST method is not public
-        Anonymous user cannot create a group
-        """
-        data = {'name': 'user-group'}
-        super().status_code_is(
-                'POST', self.url_groups, data, status.HTTP_401_UNAUTHORIZED)
-
 
 class APIUserPermission(GenericAPIStatusCode):
     """
@@ -319,7 +318,6 @@ class APIAdminPermission(GenericAPIStatusCode):
         data = {'name': 'foo'}
         super().status_code_is(
                 'POST', self.url_groups, data, status.HTTP_201_CREATED)
-
 
     def test_api_user_detail_get_is_accessible(self):
         """
