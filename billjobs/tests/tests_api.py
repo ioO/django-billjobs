@@ -8,7 +8,6 @@ class APITokenAuthenticationStatusCode(GenericAPIStatusCode):
     Test API Token Authentication response status code
     """
 
-
     def setUp(self):
         super().setUp()
         self.url = self.endpoints['api-token-auth']
@@ -77,6 +76,7 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         self.url_login = reverse('rest_framework:login')
         self.url_users = self.endpoints['users']
         self.url_users_detail = self.endpoints['users-detail']
+        self.url_groups = self.endpoints['groups']
 
     def test_api_auth_get_is_public(self):
         """
@@ -151,6 +151,14 @@ class APIAnonymousPermission(GenericAPIStatusCode):
                 'DELETE', self.url_users_detail, None,
                 status.HTTP_401_UNAUTHORIZED
                 )
+
+    def test_api_group_get_is_not_public(self):
+        """
+        Test api group endpoint with GET method is not public
+        Anonymous user can not list group
+        """
+        super().status_code_is(
+                'GET', self.url_groups, None, status.HTTP_401_UNAUTHORIZED)
 
 class APIUserPermission(GenericAPIStatusCode):
     """
