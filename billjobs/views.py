@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -17,9 +17,23 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
-from .serializers import UserSerializer
+from billjobs.serializers import UserSerializer, GroupSerializer
 from .permissions import CustomUserAPIPermission, CustomUserDetailAPIPermission
 from textwrap import wrap
+
+class GroupAPI(APIView):
+    """
+    API endpoint to list or create groups
+    """
+
+    def get(self, request, format=None):
+        """
+        List groups only accessible by admin
+        """
+        groups = Group.objects.all()
+        serializer = GroupSerializer(groups, context={'request': request},
+                many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserAPI(APIView):
     """
