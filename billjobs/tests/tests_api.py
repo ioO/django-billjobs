@@ -160,6 +160,16 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         super().status_code_is(
                 'GET', self.url_groups, None, status.HTTP_401_UNAUTHORIZED)
 
+    def test_api_group_post_is_not_public(self):
+        """
+        Test api group endpoint with POST method is not public
+        Anonymous user cannot create a group
+        """
+        data = {'name': 'user-group'}
+        super().status_code_is(
+                'POST', self.url_groups, data, status.HTTP_401_UNAUTHORIZED)
+
+
 class APIUserPermission(GenericAPIStatusCode):
     """
     Test API user level permission to endpoints
