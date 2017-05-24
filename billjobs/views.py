@@ -19,7 +19,8 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
 from .models import Bill
 from billjobs.serializers import UserSerializer, GroupSerializer
 from .permissions import CustomUserAPIPermission, \
-        CustomUserDetailAPIPermission, CustomGroupAPIPermission
+        CustomUserDetailAPIPermission, CustomGroupAPIPermission, \
+        CustomGroupDetailAPIPermission
 from textwrap import wrap
 
 class GroupAPI(APIView):
@@ -53,7 +54,19 @@ class GroupDetailAPI(APIView):
     API endpoint that allow admin and user to retrieve, update and delete a 
     group
     """
-    pass
+    permission_classes = (CustomGroupDetailAPIPermission,)
+
+    def get_object(self, pk):
+        try:
+            group = Group.objects.get(pk=pk)
+            return group
+        except Group.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        group = self.get_object(pk)
+        serializer = GroupSerializer(group, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserAPI(APIView):
     """
