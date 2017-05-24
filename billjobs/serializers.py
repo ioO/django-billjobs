@@ -3,6 +3,15 @@ from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer class for django.contrib.auth.models.User
+    """
+    groups = serializers.HyperlinkedRelatedField(
+            many=True,
+            read_only=True,
+            view_name='groups-detail-api'
+            )
+
     class Meta:
         model = User
         fields = '__all__'
