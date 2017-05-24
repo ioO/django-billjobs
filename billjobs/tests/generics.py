@@ -22,7 +22,8 @@ class GenericAPI(TestCase):
                 'api-token-auth': self.endpoint_url('api-token-auth'),
                 'users': self.endpoint_url('users-api'),
                 'users-detail': self.endpoint_url(
-                    'users-detail-api', args=(3,))
+                    'users-detail-api', args=(3,)),
+                'groups': self.endpoint_url('groups-api'),
                 }
         self.url_users_detail = reverse('users-detail-api', args=(1,))
 
