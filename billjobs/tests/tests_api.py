@@ -300,7 +300,7 @@ class APIAdminPermission(GenericAPIStatusCode):
         An admin can list user
         """
         super().status_code_is(
-                'GET', self.url_users, None, status.HTTP_200_OK)
+                'GET', self.url_groups, None, status.HTTP_200_OK)
 
     def test_api_user_post_is_accessible(self):
         """
@@ -310,6 +310,16 @@ class APIAdminPermission(GenericAPIStatusCode):
         data = {'username': 'foo', 'password': 'bar', 'email': 'foo@bar.foo'}
         super().status_code_is(
                 'POST', self.url_users, data, status.HTTP_201_CREATED)
+
+    def test_api_group_post_is_accessible(self):
+        """
+        Test api group endpoint with POST method is accessible by admin
+        An admin can create a group
+        """
+        data = {'name': 'foo'}
+        super().status_code_is(
+                'POST', self.url_groups, data, status.HTTP_201_CREATED)
+
 
     def test_api_user_detail_get_is_accessible(self):
         """
