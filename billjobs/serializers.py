@@ -17,3 +17,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
         fields = '__all__'
+        extra_kwargs = {
+                'url': {'view_name': 'groups-detail-api'}
+                }
