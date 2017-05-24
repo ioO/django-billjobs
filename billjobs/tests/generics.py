@@ -24,6 +24,8 @@ class GenericAPI(TestCase):
                 'users-detail': self.endpoint_url(
                     'users-detail-api', args=(3,)),
                 'groups': self.endpoint_url('groups-api'),
+                'groups-detail': self.endpoint_url(
+                    'groups-detail-api', args=(1,)),
                 }
         self.url_users_detail = reverse('users-detail-api', args=(1,))
 
