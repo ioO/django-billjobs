@@ -284,10 +284,19 @@ class APIAdminPermission(GenericAPIStatusCode):
         super().force_authenticate(self.admin)
         self.url_users = self.endpoints['users']
         self.url_users_detail = self.endpoints['users-detail']
+        self.url_groups = self.endpoints['groups']
 
     def test_api_user_get_is_accessible(self):
         """
         Test api user endpoint with GET method is accessible by admin
+        An admin can list user
+        """
+        super().status_code_is(
+                'GET', self.url_users, None, status.HTTP_200_OK)
+
+    def test_api_group_get_is_accessible(self):
+        """
+        Test api group endpoint with GET method is accessible by admin
         An admin can list user
         """
         super().status_code_is(
