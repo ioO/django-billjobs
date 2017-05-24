@@ -18,13 +18,15 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
 from billjobs.serializers import UserSerializer, GroupSerializer
-from .permissions import CustomUserAPIPermission, CustomUserDetailAPIPermission
+from .permissions import CustomUserAPIPermission, \
+        CustomUserDetailAPIPermission, CustomGroupAPIPermission
 from textwrap import wrap
 
 class GroupAPI(APIView):
     """
     API endpoint to list or create groups
     """
+    permission_classes = (CustomGroupAPIPermission,)
 
     def get(self, request, format=None):
         """
