@@ -9,3 +9,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {
             'url': {'view_name': 'users-detail-api'}
             }
+
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Serializer class django.contrib.auth.models.Group
+    """
+    class Meta:
+        model = Group
+        fields = '__all__'
