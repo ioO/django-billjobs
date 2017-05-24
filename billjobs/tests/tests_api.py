@@ -77,6 +77,7 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         self.url_users = self.endpoints['users']
         self.url_users_detail = self.endpoints['users-detail']
         self.url_groups = self.endpoints['groups']
+        self.url_groups_detail = self.endpoints['groups-detail']
 
     def test_api_auth_get_is_public(self):
         """
@@ -145,6 +146,16 @@ class APIAnonymousPermission(GenericAPIStatusCode):
         """
         super().status_code_is(
                 'GET', self.url_users_detail, None,
+                status.HTTP_401_UNAUTHORIZED
+                )
+
+    def test_api_group_detail_get_is_not_public(self):
+        """
+        Test api group detail endpoint with GET method is not public
+        Anonymous user can not retrieve group information
+        """
+        super().status_code_is(
+                'GET', self.url_groups_detail, None,
                 status.HTTP_401_UNAUTHORIZED
                 )
 
