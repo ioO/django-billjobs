@@ -1,4 +1,9 @@
 ---
+- model: auth.group
+  pk: 1
+  fields:
+    name: user-group
+
 - model: auth.user
   pk: 1
   fields:
@@ -16,9 +21,11 @@
      # password: jobs
     password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
     is_staff: False
+    groups: [1,]
 
 - model: auth.user
   pk: 3
   fields:
     username: steve
     email: steve@billjobs.org
+
