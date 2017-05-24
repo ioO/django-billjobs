@@ -37,6 +37,24 @@ class GroupAPI(APIView):
                 many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def post(self, request, format=None):
+        """
+        Create a group
+        """
+        serializer = GroupSerializer(data=request.data,
+                context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GroupDetailAPI(APIView):
+    """
+    API endpoint that allow admin and user to retrieve, update and delete a 
+    group
+    """
+    pass
+
 class UserAPI(APIView):
     """
     API endpoint that allows admin to list or create users
