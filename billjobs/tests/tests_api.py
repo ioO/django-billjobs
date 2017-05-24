@@ -180,6 +180,7 @@ class APIUserPermission(GenericAPIStatusCode):
         super().force_authenticate(self.user)
         self.url_users = self.endpoints['users']
         self.url_users_detail = self.endpoints['users-detail']
+        self.url_groups = self.endpoints['groups']
 
     def test_api_user_get_is_forbidden(self):
         """
@@ -188,6 +189,14 @@ class APIUserPermission(GenericAPIStatusCode):
         """
         super().status_code_is(
                 'GET', self.url_users, None, status.HTTP_403_FORBIDDEN)
+
+    def test_api_group_get_is_accessible(self):
+        """
+        Test api group endpoint with GET method is accessible
+        User can list his own groups
+        """
+        super().status_code_is(
+                'GET', self.url_groups, None, status.HTTP_200_OK)
 
     def test_api_user_post_is_public(self):
         """
