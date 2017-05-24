@@ -191,6 +191,16 @@ class APIAnonymousPermission(GenericAPIStatusCode):
                 status.HTTP_401_UNAUTHORIZED
                 )
 
+    def test_api_group_detail_delete_is_not_public(self):
+        """
+        Test api group detail endpoint with DELETE method is not public
+        Anonymous user can not delete a group instance
+        """
+        super().status_code_is(
+                'DELETE', self.url_groups_detail, None,
+                status.HTTP_401_UNAUTHORIZED
+                )
+
 class APIUserPermission(GenericAPIStatusCode):
     """
     Test API user level permission to endpoints
