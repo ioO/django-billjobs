@@ -277,6 +277,14 @@ class APIUserPermission(GenericAPIStatusCode):
                 'GET', self.url_users_detail, None,
                 status.HTTP_403_FORBIDDEN)
 
+    def test_api_group_detail_get_other_group_is_forbidden(self):
+        """
+        Test api group detail endpoint with GET method is forbidden for user
+        User can not retrieve group information that he is not a member
+        """
+        url = reverse('groups-detail-api', args=(2,))
+        super().status_code_is('GET', url, None, status.HTTP_403_FORBIDDEN)
+
     def test_api_user_detail_put_is_ok(self):
         """
         Test api user detail endpoint with POST method is ok
