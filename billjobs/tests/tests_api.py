@@ -443,7 +443,7 @@ class APIAdminPermission(GenericAPIStatusCode):
         super().status_code_is(
                 'PUT', self.url_groups_detail, data, status.HTTP_200_OK)
 
-    def test_api_user_detail_put_is_accessible(self):
+    def test_api_user_detail_delete_is_accessible(self):
         """
         Test api user detail endpoint with DELETE method is accessible by admin
         Admin can delete a user instance
@@ -451,3 +451,15 @@ class APIAdminPermission(GenericAPIStatusCode):
         url = reverse('users-detail-api', args=(2,))
         super().status_code_is(
                 'DELETE', url, None, status.HTTP_204_NO_CONTENT)
+
+    def test_api_group_detail_delete_is_accessible(self):
+        """
+        Test api group detail endpoint with DELETE method is accessible by
+        admin
+        Admin can delete a group instance information
+        """
+        super().status_code_is(
+                'DELETE', self.url_groups_detail, None,
+                status.HTTP_204_NO_CONTENT)
+
+
