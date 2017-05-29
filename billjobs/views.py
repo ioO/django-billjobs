@@ -59,6 +59,7 @@ class GroupDetailAPI(APIView):
     def get_object(self, pk):
         try:
             group = Group.objects.get(pk=pk)
+            self.check_object_permissions(self.request, group)
             return group
         except Group.DoesNotExist:
             raise Http404
