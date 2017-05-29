@@ -81,6 +81,14 @@ class GroupDetailAPI(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, pk, format=None):
+        """
+        Delete a group instance
+        """
+        group = self.get_object(pk)
+        group.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class UserAPI(APIView):
     """
     API endpoint that allows admin to list or create users
