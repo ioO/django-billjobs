@@ -351,6 +351,15 @@ class APIUserPermission(GenericAPIStatusCode):
         super().status_code_is(
                 'DELETE', url, None, status.HTTP_403_FORBIDDEN)
 
+    def test_api_group_detail_delete_other_group_is_forbidden(self):
+        """
+        Test api group detail endpoint with DELETE method is forbidden
+        User can not delete groups instances that he is not member
+        """
+        url = reverse('groups-detail-api', args=(2,))
+        super().status_code_is(
+                'DELETE', url, None, status.HTTP_403_FORBIDDEN)
+
 class APIAdminPermission(GenericAPIStatusCode):
     """
     Test API admin level permission to endpoints
