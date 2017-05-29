@@ -333,6 +333,15 @@ class APIUserPermission(GenericAPIStatusCode):
         super().status_code_is(
                 'DELETE', url, None, status.HTTP_204_NO_CONTENT)
 
+    def test_api_group_detail_delete_is_forbidden(self):
+        """
+        Test api group detail endpoint with DELETE method is ok
+        User can not delete his groups instances
+        """
+        super().status_code_is(
+                'DELETE', self.url_groups_detail, None,
+                status.HTTP_403_FORBIDDEN)
+
     def test_api_user_detail_delete_other_user_is_forbidden(self):
         """
         Test api user detail endpoint with DELETE method is forbidden
