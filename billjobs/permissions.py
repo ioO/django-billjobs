@@ -44,9 +44,12 @@ class CustomGroupDetailAPIPermission(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         """
-        Compare User instance in request is equal to User instance in obj
+        User instance in request is member of the group in obj instance
         """
-        return request.user.is_staff or obj == request.user
+        for group in request.user.groups.all():
+            if group.id == obj.id:
+                return True
+        return request.user.is_staff
 
 class CustomUserAPIPermission(permissions.BasePermission):
     """
