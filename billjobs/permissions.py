@@ -26,10 +26,13 @@ class CustomGroupDetailAPIPermission(permissions.BasePermission):
     """
     Set custom permission for group detail API
 
-    * GET, UPDATE, DELETE :
+    * GET :
         * admin can access all groups instance
-        * current user only his groups instance
+        * current user only his groups instances
         * public is forbidden
+    * UPDATE, DELETE :
+        * admin can access all groups instance
+        * current user and public is forbidden
     """
 
     def has_permission(self, request, view):
@@ -45,10 +48,12 @@ class CustomGroupDetailAPIPermission(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         """
         User instance in request is member of the group in obj instance
+        Allow object access only for GET method for user
         """
-        for group in request.user.groups.all():
-            if group.id == obj.id:
-                return True
+        if request.method == 'GET':
+            for group in request.user.groups.all():
+                if group.id == obj.id:
+                    return True
         return request.user.is_staff
 
 class CustomUserAPIPermission(permissions.BasePermission):
