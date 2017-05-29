@@ -295,6 +295,15 @@ class APIUserPermission(GenericAPIStatusCode):
         super().status_code_is(
                 'PUT', url, data, status.HTTP_200_OK)
 
+    def test_api_group_detail_put_is_forbidden(self):
+        """
+        Test api group detail endpoint with PUT method is forbidden
+        User can not update group instance
+        """
+        data = {'name': 'change-group'}
+        super().status_code_is(
+                'PUT', self.url_groups_detail, data, status.HTTP_403_FORBIDDEN)
+
     def test_api_user_detail_put_other_user_is_forbidden(self):
         """
         Test api user detail endpoint with POST method is forbidden
