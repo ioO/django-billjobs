@@ -14,8 +14,15 @@ class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
 
     def test_api_group_put_is_405(self):
         """
-        Test group api with put method return HTTP_405_METHOD_NOT_ALLOWED
+        Test group api with PUT method return HTTP_405_METHOD_NOT_ALLOWED
         """
         super().status_code_is(
                 'PUT', self.url, self.data, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_api_group_delete_is_405(self):
+        """
+        Test group api with DELETE method return HTTP_405_METHOD_NOT_ALLOWED
+        """
+        super().status_code_is(
+                'DELETE', self.url, None, status.HTTP_405_METHOD_NOT_ALLOWED)
 
