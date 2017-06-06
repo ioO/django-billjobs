@@ -1,3 +1,4 @@
+from rest_framework import status
 from billjobs.tests.generics import GenericAPIStatusCode
 
 class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
@@ -8,3 +9,13 @@ class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
 
     def setUp(self):
         super().setUp()
+        self.url = self.endpoints['groups']
+        self.data = {'name': 'group name'}
+
+    def test_api_group_put_is_405(self):
+        """
+        Test group api with put method return HTTP_405_METHOD_NOT_ALLOWED
+        """
+        super().status_code_is(
+                'PUT', self.url, self.data, status.HTTP_405_METHOD_NOT_ALLOWED)
+
