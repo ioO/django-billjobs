@@ -46,7 +46,7 @@ class UserAdminAPIStatusCode(GenericAPIStatusCode):
     def test_user_admin_put_is_405(self):
         """
         Test api user admin endpoints with PUT return
-        HTTP_405_METHOD_NOT_ALLOWEDhttp://www.lemonde.fr/
+        HTTP_405_METHOD_NOT_ALLOWED
         """
         data = {'username': 'foo'}
         super().status_code_is(
