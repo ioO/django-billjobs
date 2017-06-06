@@ -26,3 +26,14 @@ class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
         super().status_code_is(
                 'DELETE', self.url, None, status.HTTP_405_METHOD_NOT_ALLOWED)
 
+class GroupAPIUserStatusCode(GenericAPIStatusCode):
+    """
+    Tests status code returned by /groups endpoint for user
+    Permissions are tested in tests_api.py
+    """
+
+    def setUp(self):
+        super().setUp()
+        super().force_authenticate(self.user)
+        self.url = self.endpoints['groups']
+        self.data = {'name': 'group name'}
