@@ -37,3 +37,11 @@ class GroupAPIUserStatusCode(GenericAPIStatusCode):
         super().force_authenticate(self.user)
         self.url = self.endpoints['groups']
         self.data = {'name': 'group name'}
+
+    def test_api_group_put_is_405(self):
+        """
+        Test group api with PUT method return HTTP_405_METHOD_NOT_ALLOWED
+        """
+        super().status_code_is(
+                'PUT', self.url, self.data, status.HTTP_405_METHOD_NOT_ALLOWED)
+
