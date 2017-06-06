@@ -22,6 +22,8 @@ class CustomGroupAPIPermission(permissions.BasePermission):
         elif request.method == 'POST':
             return request.user and request.user.is_staff
 
+        return True
+
 class CustomGroupDetailAPIPermission(permissions.BasePermission):
     """
     Set custom permission for group detail API
