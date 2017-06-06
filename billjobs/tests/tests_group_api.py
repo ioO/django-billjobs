@@ -51,3 +51,14 @@ class GroupAPIUserStatusCode(GenericAPIStatusCode):
         """
         super().status_code_is(
                 'DELETE', self.url, None, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+class GroupAPIAdminStatusCode(GenericAPIStatusCode):
+    """
+    Tests status code returned by /groups endpoint for admin
+    """
+
+    def setUp(self):
+        super().setUp()
+        super().force_authenticate(self.admin)
+        self.url = self.endpoints['groups']
+        self.data = {'name': 'group name'}
