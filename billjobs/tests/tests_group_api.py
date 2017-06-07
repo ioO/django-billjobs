@@ -35,7 +35,7 @@ class GenericAPITest(APITestCase):
                     method, status_code)
                 )
 
-class GroupAPITest(GenericAPITest):
+class AnonymousGroupAPITest(GenericAPITest):
     """
     Test group api test
     """
@@ -44,7 +44,7 @@ class GroupAPITest(GenericAPITest):
         super().setUp()
         self.url = reverse('groups-api')
         self.expected_status = {
-                'GET': 200,
+                'GET': 401,
                 }
 
     def test_group_api_status_code(self):
