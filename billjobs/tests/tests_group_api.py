@@ -1,5 +1,47 @@
+from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework import status
+from rest_framework.test import APITestCase, APIClient
 from billjobs.tests.generics import GenericAPIStatusCode
+
+class GenericAPITest(APITestCase):
+    """
+    Generic Test class to test an API endpoint
+    """
+    fixtures = ['test_api_user.yaml']
+
+    def setUp(self):
+        self.url = None
+        self.client = APIClient()
+        self.admin = User.objects.get(pk=1)
+        self.user = User.objects.get(pk=2)
+        self.expected_status = {
+                'GET': None,
+                }
+
+    def status_code_is(self):
+        for method, status_code in self.expected_status.items():
+            if method == 'GET':
+                self.status_code_get_is(status_code)
+
+    def status_code_get_is(self, status_code):
+        response = self.client.get(self.url, format='json')
+        self.assertEqual(response.status_code, status_code)
+
+class GroupAPITest(GenericAPITest):
+    """
+    Test group api test
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('groups-api')
+        self.expected_status = {
+                'GET': 200,
+                }
+
+    def test_group_api_status_code(self):
+        self.status_code_is()
 
 class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
     """
