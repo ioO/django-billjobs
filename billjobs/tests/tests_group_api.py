@@ -45,6 +45,9 @@ class GenericAPITest(APITestCase):
                 response = self.client.head(self.url, format='json')
             elif method == 'OPTIONS':
                 response = self.client.options(self.url, format='json')
+            elif method == 'PATCH':
+                response = self.client.patch(self.url, format='json')
+
 
             self.assertEqual(response.status_code, status_code,
                     '{0} method expected status code {1}'.format(
