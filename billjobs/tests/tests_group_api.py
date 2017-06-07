@@ -54,11 +54,13 @@ class AnonymousGroupAPITest(GenericAPITest):
         super().setUp()
         self.url = reverse('groups-api')
         self.data = {
-                'create': {'name': 'group name'}
+                'create': {'name': 'group name'},
+                'update': {'name': 'new name'}
                 }
         self.expected_status = {
                 'GET': 401,
                 'POST': 401,
+                'PUT': 401,
                 }
 
     def test_group_api_status_code(self):
