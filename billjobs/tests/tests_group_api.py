@@ -16,7 +16,8 @@ class GenericAPITest(APITestCase):
         self.admin = User.objects.get(pk=1)
         self.user = User.objects.get(pk=2)
         self.data = {
-                'create': None
+                'create': None,
+                'update': None,
                 }
         self.expected_status = {
                 'GET': None,
@@ -35,11 +36,14 @@ class GenericAPITest(APITestCase):
             elif method == 'POST':
                 response = self.client.post(
                         self.url, self.data['create'], format='json')
+            elif method == 'PUT':
+                response = self.client.put(
+                        self.url, self.data['update'], format='json')
 
             self.assertEqual(response.status_code, status_code,
-                '{0} method expected status code {1}'.format(
-                    method, status_code)
-                )
+                    '{0} method expected status code {1}'.format(
+                        method, status_code)
+                    )
 
 class AnonymousGroupAPITest(GenericAPITest):
     """
