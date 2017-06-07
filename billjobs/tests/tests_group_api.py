@@ -24,7 +24,7 @@ class GenericAPITest(APITestCase):
                 'POST': None,
                 'PUT': None,
                 'DELETE': None,
-                'OPTION': None,
+                'OPTIONS': None,
                 'HEAD': None,
                 'PATCH': None,
                 }
@@ -43,6 +43,8 @@ class GenericAPITest(APITestCase):
                 response = self.client.delete(self.url, format='json')
             elif method == 'HEAD':
                 response = self.client.head(self.url, format='json')
+            elif method == 'OPTIONS':
+                response = self.client.options(self.url, format='json')
 
             self.assertEqual(response.status_code, status_code,
                     '{0} method expected status code {1}'.format(
