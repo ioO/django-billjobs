@@ -88,7 +88,8 @@ class GenericAPITest(APITestCase):
             response = self.get_response(method)
             for key, value in content.items():
                 self.assertEqual(response.data[key], value,
-                        '{0} key value is not {1}'.format(key, value)
+                        '{0} method expected key "{1}" value'.format(
+                            method, key)
                         )
 
 class GenericAPI(TestCase):
