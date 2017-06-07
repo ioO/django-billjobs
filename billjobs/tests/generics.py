@@ -29,6 +29,15 @@ class GenericAPITest(APITestCase):
                 'HEAD': None,
                 'PATCH': None,
                 }
+        self.expected_content = {
+                'GET': None,
+                'POST': None,
+                'PUT': None,
+                'DELETE': None,
+                'OPTIONS': None,
+                'HEAD': None,
+                'PATCH': None,
+                }
 
     def status_code_is(self):
         for method, status_code in self.expected_status.items():
