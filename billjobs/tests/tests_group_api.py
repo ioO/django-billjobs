@@ -66,6 +66,7 @@ class AnonymousGroupAPITest(GenericAPITest):
                 'POST': 401,
                 'PUT': 401,
                 'DELETE': 401,
+                'HEAD': 401,
                 }
 
     def test_group_api_status_code(self):
