@@ -7,7 +7,7 @@ import io
 
 class GenericAPITest(APITestCase):
     """
-    Generic Test class to test an API endpoint
+    Generic TestCase class to test an API endpoint
     """
     fixtures = ['test_api_user.yaml']
 
