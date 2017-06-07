@@ -41,6 +41,8 @@ class GenericAPITest(APITestCase):
                         self.url, self.data['update'], format='json')
             elif method == 'DELETE':
                 response = self.client.delete(self.url, format='json')
+            elif method == 'HEAD':
+                response = self.client.head(self.url, format='json')
 
             self.assertEqual(response.status_code, status_code,
                     '{0} method expected status code {1}'.format(
