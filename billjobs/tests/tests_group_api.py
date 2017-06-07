@@ -24,9 +24,16 @@ class AnonymousGroupAPITest(GenericAPITest):
                 'OPTIONS': 401,
                 'PATCH': 401,
                 }
+        self.expected_content = {
+                'GET': {
+                    'detail': 'Authentication credentials were not provided.'},
+                }
 
     def test_group_api_status_code(self):
         self.status_code_is()
+
+    def test_group_api_content(self):
+        self.content_is()
 
 class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
     """
