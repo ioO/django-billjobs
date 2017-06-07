@@ -1,9 +1,60 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APITestCase
 import json
 import io
+
+class GenericAPITest(APITestCase):
+    """
+    Generic Test class to test an API endpoint
+    """
+    fixtures = ['test_api_user.yaml']
+
+    def setUp(self):
+        self.url = None
+        self.client = APIClient()
+        self.admin = User.objects.get(pk=1)
+        self.user = User.objects.get(pk=2)
+        self.data = {
+                'create': None,
+                'update': None,
+                }
+        self.expected_status = {
+                'GET': None,
+                'POST': None,
+                'PUT': None,
+                'DELETE': None,
+                'OPTIONS': None,
+                'HEAD': None,
+                'PATCH': None,
+                }
+
+    def status_code_is(self):
+        for method, status_code in self.expected_status.items():
+            if method == 'GET':
+                response = self.client.get(self.url, format='json')
+            elif method == 'POST':
+                response = self.client.post(
+                        self.url, self.data['create'], format='json')
+            elif method == 'PUT':
+                response = self.client.put(
+                        self.url, self.data['update'], format='json')
+            elif method == 'DELETE':
+                response = self.client.delete(self.url, format='json')
+            elif method == 'HEAD':
+                response = self.client.head(self.url, format='json')
+            elif method == 'OPTIONS':
+                response = self.client.options(self.url, format='json')
+            elif method == 'PATCH':
+                response = self.client.patch(self.url, format='json')
+
+
+            self.assertEqual(response.status_code, status_code,
+                    '{0} method expected status code {1}'.format(
+                        method, status_code)
+                    )
+
 
 class GenericAPI(TestCase):
     """
