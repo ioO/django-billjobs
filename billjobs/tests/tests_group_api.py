@@ -17,6 +17,12 @@ class GenericAPITest(APITestCase):
         self.user = User.objects.get(pk=2)
         self.expected_status = {
                 'GET': None,
+                'POST': None,
+                'PUT': None,
+                'DELETE': None,
+                'OPTION': None,
+                'HEAD': None,
+                'PATCH': None,
                 }
 
     def status_code_is(self):
