@@ -39,26 +39,42 @@ class GenericAPITest(APITestCase):
                 'PATCH': None,
                 }
 
+    def get_response(self, method):
+        """
+        Get a response from client
+
+        Parameters
+        ----------
+        method : string
+            The http method to use for the request
+
+        Returns
+        -------
+        A response from APIClient()
+        """
+
+        if method == 'GET':
+            response = self.client.get(self.url, format='json')
+        elif method == 'POST':
+            response = self.client.post(
+                    self.url, self.data['create'], format='json')
+        elif method == 'PUT':
+            response = self.client.put(
+                    self.url, self.data['update'], format='json')
+        elif method == 'DELETE':
+            response = self.client.delete(self.url, format='json')
+        elif method == 'HEAD':
+            response = self.client.head(self.url, format='json')
+        elif method == 'OPTIONS':
+            response = self.client.options(self.url, format='json')
+        elif method == 'PATCH':
+            response = self.client.patch(self.url, format='json')
+
+        return response
+
     def status_code_is(self):
         for method, status_code in self.expected_status.items():
-            if method == 'GET':
-                response = self.client.get(self.url, format='json')
-            elif method == 'POST':
-                response = self.client.post(
-                        self.url, self.data['create'], format='json')
-            elif method == 'PUT':
-                response = self.client.put(
-                        self.url, self.data['update'], format='json')
-            elif method == 'DELETE':
-                response = self.client.delete(self.url, format='json')
-            elif method == 'HEAD':
-                response = self.client.head(self.url, format='json')
-            elif method == 'OPTIONS':
-                response = self.client.options(self.url, format='json')
-            elif method == 'PATCH':
-                response = self.client.patch(self.url, format='json')
-
-
+            response = self.get_response(method)
             self.assertEqual(response.status_code, status_code,
                     '{0} method expected status code {1}'.format(
                         method, status_code)
