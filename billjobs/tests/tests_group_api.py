@@ -15,6 +15,9 @@ class GenericAPITest(APITestCase):
         self.client = APIClient()
         self.admin = User.objects.get(pk=1)
         self.user = User.objects.get(pk=2)
+        self.data = {
+                'create': None
+                }
         self.expected_status = {
                 'GET': None,
                 'POST': None,
@@ -29,6 +32,9 @@ class GenericAPITest(APITestCase):
         for method, status_code in self.expected_status.items():
             if method == 'GET':
                 response = self.client.get(self.url, format='json')
+            elif method == 'POST':
+                response = self.client.post(
+                        self.url, self.data['create'], format='json')
 
             self.assertEqual(response.status_code, status_code,
                 '{0} method expected status code {1}'.format(
