@@ -28,11 +28,12 @@ class GenericAPITest(APITestCase):
     def status_code_is(self):
         for method, status_code in self.expected_status.items():
             if method == 'GET':
-                self.status_code_get_is(status_code)
+                response = self.client.get(self.url, format='json')
 
-    def status_code_get_is(self, status_code):
-        response = self.client.get(self.url, format='json')
-        self.assertEqual(response.status_code, status_code)
+            self.assertEqual(response.status_code, status_code,
+                '{0} method expected status code {1}'.format(
+                    method, status_code)
+                )
 
 class GroupAPITest(GenericAPITest):
     """
