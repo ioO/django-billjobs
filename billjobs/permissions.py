@@ -22,7 +22,7 @@ class CustomGroupAPIPermission(permissions.BasePermission):
         elif request.method == 'POST':
             return request.user and request.user.is_staff
 
-        return True
+        return False
 
 class CustomGroupDetailAPIPermission(permissions.BasePermission):
     """
