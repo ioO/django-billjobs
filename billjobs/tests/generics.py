@@ -55,6 +55,16 @@ class GenericAPITest(APITestCase):
                         method, status_code)
                     )
 
+    def content_is(self):
+        """
+        Assert expected content is in response.data
+        """
+        for method, content in self.expected_content.items():
+            response = self.client.get(self.url, format='json')
+            for key, value in content.items():
+                self.assertEqual(response.data[key], value,
+                        '{0} key value is not {1}'.format(key, value)
+                        )
 
 class GenericAPI(TestCase):
     """
