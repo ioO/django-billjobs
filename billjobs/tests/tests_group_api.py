@@ -29,6 +29,8 @@ class AnonymousGroupAPITest(GenericAPITest):
                     'detail': 'Authentication credentials were not provided.'},
                 'POST': {
                     'detail': 'Authentication credentials were not provided.'},
+                'PUT': {
+                    'detail': 'Authentication credentials were not provided.'},
                 }
 
     def test_group_api_status_code(self):
