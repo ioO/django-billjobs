@@ -104,12 +104,13 @@ class GenericAPITest(APITestCase):
         Assert expected content is in response.data
         """
         for method, content in self.expected_content.items():
-            response = self.get_response(method)
-            for key, value in content.items():
-                self.assertEqual(response.data[key], value,
-                        '{0} method expected key "{1}" value'.format(
-                            method, key)
-                        )
+            with self.subTest(method=method, content=content):
+                response = self.get_response(method)
+                for key, value in content.items():
+                    self.assertEqual(response.data[key], value,
+                            '{0} method expected key "{1}" value'.format(
+                                method, key)
+                            )
 
 class GenericAPI(TestCase):
     """
