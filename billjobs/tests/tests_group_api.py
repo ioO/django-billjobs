@@ -5,7 +5,8 @@ from billjobs.tests.generics import GenericAPITest, GenericAPIStatusCode
 
 class AnonymousGroupAPITest(GenericAPITest):
     """
-    Test group api test
+    Tests status code and response content returned by /groups endpoint for
+    anonymous user.
     """
 
     def setUp(self):
