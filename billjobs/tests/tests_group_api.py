@@ -31,6 +31,14 @@ class AnonymousGroupAPITest(GenericAPITest):
                     'detail': 'Authentication credentials were not provided.'},
                 'PUT': {
                     'detail': 'Authentication credentials were not provided.'},
+                'DELETE': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'HEAD': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'OPTIONS': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'PATCH': {
+                    'detail': 'Authentication credentials were not provided.'},
                 }
 
     def test_group_api_status_code(self):
