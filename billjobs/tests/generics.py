@@ -93,14 +93,6 @@ class GenericAPITest(APITestCase):
                             method, key)
                         )
 
-    def test_status_code_get(self):
-        response = self.get_response('GET')
-        self.assertEqual(response.status_code, self.expected_status['GET'],
-                    '{0} method expected status code {1}'.format(
-                        'GET', self.expected_status['GET'])
-                    )
-
-
 class GenericAPI(TestCase):
     """
     A generic class for API test
