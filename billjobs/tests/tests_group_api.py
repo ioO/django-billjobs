@@ -27,6 +27,8 @@ class AnonymousGroupAPITest(GenericAPITest):
         self.expected_content = {
                 'GET': {
                     'detail': 'Authentication credentials were not provided.'},
+                'POST': {
+                    'detail': 'Authentication credentials were not provided.'},
                 }
 
     def test_group_api_status_code(self):
