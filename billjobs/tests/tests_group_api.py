@@ -51,6 +51,55 @@ class AnonymousGroupAPITest(GenericAPITest):
     def test_group_api_content(self):
         self.content_is()
 
+class AnonymousGroupDetailAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /groups/pk endpoint for
+    anonymous user.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('groups-detail-api', args=(1,))
+        self.data = {
+                'create': {'name': 'group name'},
+                'update': {'name': 'new name'}
+                }
+        self.expected_status = {
+                'GET': 401,
+                'POST': 401,
+                'PUT': 401,
+                'DELETE': 401,
+                'HEAD': 401,
+                'OPTIONS': 401,
+                'PATCH': 401,
+                }
+        self.expected_content = {
+                'GET': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'POST': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'PUT': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'DELETE': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'HEAD': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'OPTIONS': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'PATCH': {
+                    'detail': 'Authentication credentials were not provided.'},
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_group_api_status_code(self):
+        self.status_code_is()
+
+    def test_group_api_content(self):
+        self.content_is()
+
+
 class GroupAPIAnonymousStatusCode(GenericAPIStatusCode):
     """
     Tests status code returned by /groups endpoint for anonymous user
