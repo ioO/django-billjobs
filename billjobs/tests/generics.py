@@ -106,11 +106,15 @@ class GenericAPITest(APITestCase):
         for method, content in self.expected_content.items():
             with self.subTest(method=method, content=content):
                 response = self.get_response(method)
-                for key, value in content.items():
-                    self.assertEqual(response.data[key], value,
-                            '{0} method expected key "{1}" value'.format(
-                                method, key)
-                            )
+                if type(content) is list:
+                    for num in range(len(content)):
+                        self.assertDictEqual(content[num-1], response.data[num-1])
+                elif type(content) is dict:
+                    for key, value in content.items():
+                        self.assertEqual(response.data[key], value,
+                                '{0} method expected key "{1}" value'.format(
+                                    method, key)
+                                )
 
 class GenericAPI(TestCase):
     """
