@@ -46,6 +46,17 @@ class GenericAPITest(APITestCase):
         del self.url, self.client, self.admin, self.user, self.data, \
                 self.expected_status, self.expected_content
 
+    def force_authenticate(self, user):
+        """
+        Force authenticate of client with user
+
+        Parameters
+        ----------
+        user : Object
+            A django.contrib.models.User instance
+        """
+        self.client.force_authenticate(user=user)
+
     def get_response(self, method):
         """
         Get a response from client
