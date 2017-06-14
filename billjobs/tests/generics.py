@@ -39,6 +39,13 @@ class GenericAPITest(APITestCase):
                 'PATCH': None,
                 }
 
+    def tearDown(self):
+        """
+        Delete variables after each test
+        """
+        del self.url, self.client, self.admin, self.user, self.data, \
+                self.expected_status, self.expected_content
+
     def get_response(self, method):
         """
         Get a response from client
