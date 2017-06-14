@@ -74,11 +74,12 @@ class GenericAPITest(APITestCase):
 
     def status_code_is(self):
         for method, status_code in self.expected_status.items():
-            response = self.get_response(method)
-            self.assertEqual(response.status_code, status_code,
-                    '{0} method expected status code {1}'.format(
-                        method, status_code)
-                    )
+            with self.subTest(method=method, status_code=status_code):
+                response = self.get_response(method)
+                self.assertEqual(response.status_code, status_code,
+                        '{0} method expected status code {1}'.format( method,
+                            status_code)
+                        )
 
     def content_is(self):
         """
@@ -91,6 +92,14 @@ class GenericAPITest(APITestCase):
                         '{0} method expected key "{1}" value'.format(
                             method, key)
                         )
+
+    def test_status_code_get(self):
+        response = self.get_response('GET')
+        self.assertEqual(response.status_code, self.expected_status['GET'],
+                    '{0} method expected status code {1}'.format(
+                        'GET', self.expected_status['GET'])
+                    )
+
 
 class GenericAPI(TestCase):
     """
