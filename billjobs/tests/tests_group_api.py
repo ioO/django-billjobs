@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework import status
 from billjobs.tests.generics import GenericAPITest, GenericAPIStatusCode
+import collections
 
 class AnonymousGroupAPITest(GenericAPITest):
     """
@@ -123,20 +124,42 @@ class UserGroupAPITest(GenericAPITest):
                 'PATCH': 403,
                 }
         self.expected_content = {
-                'GET': {
-                    'detail': 'Authentication credentials were not provided.'},
+                'GET': [
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/1/",
+                        "name": "user-group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/2/",
+                        "name": "linus-group",
+                        "permissions": []
+                        })
+                    ],
                 'POST': {
-                    'detail': 'Authentication credentials were not provided.'},
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
                 'PUT': {
-                    'detail': 'Authentication credentials were not provided.'},
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
                 'DELETE': {
-                    'detail': 'Authentication credentials were not provided.'},
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
                 'HEAD': {
-                    'detail': 'Authentication credentials were not provided.'},
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
                 'OPTIONS': {
-                    'detail': 'Authentication credentials were not provided.'},
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
                 'PATCH': {
-                    'detail': 'Authentication credentials were not provided.'},
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
                 }
 
     def tearDown(self):
@@ -146,6 +169,5 @@ class UserGroupAPITest(GenericAPITest):
         self.status_code_is()
 
     def test_group_api_content(self):
-        pass
-        #self.content_is()
+        self.content_is()
 
