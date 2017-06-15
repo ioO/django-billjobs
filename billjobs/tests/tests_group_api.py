@@ -178,3 +178,75 @@ class UserGroupAPITest(GenericAPITest):
         self.force_authenticate(user=self.nogroupuser)
         self.expected_content['GET'] = list()
         self.content_is()
+
+class UserGroupDetailAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /groups endpoint for
+    authenticated user.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('groups-detail-api', args=(2,))
+        self.force_authenticate(user=self.bill)
+        self.data = {
+                'create': {'name': 'group name'},
+                'update': {'name': 'bill jobs'}
+                }
+        self.expected_status = {
+                'GET': 200,
+                'POST': 403,
+                'PUT': 403,
+                'DELETE': 403,
+                'HEAD': 403,
+                'OPTIONS': 403,
+                'PATCH': 403,
+                }
+        self.expected_content = {
+                'GET': {
+                    "url": "http://testserver/billjobs/api/1.0/groups/2/",
+                    "name": "user group",
+                    "permissions": []
+                    },
+                'POST': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
+                'PUT': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
+                'DELETE': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
+                'HEAD': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
+                'OPTIONS': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
+                'PATCH': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                    },
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_group_api_status_code(self):
+        self.status_code_is()
+
+    def test_group_api_content(self):
+        self.content_is()
+
+    def test_user_with_no_group_response_data(self):
+        """
+        Test the data in response when the user has no group
+        """
+        self.force_authenticate(user=self.nogroupuser)
+        self.expected_content['GET'] = dict()
+        self.content_is()
