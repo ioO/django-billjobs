@@ -250,3 +250,12 @@ class UserGroupDetailAPITest(GenericAPITest):
         self.force_authenticate(user=self.nogroupuser)
         self.expected_content['GET'] = dict()
         self.content_is()
+
+    def test_user_can_not_access_group_he_do_not_belongs(self):
+        """
+        Test an authenticated user can not access group of another user
+        Bill can not access group detail of admin
+        """
+        self.url = reverse('groups-detail-api', args=(1,))
+        self.expected_status['GET'] = 403
+        self.status_code_is()
