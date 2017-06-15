@@ -1,0 +1,21 @@
+---
+- model: auth.group
+  pk: 1
+  fields:
+    name: admin group
+
+- model: auth.group
+  pk: 2
+  fields:
+    name: user group
+
+- model: auth.group
+  pk: 3
+  fields:
+    name: bill group
+
+- model: auth.group
+  pk: 4
+  fields:
+    name: steve group
+
