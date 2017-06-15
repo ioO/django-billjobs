@@ -33,7 +33,7 @@ class GroupAPI(APIView):
         """
         List groups only accessible by admin
         """
-        groups = Group.objects.all()
+        groups = Group.objects.filter(user=request.user)
         serializer = GroupSerializer(groups, context={'request': request},
                 many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
