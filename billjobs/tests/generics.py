@@ -9,13 +9,16 @@ class GenericAPITest(APITestCase):
     """
     Generic TestCase class to test an API endpoint
     """
-    fixtures = ['test_api_user.yaml']
+    fixtures = ['test_api_010_group.yaml', 'test_api_user.yaml']
 
     def setUp(self):
         self.url = None
         self.client = APIClient()
-        self.admin = User.objects.get(pk=1)
-        self.user = User.objects.get(pk=2)
+        self.superuser = User.objects.get(pk=1)
+        self.admin = User.objects.get(pk=2)
+        self.bill = User.objects.get(pk=3)
+        self.steve = User.objects.get(pk=4)
+        self.nogroupuser = User.objects.get(pk=5)
         self.data = {
                 'create': None,
                 'update': None,
@@ -43,8 +46,9 @@ class GenericAPITest(APITestCase):
         """
         Delete variables after each test
         """
-        del self.url, self.client, self.admin, self.user, self.data, \
-                self.expected_status, self.expected_content
+        del self.url, self.client, self.admin, self.bill, self.steve, \
+                self.nogroupuser, self.data, self.expected_status, \
+                self.expected_content
 
     def force_authenticate(self, user):
         """
