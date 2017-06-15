@@ -39,13 +39,15 @@ class CustomGroupDetailAPIPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         """
-        Give permission for admin or user to access API
+        Define permissions base on request.method
         """
-        return (
-                request.user and
-                request.user.is_staff or
-                is_authenticated(request.user)
-                )
+        if request.method == 'GET':
+            return (
+                    request.user and
+                    request.user.is_staff or
+                    is_authenticated(request.user)
+                    )
+        return False
 
     def has_object_permission(self, request, view, obj):
         """
