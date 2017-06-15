@@ -171,3 +171,10 @@ class UserGroupAPITest(GenericAPITest):
     def test_group_api_content(self):
         self.content_is()
 
+    def test_user_with_no_group_response_data(self):
+        """
+        Test the data in response when the user has no group
+        """
+        self.force_authenticate(user=self.nogroupuser)
+        self.expected_content['GET'] = list()
+        self.content_is()
