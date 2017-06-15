@@ -109,7 +109,7 @@ class UserGroupAPITest(GenericAPITest):
     def setUp(self):
         super().setUp()
         self.url = reverse('groups-api')
-        self.force_authenticate(user=self.user)
+        self.force_authenticate(user=self.bill)
         self.data = {
                 'create': {'name': 'group name'},
                 'update': {'name': 'new name'}
@@ -126,13 +126,13 @@ class UserGroupAPITest(GenericAPITest):
         self.expected_content = {
                 'GET': [
                     collections.OrderedDict({
-                        "url": "http://testserver/billjobs/api/1.0/groups/1/",
-                        "name": "user-group",
+                        "url": "http://testserver/billjobs/api/1.0/groups/2/",
+                        "name": "user group",
                         "permissions": []
                         }),
                     collections.OrderedDict({
-                        "url": "http://testserver/billjobs/api/1.0/groups/2/",
-                        "name": "linus-group",
+                        "url": "http://testserver/billjobs/api/1.0/groups/3/",
+                        "name": "bill group",
                         "permissions": []
                         })
                     ],
