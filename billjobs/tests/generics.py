@@ -111,6 +111,7 @@ class GenericAPITest(APITestCase):
             with self.subTest(method=method, content=content):
                 response = self.get_response(method)
                 if type(content) is list:
+                    self.assertEqual(len(content), len(response.data))
                     for num in range(len(content)):
                         self.assertDictEqual(content[num-1], response.data[num-1])
                 elif type(content) is dict:
