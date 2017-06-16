@@ -258,4 +258,9 @@ class UserGroupDetailAPITest(GenericAPITest):
         """
         self.url = reverse('groups-detail-api', args=(1,))
         self.expected_status['GET'] = 403
+        self.expected_content['GET'] = {
+                'detail':
+                    'You do not have permission to perform this action.'
+                }
         self.status_code_is()
+        self.content_is()
