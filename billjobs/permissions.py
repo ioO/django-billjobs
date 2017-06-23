@@ -48,6 +48,10 @@ class CustomGroupDetailAPIPermission(permissions.BasePermission):
                     request.user.is_staff or
                     is_authenticated(request.user)
                     )
+        elif request.method in ('POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS',
+                'HEAD'):
+            return request.user and request.user.is_staff
+
         return False
 
     def has_object_permission(self, request, view, obj):
