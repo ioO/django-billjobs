@@ -264,3 +264,118 @@ class UserGroupDetailAPITest(GenericAPITest):
                 }
         self.status_code_is()
         self.content_is()
+
+class AdminGroupAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /groups endpoint for
+    authenticated admin.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('groups-api')
+        self.force_authenticate(user=self.admin)
+        self.data = {
+                'create': {'name': 'new group'},
+                'update': {'name': 'admin jobs'}
+                }
+        self.expected_status = {
+                'GET': 200,
+                'POST': 201,
+                'PUT': 405,
+                'DELETE': 405,
+                'HEAD': 200,
+                'OPTIONS': 200,
+                'PATCH': 405,
+                }
+        self.expected_content = {
+                'GET': [
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/1/",
+                        "name": "admin group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/2/",
+                        "name": "user group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/3/",
+                        "name": "bill group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/4/",
+                        "name": "steve group",
+                        "permissions": []
+                        }),
+                    ],
+                'POST': {
+                    "url": "http://testserver/billjobs/api/1.0/groups/5/",
+                    "name": "new group",
+                    "permissions": []
+                    },
+                'PUT': {
+                    'detail':
+                        'Method "PUT" not allowed.'
+                    },
+                'DELETE': {
+                    'detail':
+                        'Method "DELETE" not allowed.'
+                    },
+                'HEAD': [
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/1/",
+                        "name": "admin group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/2/",
+                        "name": "user group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/3/",
+                        "name": "bill group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/4/",
+                        "name": "steve group",
+                        "permissions": []
+                        }),
+                    collections.OrderedDict({
+                        "url": "http://testserver/billjobs/api/1.0/groups/5/",
+                        "name": "new group",
+                        "permissions": []
+                        }),
+                    ],
+                'OPTIONS': {
+                    'name': 'Group Api',
+                    'description': 'API endpoint to list or create groups',
+                    'renders': [
+                        'application/json',
+                        'text/html'
+                        ],
+                    'parses': [
+                        'application/json',
+                        'application/x-www-form-urlencoded',
+                        'multipart/form-data'
+                        ]
+                    },
+                'PATCH': {
+                    'detail':
+                        'Method "PATCH" not allowed.'
+                    },
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_group_api_status_code(self):
+        self.status_code_is()
+
+    def test_group_api_content(self):
+        self.content_is()
+
