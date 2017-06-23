@@ -156,10 +156,10 @@ class UserAdminAPIResponseContent(GenericAPIResponseContent):
     def test_user_admin_get_list(self):
         """
         Test api user admin endpoints with GET method return a list
-        Fixtures data contain 3 users, we expect a list of 3 user in json
+        Fixtures data contain 4 users, we expect a list of 4 user in json
         """
         json_data = super().get_json('GET', self.url)
-        self.assertEqual(len(json_data), 3)
+        self.assertEqual(len(json_data), 4)
 
     def test_user_admin_post_return_user_information(self):
         """

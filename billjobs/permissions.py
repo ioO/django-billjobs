@@ -1,6 +1,70 @@
 from rest_framework import permissions
 from rest_framework.compat import is_authenticated
 
+class CustomGroupAPIPermission(permissions.BasePermission):
+    """
+    Set custom permission for GroupAPI
+
+    * GET   : accessible by admin and user
+    * POST  : only accessible by admin
+    """
+
+    def has_permission(self, request, view):
+        """
+        Define permission based on request
+        """
+        if request.method == 'GET':
+            return (
+                request.user and
+                request.user.is_staff or
+                is_authenticated(request.user)
+                )
+        elif request.method in ('POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS',
+                'HEAD'):
+            return request.user and request.user.is_staff
+
+        return False
+
+class CustomGroupDetailAPIPermission(permissions.BasePermission):
+    """
+    Set custom permission for group detail API
+
+    * GET :
+        * admin can access all groups instance
+        * current user only his groups instances
+        * public is forbidden
+    * UPDATE, DELETE :
+        * admin can access all groups instance
+        * current user and public is forbidden
+    """
+
+    def has_permission(self, request, view):
+        """
+        Define permissions base on request.method
+        """
+        if request.method == 'GET':
+            return (
+                    request.user and
+                    request.user.is_staff or
+                    is_authenticated(request.user)
+                    )
+        elif request.method in ('POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS',
+                'HEAD'):
+            return request.user and request.user.is_staff
+
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        """
+        User instance in request is member of the group in obj instance
+        Allow object access only for GET method for user
+        """
+        if request.method == 'GET':
+            for group in request.user.groups.all():
+                if group.id == obj.id:
+                    return True
+        return request.user.is_staff
+
 class CustomUserAPIPermission(permissions.BasePermission):
     """
     Set custom permission for UserAPI

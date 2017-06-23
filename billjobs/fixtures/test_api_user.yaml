@@ -2,23 +2,49 @@
 - model: auth.user
   pk: 1
   fields:
-    username: bill
-    email: bill@billjobs.org
+    username: superuser
+    email: superuser@billjobs.org
     # password: jobs
     password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
     is_staff: True
+    is_superuser: True
 
 - model: auth.user
   pk: 2
   fields:
-    username: jobs
-    email: jobs@billjobs.org
-     # password: jobs
+    username: admin
+    email: admin@billjobs.org
+    # password: jobs
     password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
-    is_staff: False
+    is_staff: True
+    is_superuser: False
+    groups: [1,]
 
 - model: auth.user
   pk: 3
   fields:
+    username: bill
+    email: bill@billjobs.org
+     # password: jobs
+    password: pbkdf2_sha256$30000$J1xYbnHgWv7g$LcXs7lgyFtmoDKUn0vzi15jWsLCSDgr6ikOj2/1uNl4=
+    is_staff: False
+    is_superuser: False
+    groups: [2,3]
+
+- model: auth.user
+  pk: 4
+  fields:
     username: steve
     email: steve@billjobs.org
+    is_staff: False
+    is_superuser: False
+    groups: [4,]
+
+- model: auth.user
+  pk: 5
+  fields:
+    username: no-group
+    email: no-group@billjobs.org
+    is_staff: False
+    is_superuser: False
+
