@@ -31,9 +31,12 @@ class GroupAPI(APIView):
 
     def get(self, request, format=None):
         """
-        List groups only accessible by admin
+        List groups
         """
-        groups = Group.objects.filter(user=request.user)
+        if request.user.is_staff is True:
+            groups = Group.objects.all()
+        else:
+            groups = Group.objects.filter(user=request.user)
         serializer = GroupSerializer(groups, context={'request': request},
                 many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
