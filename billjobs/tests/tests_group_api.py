@@ -379,3 +379,78 @@ class AdminGroupAPITest(GenericAPITest):
     def test_group_api_content(self):
         self.content_is()
 
+class AdminGroupDetailAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /groups/pk endpoint for
+    authenticated admin.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('groups-detail-api', args=(4,))
+        self.force_authenticate(user=self.admin)
+        self.data = {
+                'create': {'name': 'new group'},
+                'update': {'name': 'admin jobs'}
+                }
+        self.expected_status = {
+                'GET': 200,
+                'POST': 405,
+                'PUT': 200,
+                'DELETE': 204,
+                'HEAD': 404,
+                'OPTIONS': 200,
+                'PATCH': 405,
+                }
+        self.expected_content = {
+                'GET': {
+                    "url": "http://testserver/billjobs/api/1.0/groups/4/",
+                    "name": "steve group",
+                    "permissions": []
+                    },
+                'POST': {
+                    'detail':
+                        'Method "POST" not allowed.'
+                    },
+                'PUT': {
+                    "url": "http://testserver/billjobs/api/1.0/groups/4/",
+                    "name": "admin jobs",
+                    "permissions": []
+                    },
+                'DELETE': None,
+                'OPTIONS': {
+                    'name': 'Group Detail Api',
+                    'description': 'API endpoint that allow admin and user to retrieve, update and delete a \ngroup',
+                    'renders': [
+                        'application/json',
+                        'text/html'
+                        ],
+                    'parses': [
+                        'application/json',
+                        'application/x-www-form-urlencoded',
+                        'multipart/form-data'
+                        ]
+                    },
+                'PATCH': {
+                    'detail':
+                        'Method "PATCH" not allowed.'
+                    },
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_group_api_status_code(self):
+        self.status_code_is()
+
+    def test_group_api_content(self):
+        self.content_is()
+
+    def test_group_detail_api_head_status(self):
+        """
+        Generic class do a DELETE before a HEAD so the object is not existing
+        This test only do a HEAD request
+        """
+        self.expected_status = {'HEAD': 200}
+        self.status_code_is()
+
