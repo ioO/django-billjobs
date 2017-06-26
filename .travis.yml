@@ -11,4 +11,5 @@ install:
 # command to run tests
 script:
   - python manage.py makemigrations
-  - python manage.py test
+  - python manage.py collectstatic --noinput
+  - coverage run --source="." manage.py test billjobs
