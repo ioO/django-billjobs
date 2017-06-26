@@ -60,7 +60,57 @@ class AnonymousUserAPITest(GenericAPITest):
     def test_group_api_content(self):
         self.content_is()
 
+class AnonymousUserDetailAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /users/pk endpoint for
+    anonymous user.
+    """
 
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('users-detail-api', args=(1,))
+        self.data = {
+                'create': {
+                    'username': 'foo',
+                    'password': 'bar',
+                    'email': 'foo@bar.org'
+                    },
+                'update': {'username': 'bar'}
+                }
+        self.expected_status = {
+                'GET': 401,
+                'POST': 401,
+                'PUT': 401,
+                'DELETE': 401,
+                'HEAD': 401,
+                'OPTIONS': 401,
+                'PATCH': 401,
+                }
+        self.expected_content = {
+                'GET': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'POST': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'PUT': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'DELETE': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'HEAD': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'OPTIONS': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'PATCH': {
+                    'detail': 'Authentication credentials were not provided.'},
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_group_api_status_code(self):
+        self.status_code_is()
+
+    def test_group_api_content(self):
+        self.content_is()
 #class UserAdminAPIStatusCode(GenericAPIStatusCode):
 #    """
 #    Test status code returned by endpoints
