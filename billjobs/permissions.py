@@ -85,7 +85,7 @@ class CustomUserAPIPermission(permissions.BasePermission):
             # is public
             return True
         # all other methods are accepted to allow 405 response
-        return True
+        return False
 
 class CustomUserDetailAPIPermission(permissions.BasePermission):
     """
