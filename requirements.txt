@@ -11,6 +11,7 @@ args==0.1.0               # via clint
 babel==2.4.0              # via sphinx
 click==6.6                # via pip-tools
 clint==0.5.1              # via twine
+coverage==4.4.1
 django-debug-toolbar==1.7
 django==1.11
 djangorestframework==3.6.2
