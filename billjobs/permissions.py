@@ -71,6 +71,7 @@ class CustomUserAPIPermission(permissions.BasePermission):
 
     * GET   : accessible by admin and authenticated users
     * POST  : is public, everyone can create a user
+    * PUT, DELETE, PATCH, OPTIONS, HEAD : accessible by admin
     """
 
     def has_permission(self, request, view):
@@ -87,8 +88,8 @@ class CustomUserAPIPermission(permissions.BasePermission):
         elif request.method == 'POST':
             # is public
             return True
-        # all other methods are accepted to allow 405 response
-        return False
+        # other HTTP method allowed to admin, others get 401/403
+        return request.user and request.user.is_staff
 
 class CustomUserDetailAPIPermission(permissions.BasePermission):
     """
