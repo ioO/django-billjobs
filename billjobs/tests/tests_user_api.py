@@ -19,7 +19,7 @@ class AnonymousUserAPITest(GenericAPITest):
                     'password': 'bar',
                     'email': 'foo@bar.org'
                     },
-                'update': {'name': 'new name'}
+                'update': {'username': 'bar'}
                 }
         self.expected_status = {
                 'GET': 401,
