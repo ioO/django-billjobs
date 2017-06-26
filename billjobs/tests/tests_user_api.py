@@ -111,6 +111,67 @@ class AnonymousUserDetailAPITest(GenericAPITest):
 
     def test_group_api_content(self):
         self.content_is()
+
+class UserUserAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /users endpoint for
+    authenticated user.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.url = reverse('users-api')
+        self.force_authenticate(user=self.bill)
+        self.data = {
+                'create': {
+                    'username': 'foo',
+                    'password': 'bar',
+                    'email': 'foo@bar.org'
+                    },
+                'update': {'username': 'bar'}
+                }
+        self.expected_status = {
+                'GET': 200,
+                'POST': 201,
+                'PUT': 403,
+                'DELETE': 403,
+                'HEAD': 403,
+                'OPTIONS': 403,
+                'PATCH': 403,
+                }
+        self.expected_content = {
+                'GET': {
+                    'url': 'http://testserver/billjobs/api/1.0/users/3/',
+                    'username': 'bill',
+                    'email': 'bill@billjobs.org'
+                    },
+                'POST': {
+                    'url': 'http://testserver/billjobs/api/1.0/users/6/',
+                    'username': 'foo',
+                    'password': 'bar',
+                    'email': 'foo@bar.org'
+                    },
+                'PUT': {
+                    'detail': 'You do not have permission to perform this action.'},
+                'DELETE': {
+                    'detail': 'You do not have permission to perform this action.'},
+                'HEAD': {
+                    'detail': 'You do not have permission to perform this action.'},
+                'OPTIONS': {
+                    'detail': 'You do not have permission to perform this action.'},
+                'PATCH': {
+                    'detail': 'You do not have permission to perform this action.'},
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_user_api_status_code(self):
+        self.status_code_is()
+
+    def test_user_api_content(self):
+        self.content_is()
+
 #class UserAdminAPIStatusCode(GenericAPIStatusCode):
 #    """
 #    Test status code returned by endpoints
