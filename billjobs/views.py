@@ -105,6 +105,8 @@ class UserAPI(APIView):
         """
         if request.user.is_staff is True:
             users = User.objects.all()
+            serializer = UserSerializer(users, context={'request': request},
+                    many=True)
         else:
             users = User.objects.get(pk=request.user.id)
             serializer = UserSerializer(users, context={'request': request})
