@@ -1,12 +1,8 @@
 from django.urls import reverse
-from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework import status
-from rest_framework.test import APIClient, APIRequestFactory, \
-        force_authenticate
-from billjobs.views import UserAPI, UserDetailAPI
-from billjobs.tests.generics import GenericAPIStatusCode, \
-        GenericAPIResponseContent
+from billjobs.tests.generics import GenericAPITest, GenericAPIStatusCode
+import collections
 
 class UserAdminAPIStatusCode(GenericAPIStatusCode):
     """
