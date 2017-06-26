@@ -69,7 +69,7 @@ class CustomUserAPIPermission(permissions.BasePermission):
     """
     Set custom permission for UserAPI
 
-    * GET   : only accessible by admin
+    * GET   : accessible by admin and authenticated users
     * POST  : is public, everyone can create a user
     """
 
@@ -78,8 +78,11 @@ class CustomUserAPIPermission(permissions.BasePermission):
         Define permission based on request method
         """
         if request.method == 'GET':
-            # admin only
-            return request.user and request.user.is_staff
+            return (
+                request.user and
+                request.user.is_staff or
+                is_authenticated(request.user)
+                )
 
         elif request.method == 'POST':
             # is public
