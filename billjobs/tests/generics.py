@@ -41,6 +41,14 @@ class GenericAPITest(APITestCase):
                 'HEAD': None,
                 'PATCH': None,
                 }
+        self.error_message = {
+                'authenticated': {
+                    'detail': 'Authentication credentials were not provided.'},
+                'forbidden': {
+                    'detail':
+                        'You do not have permission to perform this action.'
+                        },
+                }
 
     def tearDown(self):
         """

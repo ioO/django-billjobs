@@ -27,20 +27,13 @@ class AnonymousGroupAPITest(GenericAPITest):
                 'PATCH': 401,
                 }
         self.expected_content = {
-                'GET': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'POST': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'PUT': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'DELETE': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'HEAD': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'OPTIONS': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'PATCH': {
-                    'detail': 'Authentication credentials were not provided.'},
+                'GET': self.error_message['authenticated'],
+                'POST': self.error_message['authenticated'],
+                'PUT': self.error_message['authenticated'],
+                'DELETE': self.error_message['authenticated'],
+                'HEAD': self.error_message['authenticated'],
+                'OPTIONS': self.error_message['authenticated'],
+                'PATCH': self.error_message['authenticated'],
                 }
 
     def tearDown(self):
@@ -75,20 +68,13 @@ class AnonymousGroupDetailAPITest(GenericAPITest):
                 'PATCH': 401,
                 }
         self.expected_content = {
-                'GET': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'POST': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'PUT': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'DELETE': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'HEAD': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'OPTIONS': {
-                    'detail': 'Authentication credentials were not provided.'},
-                'PATCH': {
-                    'detail': 'Authentication credentials were not provided.'},
+                'GET': self.error_message['authenticated'],
+                'POST': self.error_message['authenticated'],
+                'PUT': self.error_message['authenticated'],
+                'DELETE': self.error_message['authenticated'],
+                'HEAD': self.error_message['authenticated'],
+                'OPTIONS': self.error_message['authenticated'],
+                'PATCH': self.error_message['authenticated'],
                 }
 
     def tearDown(self):
@@ -136,30 +122,12 @@ class UserGroupAPITest(GenericAPITest):
                         "permissions": []
                         })
                     ],
-                'POST': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'PUT': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'DELETE': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'HEAD': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'OPTIONS': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'PATCH': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
+                'POST': self.error_message['forbidden'],
+                'PUT': self.error_message['forbidden'],
+                'DELETE': self.error_message['forbidden'],
+                'HEAD': self.error_message['forbidden'],
+                'OPTIONS': self.error_message['forbidden'],
+                'PATCH': self.error_message['forbidden'],
                 }
 
     def tearDown(self):
@@ -208,30 +176,12 @@ class UserGroupDetailAPITest(GenericAPITest):
                     "name": "user group",
                     "permissions": []
                     },
-                'POST': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'PUT': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'DELETE': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'HEAD': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'OPTIONS': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
-                'PATCH': {
-                    'detail':
-                        'You do not have permission to perform this action.'
-                    },
+                'POST': self.error_message['forbidden'],
+                'PUT': self.error_message['forbidden'],
+                'DELETE': self.error_message['forbidden'],
+                'HEAD': self.error_message['forbidden'],
+                'OPTIONS': self.error_message['forbidden'],
+                'PATCH': self.error_message['forbidden'],
                 }
 
     def tearDown(self):
@@ -258,10 +208,7 @@ class UserGroupDetailAPITest(GenericAPITest):
         """
         self.url = reverse('groups-detail-api', args=(1,))
         self.expected_status['GET'] = 403
-        self.expected_content['GET'] = {
-                'detail':
-                    'You do not have permission to perform this action.'
-                }
+        self.expected_content['GET'] = self.error_message['forbidden']
         self.status_code_is()
         self.content_is()
 
