@@ -54,10 +54,10 @@ class AnonymousUserAPITest(GenericAPITest):
     def tearDown(self):
         super().tearDown()
 
-    def test_group_api_status_code(self):
+    def test_user_api_status_code(self):
         self.status_code_is()
 
-    def test_group_api_content(self):
+    def test_user_api_content(self):
         self.content_is()
 
 class AnonymousUserDetailAPITest(GenericAPITest):
@@ -106,10 +106,10 @@ class AnonymousUserDetailAPITest(GenericAPITest):
     def tearDown(self):
         super().tearDown()
 
-    def test_group_api_status_code(self):
+    def test_user_detail_api_status_code(self):
         self.status_code_is()
 
-    def test_group_api_content(self):
+    def test_user_detail_api_content(self):
         self.content_is()
 
 class UserUserAPITest(GenericAPITest):
