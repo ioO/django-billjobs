@@ -103,11 +103,13 @@ class CustomUserDetailAPIPermission(permissions.BasePermission):
         """
         Give permission for admin or user to access API
         """
-        return (
+        if request.method in ('GET', 'PUT', 'DELETE'):
+            return (
                 request.user and
                 request.user.is_staff or
                 is_authenticated(request.user)
                 )
+        return False
 
     def has_object_permission(self, request, view, obj):
         """
