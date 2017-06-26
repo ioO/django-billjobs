@@ -99,9 +99,15 @@ class UserAPI(APIView):
     permission_classes = (CustomUserAPIPermission,)
 
     def get(self, request, format=None):
-        users = User.objects.all()
-        serializer = UserSerializer(users, context={'request': request},
-                many=True)
+        """
+        List users for admin
+        Retrieve user for authenticated user
+        """
+        if request.user.is_staff is True:
+            users = User.objects.all()
+        else:
+            users = User.objects.get(pk=request.user.id)
+            serializer = UserSerializer(users, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
