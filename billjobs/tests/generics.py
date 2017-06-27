@@ -41,6 +41,8 @@ class GenericAPITest(APITestCase):
                 'HEAD': None,
                 'PATCH': None,
                 }
+        # Use HTTP method as dict key
+        self.expected_length = {}
         self.error_message = {
                 '401': {
                     'detail': 'Authentication credentials were not provided.'},
@@ -116,6 +118,21 @@ class GenericAPITest(APITestCase):
                         '{0} method expected status code {1}'.format( method,
                             status_code)
                         )
+
+    def content_len_is(self):
+        """
+        Assert expected content length in response.data
+        """
+        for method, length in self.expected_length.items():
+            with self.subTest(method=method, length=length):
+                response = self.get_response(method)
+                #response is list we want the size of list
+                if type(response.data) is list:
+                    self.assertEqual(length, len(response.data))
+                #response is dict we do not test length of dict 
+                #(too unpredictable)
+                elif type(response.data) is dict:
+                    self.assertEqual(length, 1)
 
     def content_is(self):
         """
