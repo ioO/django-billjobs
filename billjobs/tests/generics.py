@@ -42,12 +42,18 @@ class GenericAPITest(APITestCase):
                 'PATCH': None,
                 }
         self.error_message = {
-                'authenticated': {
+                '401': {
                     'detail': 'Authentication credentials were not provided.'},
-                'forbidden': {
+                '403': {
                     'detail':
-                        'You do not have permission to perform this action.'
-                        },
+                        'You do not have permission to perform this action.'},
+                '405_GET': {'detail': 'Method "GET" not allowed.'},
+                '405_POST': {'detail': 'Method "POST" not allowed.'},
+                '405_PUT': {'detail': 'Method "PUT" not allowed.'},
+                '405_DELETE': {'detail': 'Method "DELETE" not allowed.'},
+                '405_PATCH': {'detail': 'Method "PATCH" not allowed.'},
+                '405_OPTIONS': {'detail': 'Method "OPTIONS" not allowed.'},
+                '405_HEAD': {'detail': 'Method "HEAD" not allowed.'},
                 }
 
     def tearDown(self):
