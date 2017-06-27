@@ -129,7 +129,7 @@ class GenericAPITest(APITestCase):
                 #response is list we want the size of list
                 if type(response.data) is list:
                     self.assertEqual(length, len(response.data))
-                #response is dict we do not test length of dict 
+                #response is dict we do not test length of dict
                 #(too unpredictable)
                 elif type(response.data) is dict:
                     self.assertEqual(length, 1)
@@ -141,16 +141,37 @@ class GenericAPITest(APITestCase):
         for method, content in self.expected_content.items():
             with self.subTest(method=method, content=content):
                 response = self.get_response(method)
-                if type(content) is list:
-                    self.assertEqual(len(content), len(response.data))
+                if type(response.data) is list:
                     for num in range(len(content)):
-                        self.assertDictEqual(content[num-1], response.data[num-1])
-                elif type(content) is dict:
-                    for key, value in content.items():
-                        self.assertEqual(response.data[key], value,
-                                '{0} method expected key "{1}" value'.format(
-                                    method, key)
-                                )
+                            self.assert_content(
+                                    content[num-1],
+                                    response.data[num-1],
+                                    method
+                                    )
+                elif type(response.data) is dict:
+                    self.assert_content(content, response.data, method)
+
+    def assert_content(self, content, data, method):
+        """
+        Assert dictionary value for each key are equals
+
+        Parameters
+        ----------
+        content : dict
+            A dictionary of expected content
+        data: dict
+            A dictionary from response
+        method : string
+            HTTP method for error message
+
+        Returns
+        -------
+        the result of assertEqual
+        """
+        for key, value in content.items():
+            self.assertEqual(data[key], value,
+                    '{0} method expected key "{1}" value'.format(method, key)
+                    )
 
 class GenericAPI(TestCase):
     """
