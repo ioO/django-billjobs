@@ -27,13 +27,13 @@ class AnonymousGroupAPITest(GenericAPITest):
                 'PATCH': 401,
                 }
         self.expected_content = {
-                'GET': self.error_message['authenticated'],
-                'POST': self.error_message['authenticated'],
-                'PUT': self.error_message['authenticated'],
-                'DELETE': self.error_message['authenticated'],
-                'HEAD': self.error_message['authenticated'],
-                'OPTIONS': self.error_message['authenticated'],
-                'PATCH': self.error_message['authenticated'],
+                'GET': self.error_message['401'],
+                'POST': self.error_message['401'],
+                'PUT': self.error_message['401'],
+                'DELETE': self.error_message['401'],
+                'HEAD': self.error_message['401'],
+                'OPTIONS': self.error_message['401'],
+                'PATCH': self.error_message['401'],
                 }
 
     def tearDown(self):
@@ -68,13 +68,13 @@ class AnonymousGroupDetailAPITest(GenericAPITest):
                 'PATCH': 401,
                 }
         self.expected_content = {
-                'GET': self.error_message['authenticated'],
-                'POST': self.error_message['authenticated'],
-                'PUT': self.error_message['authenticated'],
-                'DELETE': self.error_message['authenticated'],
-                'HEAD': self.error_message['authenticated'],
-                'OPTIONS': self.error_message['authenticated'],
-                'PATCH': self.error_message['authenticated'],
+                'GET': self.error_message['401'],
+                'POST': self.error_message['401'],
+                'PUT': self.error_message['401'],
+                'DELETE': self.error_message['401'],
+                'HEAD': self.error_message['401'],
+                'OPTIONS': self.error_message['401'],
+                'PATCH': self.error_message['401'],
                 }
 
     def tearDown(self):
@@ -122,12 +122,12 @@ class UserGroupAPITest(GenericAPITest):
                         "permissions": []
                         })
                     ],
-                'POST': self.error_message['forbidden'],
-                'PUT': self.error_message['forbidden'],
-                'DELETE': self.error_message['forbidden'],
-                'HEAD': self.error_message['forbidden'],
-                'OPTIONS': self.error_message['forbidden'],
-                'PATCH': self.error_message['forbidden'],
+                'POST': self.error_message['403'],
+                'PUT': self.error_message['403'],
+                'DELETE': self.error_message['403'],
+                'HEAD': self.error_message['403'],
+                'OPTIONS': self.error_message['403'],
+                'PATCH': self.error_message['403'],
                 }
 
     def tearDown(self):
@@ -176,12 +176,12 @@ class UserGroupDetailAPITest(GenericAPITest):
                     "name": "user group",
                     "permissions": []
                     },
-                'POST': self.error_message['forbidden'],
-                'PUT': self.error_message['forbidden'],
-                'DELETE': self.error_message['forbidden'],
-                'HEAD': self.error_message['forbidden'],
-                'OPTIONS': self.error_message['forbidden'],
-                'PATCH': self.error_message['forbidden'],
+                'POST': self.error_message['403'],
+                'PUT': self.error_message['403'],
+                'DELETE': self.error_message['403'],
+                'HEAD': self.error_message['403'],
+                'OPTIONS': self.error_message['403'],
+                'PATCH': self.error_message['403'],
                 }
 
     def tearDown(self):
@@ -208,7 +208,7 @@ class UserGroupDetailAPITest(GenericAPITest):
         """
         self.url = reverse('groups-detail-api', args=(1,))
         self.expected_status['GET'] = 403
-        self.expected_content['GET'] = self.error_message['forbidden']
+        self.expected_content['GET'] = self.error_message['403']
         self.status_code_is()
         self.content_is()
 
