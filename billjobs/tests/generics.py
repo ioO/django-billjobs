@@ -41,6 +41,22 @@ class GenericAPITest(APITestCase):
                 'HEAD': None,
                 'PATCH': None,
                 }
+        # Use HTTP method as dict key
+        self.expected_length = {}
+        self.error_message = {
+                '401': {
+                    'detail': 'Authentication credentials were not provided.'},
+                '403': {
+                    'detail':
+                        'You do not have permission to perform this action.'},
+                '405_GET': {'detail': 'Method "GET" not allowed.'},
+                '405_POST': {'detail': 'Method "POST" not allowed.'},
+                '405_PUT': {'detail': 'Method "PUT" not allowed.'},
+                '405_DELETE': {'detail': 'Method "DELETE" not allowed.'},
+                '405_PATCH': {'detail': 'Method "PATCH" not allowed.'},
+                '405_OPTIONS': {'detail': 'Method "OPTIONS" not allowed.'},
+                '405_HEAD': {'detail': 'Method "HEAD" not allowed.'},
+                }
 
     def tearDown(self):
         """
@@ -103,6 +119,21 @@ class GenericAPITest(APITestCase):
                             status_code)
                         )
 
+    def content_len_is(self):
+        """
+        Assert expected content length in response.data
+        """
+        for method, length in self.expected_length.items():
+            with self.subTest(method=method, length=length):
+                response = self.get_response(method)
+                #response is list we want the size of list
+                if type(response.data) is list:
+                    self.assertEqual(length, len(response.data))
+                #response is dict we do not test length of dict
+                #(too unpredictable)
+                elif type(response.data) is dict:
+                    self.assertEqual(length, 1)
+
     def content_is(self):
         """
         Assert expected content is in response.data
@@ -111,15 +142,36 @@ class GenericAPITest(APITestCase):
             with self.subTest(method=method, content=content):
                 response = self.get_response(method)
                 if type(content) is list:
-                    self.assertEqual(len(content), len(response.data))
                     for num in range(len(content)):
-                        self.assertDictEqual(content[num-1], response.data[num-1])
+                            self.assert_content(
+                                    content[num-1],
+                                    response.data[num-1],
+                                    method
+                                    )
                 elif type(content) is dict:
-                    for key, value in content.items():
-                        self.assertEqual(response.data[key], value,
-                                '{0} method expected key "{1}" value'.format(
-                                    method, key)
-                                )
+                    self.assert_content(content, response.data, method)
+
+    def assert_content(self, content, data, method):
+        """
+        Assert dictionary value for each key are equals
+
+        Parameters
+        ----------
+        content : dict
+            A dictionary of expected content
+        data: dict
+            A dictionary from response
+        method : string
+            HTTP method for error message
+
+        Returns
+        -------
+        the result of assertEqual
+        """
+        for key, value in content.items():
+            self.assertEqual(data[key], value,
+                    '{0} method expected key "{1}" value'.format(method, key)
+                    )
 
 class GenericAPI(TestCase):
     """

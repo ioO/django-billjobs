@@ -69,8 +69,9 @@ class CustomUserAPIPermission(permissions.BasePermission):
     """
     Set custom permission for UserAPI
 
-    * GET   : only accessible by admin
+    * GET   : accessible by admin and authenticated users
     * POST  : is public, everyone can create a user
+    * PUT, DELETE, PATCH, OPTIONS, HEAD : accessible by admin
     """
 
     def has_permission(self, request, view):
@@ -78,14 +79,17 @@ class CustomUserAPIPermission(permissions.BasePermission):
         Define permission based on request method
         """
         if request.method == 'GET':
-            # admin only
-            return request.user and request.user.is_staff
+            return (
+                request.user and
+                request.user.is_staff or
+                is_authenticated(request.user)
+                )
 
         elif request.method == 'POST':
             # is public
             return True
-        # all other methods are accepted to allow 405 response
-        return True
+        # other HTTP method allowed to admin, others get 401/403
+        return request.user and request.user.is_staff
 
 class CustomUserDetailAPIPermission(permissions.BasePermission):
     """
@@ -100,11 +104,13 @@ class CustomUserDetailAPIPermission(permissions.BasePermission):
         """
         Give permission for admin or user to access API
         """
-        return (
+        if request.method in ('GET', 'PUT', 'DELETE'):
+            return (
                 request.user and
                 request.user.is_staff or
                 is_authenticated(request.user)
                 )
+        return request.user and request.user.is_staff
 
     def has_object_permission(self, request, view, obj):
         """
