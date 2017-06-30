@@ -141,14 +141,14 @@ class GenericAPITest(APITestCase):
         for method, content in self.expected_content.items():
             with self.subTest(method=method, content=content):
                 response = self.get_response(method)
-                if type(response.data) is list:
+                if type(content) is list:
                     for num in range(len(content)):
                             self.assert_content(
                                     content[num-1],
                                     response.data[num-1],
                                     method
                                     )
-                elif type(response.data) is dict:
+                elif type(content) is dict:
                     self.assert_content(content, response.data, method)
 
     def assert_content(self, content, data, method):
