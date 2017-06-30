@@ -240,7 +240,7 @@ class UserUserDetailAPITest(GenericAPITest):
 
 class AdminUserAPITest(GenericAPITest):
     """
-    Tests status code and response content returned by /users endpoint for 
+    Tests status code and response content returned by /users endpoint for
     admin.
     """
 
@@ -345,3 +345,76 @@ class AdminUserAPITest(GenericAPITest):
     def test_user_api_content(self):
         self.content_is()
 
+class AdminUserDetailAPITest(GenericAPITest):
+    """
+    Tests status code and response content returned by /users/pk endpoint for 
+    admin.
+    """
+
+    def setUp(self):
+        self.maxDiff = None
+        super().setUp()
+        self.url = reverse('users-detail-api', args=(3,))
+        self.force_authenticate(user=self.admin)
+        self.data = {
+                'create': {
+                    'username': 'foo',
+                    'password': 'bar',
+                    'email': 'foo@bar.org'
+                    },
+                'update': {'username': 'bar'}
+                }
+        self.expected_status = {
+                'GET': 200,
+                'POST': 405,
+                'PUT': 200,
+                'HEAD': 200,
+                'OPTIONS': 200,
+                'PATCH': 405,
+                'DELETE': 204,
+                }
+        self.expected_length = {
+                'GET': 1,
+                'PUT': 1
+                }
+        self.expected_content = {
+                'GET': {
+                    'url': 'http://testserver/billjobs/api/1.0/users/3/',
+                    'username': 'bill',
+                    'email': 'bill@billjobs.org',
+                    'is_staff': False,
+                    'is_superuser': False,
+                    'groups': [
+                        'http://testserver/billjobs/api/1.0/groups/2/',
+                        'http://testserver/billjobs/api/1.0/groups/3/'
+                        ]
+                    },
+                'POST': self.error_message['405_POST'],
+                'PUT': {
+                    'url': 'http://testserver/billjobs/api/1.0/users/3/',
+                    'username': 'bar',
+                    'email': 'bill@billjobs.org',
+                    'is_staff': False,
+                    'is_superuser': False,
+                    'groups': [
+                        'http://testserver/billjobs/api/1.0/groups/2/',
+                        'http://testserver/billjobs/api/1.0/groups/3/'
+                        ]
+                    },
+                'HEAD': [],
+                'OPTIONS': {},
+                'PATCH': self.error_message['405_PATCH'],
+                'DELETE': None,
+                }
+
+    def tearDown(self):
+        super().tearDown()
+
+    def test_user_detail_api_status_code(self):
+        self.status_code_is()
+
+    def test_user_detail_api_content_length(self):
+        self.content_len_is()
+
+    def test_user_detail_api_content(self):
+        self.content_is()
