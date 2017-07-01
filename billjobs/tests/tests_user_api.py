@@ -25,10 +25,10 @@ class AnonymousUserAPITest(GenericAPITest):
                 'GET': 401,
                 'POST': 201,
                 'PUT': 401,
-                'DELETE': 401,
                 'HEAD': 401,
                 'OPTIONS': 401,
                 'PATCH': 401,
+                'DELETE': 401,
                 }
         self.expected_content = {
                 'GET': self.error_message['401'],
@@ -39,10 +39,10 @@ class AnonymousUserAPITest(GenericAPITest):
                     'email': 'foo@bar.org'
                     },
                 'PUT': self.error_message['401'],
-                'DELETE': self.error_message['401'],
                 'HEAD': self.error_message['401'],
                 'OPTIONS': self.error_message['401'],
                 'PATCH': self.error_message['401'],
+                'DELETE': self.error_message['401'],
                 }
 
     def tearDown(self):
@@ -75,19 +75,19 @@ class AnonymousUserDetailAPITest(GenericAPITest):
                 'GET': 401,
                 'POST': 401,
                 'PUT': 401,
-                'DELETE': 401,
                 'HEAD': 401,
                 'OPTIONS': 401,
                 'PATCH': 401,
+                'DELETE': 401,
                 }
         self.expected_content = {
                 'GET': self.error_message['401'],
                 'POST': self.error_message['401'],
                 'PUT': self.error_message['401'],
-                'DELETE': self.error_message['401'],
                 'HEAD': self.error_message['401'],
                 'OPTIONS': self.error_message['401'],
                 'PATCH': self.error_message['401'],
+                'DELETE': self.error_message['401'],
                 }
 
     def tearDown(self):
@@ -121,10 +121,10 @@ class UserUserAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 201,
                 'PUT': 403,
-                'DELETE': 403,
                 'HEAD': 403,
                 'OPTIONS': 403,
                 'PATCH': 403,
+                'DELETE': 403,
                 }
         self.expected_content = {
                 'GET': {
@@ -139,10 +139,10 @@ class UserUserAPITest(GenericAPITest):
                     'email': 'foo@bar.org'
                     },
                 'PUT': self.error_message['403'],
-                'DELETE': self.error_message['403'],
                 'HEAD': self.error_message['403'],
                 'OPTIONS': self.error_message['403'],
                 'PATCH': self.error_message['403'],
+                'DELETE': self.error_message['403'],
                 }
 
     def tearDown(self):
@@ -176,10 +176,10 @@ class UserUserDetailAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 403,
                 'PUT': 200,
-                'DELETE': 204,
                 'HEAD': 403,
                 'OPTIONS': 403,
                 'PATCH': 403,
+                'DELETE': 204,
                 }
         self.expected_content = {
                 'GET': {
@@ -193,10 +193,10 @@ class UserUserDetailAPITest(GenericAPITest):
                     'username': 'bar',
                     'email': 'bill@billjobs.org'
                     },
-                'DELETE': None,
                 'HEAD': self.error_message['403'],
                 'OPTIONS': self.error_message['403'],
                 'PATCH': self.error_message['403'],
+                'DELETE': None,
                 }
 
     def tearDown(self):
@@ -261,10 +261,10 @@ class AdminUserAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 201,
                 'PUT': 405,
-                'DELETE': 405,
                 'HEAD': 200,
                 'OPTIONS': 200,
                 'PATCH': 405,
+                'DELETE': 405,
                 }
         self.expected_length = {
                 'GET': 5,
@@ -327,10 +327,10 @@ class AdminUserAPITest(GenericAPITest):
                     'is_active': True
                     },
                 'PUT': self.error_message['405_PUT'],
-                'DELETE': self.error_message['405_DELETE'],
                 'HEAD': [],
                 'OPTIONS': {},
                 'PATCH': self.error_message['405_PATCH'],
+                'DELETE': self.error_message['405_DELETE'],
                 }
 
     def tearDown(self):
