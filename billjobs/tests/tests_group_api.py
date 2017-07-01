@@ -21,19 +21,19 @@ class AnonymousGroupAPITest(GenericAPITest):
                 'GET': 401,
                 'POST': 401,
                 'PUT': 401,
-                'DELETE': 401,
                 'HEAD': 401,
                 'OPTIONS': 401,
                 'PATCH': 401,
+                'DELETE': 401,
                 }
         self.expected_content = {
                 'GET': self.error_message['401'],
                 'POST': self.error_message['401'],
                 'PUT': self.error_message['401'],
-                'DELETE': self.error_message['401'],
                 'HEAD': self.error_message['401'],
                 'OPTIONS': self.error_message['401'],
                 'PATCH': self.error_message['401'],
+                'DELETE': self.error_message['401'],
                 }
 
     def tearDown(self):
@@ -62,19 +62,19 @@ class AnonymousGroupDetailAPITest(GenericAPITest):
                 'GET': 401,
                 'POST': 401,
                 'PUT': 401,
-                'DELETE': 401,
                 'HEAD': 401,
                 'OPTIONS': 401,
                 'PATCH': 401,
+                'DELETE': 401,
                 }
         self.expected_content = {
                 'GET': self.error_message['401'],
                 'POST': self.error_message['401'],
                 'PUT': self.error_message['401'],
-                'DELETE': self.error_message['401'],
                 'HEAD': self.error_message['401'],
                 'OPTIONS': self.error_message['401'],
                 'PATCH': self.error_message['401'],
+                'DELETE': self.error_message['401'],
                 }
 
     def tearDown(self):
@@ -104,10 +104,10 @@ class UserGroupAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 403,
                 'PUT': 403,
-                'DELETE': 403,
                 'HEAD': 403,
                 'OPTIONS': 403,
                 'PATCH': 403,
+                'DELETE': 403,
                 }
         self.expected_content = {
                 'GET': [
@@ -124,10 +124,10 @@ class UserGroupAPITest(GenericAPITest):
                     ],
                 'POST': self.error_message['403'],
                 'PUT': self.error_message['403'],
-                'DELETE': self.error_message['403'],
                 'HEAD': self.error_message['403'],
                 'OPTIONS': self.error_message['403'],
                 'PATCH': self.error_message['403'],
+                'DELETE': self.error_message['403'],
                 }
 
     def tearDown(self):
@@ -165,10 +165,10 @@ class UserGroupDetailAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 403,
                 'PUT': 403,
-                'DELETE': 403,
                 'HEAD': 403,
                 'OPTIONS': 403,
                 'PATCH': 403,
+                'DELETE': 403,
                 }
         self.expected_content = {
                 'GET': {
@@ -178,10 +178,10 @@ class UserGroupDetailAPITest(GenericAPITest):
                     },
                 'POST': self.error_message['403'],
                 'PUT': self.error_message['403'],
-                'DELETE': self.error_message['403'],
                 'HEAD': self.error_message['403'],
                 'OPTIONS': self.error_message['403'],
                 'PATCH': self.error_message['403'],
+                'DELETE': self.error_message['403'],
                 }
 
     def tearDown(self):
@@ -230,10 +230,10 @@ class AdminGroupAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 201,
                 'PUT': 405,
-                'DELETE': 405,
                 'HEAD': 200,
                 'OPTIONS': 200,
                 'PATCH': 405,
+                'DELETE': 405,
                 }
         self.expected_content = {
                 'GET': [
@@ -266,10 +266,6 @@ class AdminGroupAPITest(GenericAPITest):
                 'PUT': {
                     'detail':
                         'Method "PUT" not allowed.'
-                    },
-                'DELETE': {
-                    'detail':
-                        'Method "DELETE" not allowed.'
                     },
                 'HEAD': [
                     collections.OrderedDict({
@@ -315,6 +311,10 @@ class AdminGroupAPITest(GenericAPITest):
                     'detail':
                         'Method "PATCH" not allowed.'
                     },
+                'DELETE': {
+                    'detail':
+                        'Method "DELETE" not allowed.'
+                    },
                 }
 
     def tearDown(self):
@@ -344,10 +344,10 @@ class AdminGroupDetailAPITest(GenericAPITest):
                 'GET': 200,
                 'POST': 405,
                 'PUT': 200,
-                'DELETE': 204,
-                'HEAD': 404,
+                'HEAD': 200,
                 'OPTIONS': 200,
                 'PATCH': 405,
+                'DELETE': 204,
                 }
         self.expected_content = {
                 'GET': {
@@ -364,7 +364,6 @@ class AdminGroupDetailAPITest(GenericAPITest):
                     "name": "admin jobs",
                     "permissions": []
                     },
-                'DELETE': None,
                 'OPTIONS': {
                     'name': 'Group Detail Api',
                     'description': 'API endpoint that allow admin and user to retrieve, update and delete a \ngroup',
@@ -382,6 +381,7 @@ class AdminGroupDetailAPITest(GenericAPITest):
                     'detail':
                         'Method "PATCH" not allowed.'
                     },
+                'DELETE': None,
                 }
 
     def tearDown(self):
