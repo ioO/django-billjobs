@@ -1,10 +1,10 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.contrib.auth.models import User
-from billjobs.models import Bill, UserProfile
+
 
 class BillingAdminListViewTestCase(TestCase):
     ''' Test billing model admin view '''
-    fixtures=['test_billing_admin.yaml']
+    fixtures = ['test_billing_admin.yaml']
 
     def test_coworker_name_link_to_user(self):
         ''' Test link to user view in BillAdmin list view '''
