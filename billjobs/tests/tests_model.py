@@ -1,24 +1,9 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
-from rest_framework.authtoken.models import Token
 from billjobs.models import Bill, Service
 from billjobs.settings import BILLJOBS_BILL_ISSUER
 
-class UserModelTestCase(TestCase):
-    """
-    Test User Model for billjobs
-    """
-
-    def test_token_is_created(self):
-        """
-        Test signal create a token for each new user
-        """
-        user = User(username='Taken', email='taken@billjobs.org',
-                password='billjobs')
-        user.save()
-        token = Token.objects.get(user=user)
-        self.assertIsNotNone(token)
 
 class BillingTestCase(TestCase):
     ''' Test billing creation and modification '''
@@ -26,15 +11,6 @@ class BillingTestCase(TestCase):
 
     def setUp(self):
         self.user = User.objects.get(username='bill')
-
-    def tearDown(self):
-        pass
-
-    def test_create_bill_with_one_line(self):
-        ''' Test when user is created a bill with a single service '''
-        #response = self.client.get('/admin/billjobs/bill/add/', follow_redirect=True)
-        #self.assertEqual(response.status_code, 200)
-        self.assertTrue(True)
 
     def test_create_bill(self):
         bill = Bill(user=self.user)
@@ -76,6 +52,7 @@ class BillingTestCase(TestCase):
         bill.amount = 100
         bill.save()
         self.assertEqual(bill.billing_address, previous_billing_address)
+
 
 class ServiceTestCase(TestCase):
     ''' Test CRUD for Service model '''
