@@ -1,13 +1,13 @@
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save, pre_init, post_save, post_delete
+from django.db.models.signals import pre_save, post_save, post_delete
 # TODO delete this import
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
-from rest_framework.authtoken.models import Token
 from .settings import BILLJOBS_BILL_ISSUER
 import datetime
+
 
 @python_2_unicode_compatible
 class Bill(models.Model):

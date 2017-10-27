@@ -39,8 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'billjobs',
-    'rest_framework',
-    'rest_framework.authtoken',
     'debug_toolbar',
 )
 
@@ -100,13 +98,3 @@ TEMPLATES = [
         }
     },
 ]
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser',
-        ),
-    'PAGE_SIZE': 10
-}

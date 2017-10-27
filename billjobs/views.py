@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User, Group
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -17,153 +12,21 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
 from .models import Bill
-from billjobs.serializers import UserSerializer, GroupSerializer
-from .permissions import CustomUserAPIPermission, \
-        CustomUserDetailAPIPermission, CustomGroupAPIPermission, \
-        CustomGroupDetailAPIPermission
 from textwrap import wrap
 
-class GroupAPI(APIView):
-    """
-    API endpoint to list or create groups
-    """
-    permission_classes = (CustomGroupAPIPermission,)
-
-    def get(self, request, format=None):
-        """
-        List groups
-        """
-        if request.user.is_staff is True:
-            groups = Group.objects.all()
-        else:
-            groups = Group.objects.filter(user=request.user)
-        serializer = GroupSerializer(groups, context={'request': request},
-                many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request, format=None):
-        """
-        Create a group
-        """
-        serializer = GroupSerializer(data=request.data,
-                context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class GroupDetailAPI(APIView):
-    """
-    API endpoint that allow admin and user to retrieve, update and delete a 
-    group
-    """
-    permission_classes = (CustomGroupDetailAPIPermission,)
-
-    def get_object(self, pk):
-        try:
-            group = Group.objects.get(pk=pk)
-            self.check_object_permissions(self.request, group)
-            return group
-        except Group.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        group = self.get_object(pk)
-        serializer = GroupSerializer(group, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request, pk, format=None):
-        """
-        Update a group instance
-        """
-        group = self.get_object(pk)
-        serializer = GroupSerializer(group, data=request.data,
-                context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        """
-        Delete a group instance
-        """
-        group = self.get_object(pk)
-        group.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class UserAPI(APIView):
-    """
-    API endpoint that allows admin to list or create users
-    """
-    permission_classes = (CustomUserAPIPermission,)
-
-    def get(self, request, format=None):
-        """
-        List users for admin
-        Retrieve user for authenticated user
-        """
-        if request.user.is_staff is True:
-            users = User.objects.all()
-            serializer = UserSerializer(users, context={'request': request},
-                    many=True)
-        else:
-            users = User.objects.get(pk=request.user.id)
-            serializer = UserSerializer(users, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data,
-                context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UserDetailAPI(APIView):
-    """
-    API endpoint that allows admin to retrieve, update, delete a user
-    """
-    permission_classes = (CustomUserDetailAPIPermission,)
-
-    def get_object(self, pk):
-        try:
-            user = User.objects.get(pk=pk)
-            self.check_object_permissions(self.request, user)
-            return user
-        except User.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user, context={'request': request})
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def put(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user, data=request.data,
-                context={'request': request}, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        user = self.get_object(pk)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @login_required
 def generate_pdf(request, bill_id):
     bill = Bill.objects.get(id=bill_id)
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="%s.pdf"' % bill.number
+    response['Content-Disposition'] = '{} "{}"'.format(
+            'attachment; filename=', bill.number)
 
     # Create a buffer
     buffer = BytesIO()
     pdf = canvas.Canvas(buffer, pagesize=A4)
     # define new 0,0 bottom left with cm as margin
-    pdf.translate(cm,cm)
+    pdf.translate(cm, cm)
     # define document width and height with cm as margin
     width, height = A4
     width = width - 2*cm
@@ -171,35 +34,45 @@ def generate_pdf(request, bill_id):
 
     # if debug draw lines for document limit
     if BILLJOBS_DEBUG_PDF is True:
-        pdf.setStrokeColorRGB(1,0,0)
-        pdf.line(0,0,width,0)
-        pdf.line(0,0,0,height)
-        pdf.line(0,height,width,height)
-        pdf.line(width,height,width,0)
+        pdf.setStrokeColorRGB(1, 0, 0)
+        pdf.line(0, 0, width, 0)
+        pdf.line(0, 0, 0, height)
+        pdf.line(0, height, width, height)
+        pdf.line(width, height, width, 0)
 
     # Put logo on top of pdf original image size is 570px/250px
-    pdf.drawImage(BILLJOBS_BILL_LOGO_PATH, 0, height-BILLJOBS_BILL_LOGO_HEIGHT, 
-            width=BILLJOBS_BILL_LOGO_WIDTH, height=BILLJOBS_BILL_LOGO_HEIGHT)
+    pdf.drawImage(
+            BILLJOBS_BILL_LOGO_PATH,
+            0,
+            height-BILLJOBS_BILL_LOGO_HEIGHT,
+            width=BILLJOBS_BILL_LOGO_WIDTH,
+            height=BILLJOBS_BILL_LOGO_HEIGHT
+            )
     # billing information
-    lh = 15 #define a line height
-    pdf.setFillColorRGB(0.3,0.3,0.3)
+    lh = 15  # define a line height
+    pdf.setFillColorRGB(0.3, 0.3, 0.3)
     pdf.setFont("Helvetica-Bold", 14)
-    pdf.drawRightString(width, height-lh, 'Facture');
+    pdf.drawRightString(width, height-lh, 'Facture')
     pdf.setFont("Helvetica-Bold", 10)
     pdf.drawRightString(width, height-2*lh, u'Numéro : %s' % bill.number)
     pdf.setFont("Helvetica", 10)
-    pdf.drawRightString(width, height-3*lh, u'Date facturation : %s' % bill.billing_date.strftime('%d/%m/%Y'))
+    pdf.drawRightString(
+            width,
+            height-3*lh,
+            u'Date facturation : {}'.format(
+                bill.billing_date.strftime('%d/%m/%Y'))
+            )
 
     # define new height
     nh = height - 90
 
     # seller
-    pdf.setFillColorRGB(0.95,0.95,0.95)
-    pdf.setStrokeColorRGB(1,1,1)
+    pdf.setFillColorRGB(0.95, 0.95, 0.95)
+    pdf.setStrokeColorRGB(1, 1, 1)
     # rect(x,y,width,height)
     pdf.rect(0, nh-8*lh, width/2-40, 6.4*lh, fill=1)
     # reset fill for text color
-    pdf.setFillColorRGB(0.3,0.3,0.3)
+    pdf.setFillColorRGB(0.3, 0.3, 0.3)
     pdf.drawString(10, nh-lh, 'Émetteur')
     issuer = Paragraph(bill.issuer_address, getSampleStyleSheet()['Normal'])
     issuer.wrapOn(pdf, width*0.25, 6*lh)
@@ -210,14 +83,17 @@ def generate_pdf(request, bill_id):
     customer = pdf.beginText()
     customer.setTextOrigin(width/2+20, nh-3*lh)
     # create text with \n and remove \r
-    text = '%s %s\n%s' % (bill.user.first_name, bill.user.last_name,
-                bill.billing_address.replace('\r',''))
+    text = '{} {}\n{}'.format(
+            bill.user.first_name,
+            bill.user.last_name,
+            bill.billing_address.replace('\r', '')
+            )
     # get each line
     for line in text.split('\n'):
         customer.textOut(line)
-        customer.moveCursor(0,lh)
+        customer.moveCursor(0, lh)
     pdf.drawText(customer)
-    pdf.setStrokeColorRGB(0,0,0)
+    pdf.setStrokeColorRGB(0, 0, 0)
     # rect(x,y,width,height)
     pdf.rect(width/2, nh-8*lh, width/2, 6.4*lh, fill=0)
 
@@ -227,38 +103,45 @@ def generate_pdf(request, bill_id):
     data = [['Désignation', 'Prix unit. HT', 'Quantité', 'Total HT']]
 
     for line in bill.billline_set.all():
-        description = '%s - %s\n%s' % (line.service.reference,
+        description = '{} - {}\n{}'.format(
+                line.service.reference,
                 line.service.name,
-                '\n'.join(wrap(line.service.description,62)))
+                '\n'.join(wrap(line.service.description, 62)))
 
-        if line.note :
-            description = '%s\n%s' % (description,
-                    '\n'.join(wrap(line.note,62)))
+        if line.note:
+            description = '{}\n{}'.format(
+                    description,
+                    '\n'.join(wrap(line.note, 62)))
 
         line = (description, line.service.price, line.quantity, line.total)
         data.append(line)
 
-    data.append(('TVA non applicable art-293B du CGI', '', 'Total HT', 
-        '%s €' % bill.amount))
+    data.append((
+        'TVA non applicable art-293B du CGI',
+        '',
+        'Total HT',
+        '{} €'.format(bill.amount)
+        ))
     data.append(('', '', 'TVA 0%', '0'))
-    data.append(('', '', 'Total TTC', '%s €' % bill.amount))
+    data.append(('', '', 'Total TTC', '{} €.'.format(bill.amount)))
 
     # widths in percent of pdf width
     colWidths = (width*0.55, width*0.15, width*0.15, width*0.15)
-    style = [('GRID', (0,0), (-1,0),1, colors.black),
-            ('GRID', (-2,-3), (-1,-1), 1, colors.black),
-            ('BOX', (0,1), (0,-4), 1, colors.black),
-            ('BOX', (1,1), (1,-4), 1, colors.black),
-            ('BOX', (2,1), (2,-4), 1, colors.black),
-            ('BOX', (-1,1), (-1,-4), 1, colors.black),
-            ('ALIGN',(0,0),(0,-1),'LEFT'),
-            ('ALIGN',(1,0),(-1,-1),'CENTER'),
-            ('ALIGN',(-1,0),(-1,-1),'RIGHT'),
-            ('FONTNAME', (0,-3), (0,-3), 'Helvetica-Bold'),
+    style = [
+            ('GRID', (0, 0), (-1, 0), 1, colors.black),
+            ('GRID', (-2, -3), (-1, -1), 1, colors.black),
+            ('BOX', (0, 1), (0, -4), 1, colors.black),
+            ('BOX', (1, 1), (1, -4), 1, colors.black),
+            ('BOX', (2, 1), (2, -4), 1, colors.black),
+            ('BOX', (-1, 1), (-1, -4), 1, colors.black),
+            ('ALIGN', (0, 0), (0, -1), 'LEFT'),
+            ('ALIGN', (1, 0), (-1, -1), 'CENTER'),
+            ('ALIGN', (-1, 0), (-1, -1), 'RIGHT'),
+            ('FONTNAME', (0, -3), (0, -3), 'Helvetica-Bold'),
             ]
     table = Table(data, colWidths=colWidths, style=style)
     # create table and get width and height
-    t_width, t_height = table.wrap(0,0)
+    t_width, t_height = table.wrap(0, 0)
     table.drawOn(pdf, 0, nh-t_height)
 
     p = Paragraph(BILLJOBS_BILL_PAYMENT_INFO, getSampleStyleSheet()['Normal'])
