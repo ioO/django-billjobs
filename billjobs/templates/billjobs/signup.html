@@ -15,6 +15,7 @@
               <div class="control has-icons-left">
                 {% if form.username.errors %}
                 <input class="input is-danger" type="text" placeholder="Nom utilisateur" name="{{ form.username.name }}">
+                <div class="help is-danger">{{ form.username.errors }}</div>
                 {% else %}
                 <input class="input" type="text" placeholder="Nom utilisateur" name="{{ form.username.name }}">
                 {% endif %}
@@ -28,6 +29,7 @@
               <div class="control has-icons-left">
                 {% if form.password.errors %}
                 <input class="input is-danger" type="password" placeholder="Mot de passe" name={{ form.password.name }}>
+                <div class="help is-danger">{{ form.password.errors }}</div>
                 {% else %}
                 <input class="input" type="password" placeholder="Mot de passe" name="{{ form.password.name }}">
                 {% endif %}
