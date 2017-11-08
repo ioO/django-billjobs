@@ -49,6 +49,8 @@ def signup(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = UserSignupForm(request.POST)
+        if form.is_valid():
+            form.save()
     else:
         form = UserSignupForm()
     return render(request, 'billjobs/signup.html', {'form': form})
