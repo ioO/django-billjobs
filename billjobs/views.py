@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -23,6 +24,12 @@ class UserSignupForm(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if data == "":
+            raise ValidationError(_("This field is required."))
+        return data
 
 
 def signup(request):
