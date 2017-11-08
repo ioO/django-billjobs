@@ -15,6 +15,11 @@ from .models import Bill
 from textwrap import wrap
 
 
+def signup(request):
+    ''' Signup view for new user '''
+    return HttpResponse('Hello')
+
+
 @login_required
 def generate_pdf(request, bill_id):
     bill = Bill.objects.get(id=bill_id)
