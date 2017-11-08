@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
@@ -17,7 +18,8 @@ from textwrap import wrap
 
 def signup(request):
     ''' Signup view for new user '''
-    return HttpResponse('Hello')
+    context = 'Hello'
+    return render(request, 'billjobs/signup.html', {'context': context})
 
 
 @login_required
