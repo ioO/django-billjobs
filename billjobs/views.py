@@ -31,6 +31,18 @@ class UserSignupForm(ModelForm):
             raise ValidationError(_("This field is required."))
         return data
 
+    def clean_first_name(self):
+        data = self.cleaned_data['first_name']
+        if data == "":
+            raise ValidationError(_("This field is required."))
+        return data
+
+    def clean_last_name(self):
+        data = self.cleaned_data['last_name']
+        if data == "":
+            raise ValidationError(_("This field is required."))
+        return data
+
 
 def signup(request):
     ''' Signup view for new user '''
