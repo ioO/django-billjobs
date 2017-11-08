@@ -54,6 +54,7 @@
               <div class="control">
                 {% if form.first_name.errors %}
                 <input class="input is-danger" type="text" placeholder="Votre prénom" name={{ form.first_name.name }}>
+                <div class="help is-danger">{{ form.first_name.errors }}</div>
                 {% else %}
                 <input class="input" type="text" placeholder="Votre prénom" name={{ form.first_name.name }}>
                 {% endif %}
@@ -64,6 +65,7 @@
               <div class="control">
                 {% if form.last_name.errors %}
                 <input class="input is-danger" type="text" placeholder="Votre nom" name={{ form.last_name.name }}>
+                <div class="help is-danger">{{ form.last_name.errors }}</div>
                 {% else %}
                 <input class="input" type="text" placeholder="Votre nom" name={{ form.last_name.name }}>
                 {% endif %}
@@ -72,7 +74,7 @@
             <div class="field is-clearfix">
               <p class="control">
               <button class="button is-success is-pulled-right">
-                Se connecter
+                S'inscrire
               </button>
               </p>
             </div>
