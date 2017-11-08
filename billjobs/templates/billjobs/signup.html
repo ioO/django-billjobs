@@ -43,6 +43,7 @@
               <div class="control">
                 {% if form.email.errors %}
                 <input class="input is-danger" type="text" placeholder="Votre adresse email" name={{ form.email.name }}>
+                <div class="help is-danger">{{ form.email.errors }}</div>
                 {% else %}
                 <input class="input" type="text" placeholder="Votre adresse email" name={{ form.email.name }}>
                 {% endif %}
