@@ -27,7 +27,11 @@ class UserSignupForm(ModelForm):
 
 def signup(request):
     ''' Signup view for new user '''
-    form = UserSignupForm()
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = UserSignupForm(request.POST)
+    else:
+        form = UserSignupForm()
     return render(request, 'billjobs/signup.html', {'form': form})
 
 
