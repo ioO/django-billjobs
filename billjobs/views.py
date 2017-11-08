@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from django.forms import ModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -16,10 +18,17 @@ from .models import Bill
 from textwrap import wrap
 
 
+class UserSignupForm(ModelForm):
+    ''' Form for signup '''
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+
+
 def signup(request):
     ''' Signup view for new user '''
-    context = 'Hello'
-    return render(request, 'billjobs/signup.html', {'context': context})
+    form = UserSignupForm()
+    return render(request, 'billjobs/signup.html', {'form': form})
 
 
 @login_required
