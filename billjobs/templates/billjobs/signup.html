@@ -14,10 +14,10 @@
               <label class="label">Utilisateur</label>
               <div class="control has-icons-left">
                 {% if form.username.errors %}
-                <input class="input is-danger" type="text" placeholder="Nom utilisateur" name="{{ form.username.name }}" value="{{ form.username.data }}">
+                <input class="input is-danger" type="text" placeholder="Nom utilisateur" name="{{ form.username.name }}" value="{{ form.username.value }}">
                 <div class="help is-danger">{{ form.username.errors }}</div>
                 {% else %}
-                <input class="input" type="text" placeholder="Nom utilisateur" name="{{ form.username.name }}" value="{{ form.username.data }}">
+                <input class="input" type="text" placeholder="Nom utilisateur" name="{{ form.username.name }}" value="{{ form.username.value|default_if_none:'' }}">
                 {% endif %}
                 <span class="icon is-small is-left">
                   <i class="fa fa-user"></i>
@@ -28,10 +28,10 @@
               <label class="label">Mot de passe</label>
               <div class="control has-icons-left">
                 {% if form.password.errors %}
-                <input class="input is-danger" type="password" placeholder="Mot de passe" name={{ form.password.name }} value="{{ form.password.data }}">
+                <input class="input is-danger" type="password" placeholder="Mot de passe" name={{ form.password.name }} value="{{ form.password.value }}">
                 <div class="help is-danger">{{ form.password.errors }}</div>
                 {% else %}
-                <input class="input" type="password" placeholder="Mot de passe" name="{{ form.password.name }}" value="{{ form.password.data }}">
+                <input class="input" type="password" placeholder="Mot de passe" name="{{ form.password.name }}" value="{{ form.password.value|default_if_none:'' }}">
                 {% endif %}
                 <span class="icon is-small is-left">
                   <i class="fa fa-lock"></i>
@@ -42,10 +42,10 @@
               <label class="label">Email</label>
               <div class="control">
                 {% if form.email.errors %}
-                <input class="input is-danger" type="text" placeholder="Votre adresse email" name={{ form.email.name }} value="{{ form.email.data }}">
+                <input class="input is-danger" type="text" placeholder="Votre adresse email" name={{ form.email.name }} value="{{ form.email.value }}">
                 <div class="help is-danger">{{ form.email.errors }}</div>
                 {% else %}
-                <input class="input" type="text" placeholder="Votre adresse email" name={{ form.email.name }} value="{{ form.email.data }}">
+                <input class="input" type="text" placeholder="Votre adresse email" name={{ form.email.name }} value="{{ form.email.value|default_if_none:'' }}">
                 {% endif %}
               </div>
             </div>
@@ -53,10 +53,10 @@
               <label class="label">Prenom</label>
               <div class="control">
                 {% if form.first_name.errors %}
-                <input class="input is-danger" type="text" placeholder="Votre prénom" name={{ form.first_name.name }} value="{{ form.first_name.data }}">
+                <input class="input is-danger" type="text" placeholder="Votre prénom" name={{ form.first_name.name }} value="{{ form.first_name.value }}">
                 <div class="help is-danger">{{ form.first_name.errors }}</div>
                 {% else %}
-                <input class="input" type="text" placeholder="Votre prénom" name={{ form.first_name.name }} value="{{ form.first_name.data }}">
+                <input class="input" type="text" placeholder="Votre prénom" name={{ form.first_name.name }} value="{{ form.first_name.value|default_if_none:'' }}">
                 {% endif %}
               </div>
             </div>
@@ -64,10 +64,10 @@
               <label class="label">Nom</label>
               <div class="control">
                 {% if form.last_name.errors %}
-                <input class="input is-danger" type="text" placeholder="Votre nom" name={{ form.last_name.name }} value="{{ form.last_name.data }}">
+                <input class="input is-danger" type="text" placeholder="Votre nom" name={{ form.last_name.name }} value="{{ form.last_name.value }}">
                 <div class="help is-danger">{{ form.last_name.errors }}</div>
                 {% else %}
-                <input class="input" type="text" placeholder="Votre nom" name={{ form.last_name.name }} value="{{ form.last_name.data }}">
+                <input class="input" type="text" placeholder="Votre nom" name={{ form.last_name.name }} value="{{ form.last_name.value|default_if_none:'' }}">
                 {% endif %}
               </div>
             </div>
