@@ -61,22 +61,22 @@ def signup(request):
     ''' Signup view for new user '''
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = UserSignupForm(request.POST)
-        formset = UserProfileForm(request.POST)
-        if form.is_valid() and formset.is_valid():
-            user = form.save(commit=False)
+        user_form = UserSignupForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
             user.is_staff = True
             user.save()
-            profile = formset.save(commit=False)
+            profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
     else:
-        form = UserSignupForm()
-        formset = UserProfileForm()
+        user_form = UserSignupForm()
+        profile_form = UserProfileForm()
     return render(
             request,
             'billjobs/signup.html',
-            {'form': form, 'formset': formset}
+            {'user_form': user_form, 'profile_form': profile_form}
             )
 
 
