@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
@@ -70,6 +70,7 @@ def signup(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+            return redirect('billjobs_signup_success')
     else:
         user_form = UserSignupForm()
         profile_form = UserProfileForm()
@@ -78,6 +79,10 @@ def signup(request):
             'billjobs/signup.html',
             {'user_form': user_form, 'profile_form': profile_form}
             )
+
+
+def signup_success(request):
+    return render(request, 'billjobs/signup_success.html')
 
 
 @login_required
