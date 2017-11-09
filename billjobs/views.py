@@ -46,15 +46,19 @@ class UserSignupForm(ModelForm):
 
 def signup(request):
     ''' Signup view for new user '''
+    UserProfileFormset = inlineformset_factory(
+                User, UserProfile, fields=('billing_address',))
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = UserSignupForm(request.POST)
+        formset = UserProfileFormset(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            formset.instance = user
+            if formset.is_valid():
+                formset.save()
     else:
         form = UserSignupForm()
-        UserProfileFormset = inlineformset_factory(
-                User, UserProfile, fields=('billing_address',))
         formset = UserProfileFormset()
     return render(
             request,
