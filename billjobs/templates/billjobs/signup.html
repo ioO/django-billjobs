@@ -71,6 +71,23 @@
                 {% endif %}
               </div>
             </div>
+            {{ formset.management_form }}
+            {% for profile_form in formset %}
+              {{ profile_form.id }}
+              <div class="field">
+                <label class="label">Adresse de facturation</label>
+                <div class="control">
+                  {% if profile_form.billing_address.errors %}
+                    <textarea class="textarea is-danger" placeholder="Votre nom" name={{ profile_form.billing_address.name }}>
+                      {{ profile_form.billing_address.value }}
+                    </textarea>
+                    <div class="help is-danger">{{ profile_form.billing_address.errors }}</div>
+                  {% else %}
+                  <textarea class="textarea" placeholder="Votre nom" name={{ profile_form.prefix }}-{{ profile_form.billing_address.name }}>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
             <div class="field is-clearfix">
               <p class="control">
               <button class="button is-success is-pulled-right">
