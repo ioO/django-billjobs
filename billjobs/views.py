@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm, ValidationError, inlineformset_factory
+from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -44,22 +44,36 @@ class UserSignupForm(ModelForm):
         return data
 
 
+class UserProfileForm(ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ['billing_address']
+
+    def clean_billing_address(self):
+        data = self.cleaned_data['billing_address']
+        if data == "":
+            raise ValidationError(_('This field is required.'))
+        return data
+
+
 def signup(request):
     ''' Signup view for new user '''
-    UserProfileFormset = inlineformset_factory(
-                User, UserProfile, fields=('billing_address',))
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = UserSignupForm(request.POST)
-        formset = UserProfileFormset(request.POST)
-        if form.is_valid():
-            user = form.save()
+        formset = UserProfileForm(request.POST)
+        if form.is_valid() and formset.is_valid():
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.save()
             formset.instance = user
-            if formset.is_valid():
-                formset.save()
+            profile = formset.save(commit=False)
+            profile.user = user
+            profile.save()
     else:
         form = UserSignupForm()
-        formset = UserProfileFormset()
+        formset = UserProfileForm()
     return render(
             request,
             'billjobs/signup.html',
