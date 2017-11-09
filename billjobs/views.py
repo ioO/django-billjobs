@@ -67,7 +67,6 @@ def signup(request):
             user = form.save(commit=False)
             user.is_staff = True
             user.save()
-            formset.instance = user
             profile = formset.save(commit=False)
             profile.user = user
             profile.save()
