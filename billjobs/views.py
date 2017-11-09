@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.forms import ModelForm, ValidationError
+from django.forms import ModelForm, ValidationError, inlineformset_factory
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -15,7 +15,7 @@ from io import BytesIO
 from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
-from .models import Bill
+from .models import Bill, UserProfile
 from textwrap import wrap
 
 
@@ -53,7 +53,14 @@ def signup(request):
             form.save()
     else:
         form = UserSignupForm()
-    return render(request, 'billjobs/signup.html', {'form': form})
+        UserProfileFormset = inlineformset_factory(
+                User, UserProfile, fields=('billing_address',))
+        formset = UserProfileFormset()
+    return render(
+            request,
+            'billjobs/signup.html',
+            {'form': form, 'formset': formset}
+            )
 
 
 @login_required
