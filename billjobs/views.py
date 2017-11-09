@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -11,8 +15,74 @@ from io import BytesIO
 from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO
-from .models import Bill
+from .models import Bill, UserProfile
 from textwrap import wrap
+
+
+class UserSignupForm(ModelForm):
+    ''' Form for signup '''
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'first_name', 'last_name', 'email']
+
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if data == "":
+            raise ValidationError(_("This field is required."))
+        return data
+
+    def clean_first_name(self):
+        data = self.cleaned_data['first_name']
+        if data == "":
+            raise ValidationError(_("This field is required."))
+        return data
+
+    def clean_last_name(self):
+        data = self.cleaned_data['last_name']
+        if data == "":
+            raise ValidationError(_("This field is required."))
+        return data
+
+
+class UserProfileForm(ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ['billing_address']
+
+    def clean_billing_address(self):
+        data = self.cleaned_data['billing_address']
+        if data == "":
+            raise ValidationError(_('This field is required.'))
+        return data
+
+
+def signup(request):
+    ''' Signup view for new user '''
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        user_form = UserSignupForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
+            user.is_staff = True
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('billjobs_signup_success')
+    else:
+        user_form = UserSignupForm()
+        profile_form = UserProfileForm()
+    return render(
+            request,
+            'billjobs/signup.html',
+            {'user_form': user_form, 'profile_form': profile_form}
+            )
+
+
+def signup_success(request):
+    return render(request, 'billjobs/signup_success.html')
 
 
 @login_required

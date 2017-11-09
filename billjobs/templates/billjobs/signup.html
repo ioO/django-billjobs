@@ -1,0 +1,98 @@
+{% extends "billjobs/base.html" %}
+{% block body %}
+<section class="section">
+  <div class="container">
+    <div class="column is-half is-offset-one-quarter">
+      <article class="message">
+        <div class="message-header">
+          <p>Inscription</p>
+        </div>
+        <div class="message-body">
+          <form action="{% url "billjobs_signup" %}" method="post">
+            {% csrf_token %}
+            <div class="field">
+              <label class="label">Utilisateur</label>
+              <div class="control has-icons-left">
+                {% if user_form.username.errors %}
+                <input class="input is-danger" type="text" placeholder="Nom utilisateur" name="{{ user_form.username.name }}" value="{{ user_form.username.value }}">
+                <div class="help is-danger">{{ user_form.username.errors }}</div>
+                {% else %}
+                <input class="input" type="text" placeholder="Nom utilisateur" name="{{ user_form.username.name }}" value="{{ user_form.username.value|default_if_none:'' }}">
+                {% endif %}
+                <span class="icon is-small is-left">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Mot de passe</label>
+              <div class="control has-icons-left">
+                {% if user_form.password.errors %}
+                <input class="input is-danger" type="password" placeholder="Mot de passe" name={{ user_form.password.name }} value="{{ user_form.password.value }}">
+                <div class="help is-danger">{{ user_form.password.errors }}</div>
+                {% else %}
+                <input class="input" type="password" placeholder="Mot de passe" name="{{ user_form.password.name }}" value="{{ user_form.password.value|default_if_none:'' }}">
+                {% endif %}
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control">
+                {% if user_form.email.errors %}
+                <input class="input is-danger" type="text" placeholder="Votre adresse email" name={{ user_form.email.name }} value="{{ user_form.email.value }}">
+                <div class="help is-danger">{{ user_form.email.errors }}</div>
+                {% else %}
+                <input class="input" type="text" placeholder="Votre adresse email" name={{ user_form.email.name }} value="{{ user_form.email.value|default_if_none:'' }}">
+                {% endif %}
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Prenom</label>
+              <div class="control">
+                {% if user_form.first_name.errors %}
+                <input class="input is-danger" type="text" placeholder="Votre prénom" name={{ user_form.first_name.name }} value="{{ user_form.first_name.value }}">
+                <div class="help is-danger">{{ user_form.first_name.errors }}</div>
+                {% else %}
+                <input class="input" type="text" placeholder="Votre prénom" name={{ user_form.first_name.name }} value="{{ user_form.first_name.value|default_if_none:'' }}">
+                {% endif %}
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Nom</label>
+              <div class="control">
+                {% if user_form.last_name.errors %}
+                <input class="input is-danger" type="text" placeholder="Votre nom" name={{ user_form.last_name.name }} value="{{ user_form.last_name.value }}">
+                <div class="help is-danger">{{ user_form.last_name.errors }}</div>
+                {% else %}
+                <input class="input" type="text" placeholder="Votre nom" name={{ user_form.last_name.name }} value="{{ user_form.last_name.value|default_if_none:'' }}">
+                {% endif %}
+              </div>
+            </div>
+              <div class="field">
+                <label class="label">Adresse de facturation</label>
+                <div class="control">
+                  {% if profile_form.billing_address.errors %}
+                    <textarea class="textarea is-danger" placeholder="Votre adresse" name={{ profile_form.billing_address.name }}>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
+                    <div class="help is-danger">{{ profile_form.billing_address.errors }}</div>
+                  {% else %}
+                  <textarea class="textarea" placeholder="Votre adresse" name={{ profile_form.billing_address.name }}>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
+                  {% endif %}
+                </div>
+              </div>
+            <div class="field is-clearfix">
+              <p class="control">
+              <button class="button is-success is-pulled-right">
+                S'inscrire
+              </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock body %}
