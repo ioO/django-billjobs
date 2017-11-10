@@ -3,7 +3,7 @@ from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext as _
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
@@ -14,7 +14,8 @@ from reportlab.platypus import Table, Paragraph
 from io import BytesIO
 from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
-        BILLJOBS_BILL_PAYMENT_INFO
+        BILLJOBS_BILL_PAYMENT_INFO, BILLJOBS_FORCE_SUPERUSER, \
+        BILLJOBS_FORCE_USER_GROUP
 from .models import Bill, UserProfile
 from textwrap import wrap
 
@@ -57,6 +58,17 @@ class UserProfileForm(ModelForm):
         return data
 
 
+def force_user_properties(user):
+    ''' Force user properties to be set when we register them '''
+    user.is_staff = True
+    if BILLJOBS_FORCE_SUPERUSER is True:
+        user.is_superuser = True
+    if BILLJOBS_FORCE_USER_GROUP is not None:
+        group = Group.objects.get(name=BILLJOBS_FORCE_USER_GROUP)
+        user.groups.add(group.id)
+    user.save()
+
+
 def signup(request):
     ''' Signup view for new user '''
     if request.method == 'POST':
@@ -64,9 +76,8 @@ def signup(request):
         user_form = UserSignupForm(request.POST)
         profile_form = UserProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.is_staff = True
-            user.save()
+            user = user_form.save()
+            force_user_properties(user)
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
