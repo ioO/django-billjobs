@@ -16,3 +16,9 @@
   fields:
     user: 3
     billing_address: "7 rue Cart\r\n30000 Nîmes"
+
+- model: billjobs.userprofile
+  pk: 4
+  fields:
+    user: 4
+    billing_address: "51 iem état\r\nLondon"

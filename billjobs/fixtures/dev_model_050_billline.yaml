@@ -21,13 +21,6 @@
     quantity: 2
 
 - model: billjobs.billline
-  pk: 4
-  fields:
-    bill: 3
-    service: 4
-    quantity: 1
-
-- model: billjobs.billline
   pk: 5
   fields:
     bill: 4
