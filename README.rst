@@ -13,6 +13,8 @@ Billjobs
    :target: http://django-billjobs.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
+**Warning: this project is going to be closed soon** Do not use it for a new project
+
 A django billing app for coworking space.
 
 We intend to keep things as simple as we can and with an easy user experience. This apps is designed to manage coworkers and their bills.
