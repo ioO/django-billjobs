@@ -5,3 +5,4 @@ recursive-include billjobs/fixtures *
 recursive-include billjobs/locale *
 recursive-include billjobs/migrations *
 recursive-include billjobs/tests *
+recursive-include billjobs/templates *
