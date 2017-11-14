@@ -59,3 +59,13 @@ BILLJOBS_FORCE_USER_GROUP = getattr(
         'BILLJOBS_FORCE_USER_GROUP',
         BILLJOBS_DEFAULT['FORCE_USER_GROUP']
         )
+BILLJOBS_SLACK_TOKEN = getattr(
+        settings,
+        'BILLJOBS_SLACK_TOKEN',
+        False
+        )
+BILLJOBS_SLACK_CHANNEL = getattr(
+        settings,
+        'BILLJOBS_SLACK_CHANNEL',
+        False
+        )
