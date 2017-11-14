@@ -5,8 +5,8 @@ from django.shortcuts import reverse
 class SignupAndSlack(TestCase):
     ''' Test signup when project owner doesn't define slack settings '''
 
-    def test_create_when_all_settings_false(self):
-        ''' Test signup works without slack invitation or notification '''
+    def test_slack_invitation(self):
+        ''' Test signup and slack invitation '''
         data = {
                 'username': 'noslack',
                 'password': 'motdepasse',
