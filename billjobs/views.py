@@ -86,12 +86,12 @@ def send_slack_invitation(user):
 def notify_subscription(user, invitation):
     ''' Send to a specific channel information about last signup '''
     if invitation is True:
-        invitation_status = 'L\invitation slack a réussi'
+        invitation_status = 'L\'envoi de l\'invitation slack a réussi'
     elif invitation is False:
         invitation_status = (
-                "L\invitation slack a échoué\nSoit il sait pas "
-                "écrire son email(ça commence bien), soit slack a un "
-                "problème(c\'est possible)"
+                "L\'envoi de l\'invitation slack a échoué\nSoit il sait pas "
+                "écrire son email (ça commence bien), soit slack a un "
+                "problème (c\'est possible)"
                 )
 
     url = 'https://slack.com/api/chat.postMessage'
