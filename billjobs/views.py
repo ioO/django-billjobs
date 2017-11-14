@@ -125,6 +125,8 @@ def signup(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+            if BILLJOBS_SLACK_TOKEN is not False:
+                send_slack_invitation(user)
             return redirect('billjobs_signup_success')
     else:
         user_form = UserSignupForm()
