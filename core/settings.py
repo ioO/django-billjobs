@@ -98,3 +98,5 @@ TEMPLATES = [
         }
     },
 ]
+BILLJOBS_SLACK_TOKEN = os.environ.get('BILLJOBS_SLACK_TOKEN')
+BILLJOBS_SLACK_CHANNEL = os.environ.get('BILLJOBS_SLACK_CHANNEL')
