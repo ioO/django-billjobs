@@ -11,3 +11,4 @@ sphinx-autobuild
 sphinx_rtd_theme
 six==1.11.0
 coverage==4.4.2
+requests==2.18.4

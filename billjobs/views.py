@@ -11,11 +11,13 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Table, Paragraph
+import requests
 from io import BytesIO
 from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_LOGO_WIDTH, BILLJOBS_BILL_LOGO_HEIGHT, \
         BILLJOBS_BILL_PAYMENT_INFO, BILLJOBS_FORCE_SUPERUSER, \
-        BILLJOBS_FORCE_USER_GROUP
+        BILLJOBS_FORCE_USER_GROUP, BILLJOBS_SLACK_TOKEN, \
+        BILLJOBS_SLACK_CHANNEL
 from .models import Bill, UserProfile
 from textwrap import wrap
 
@@ -69,6 +71,48 @@ def force_user_properties(user):
     user.save()
 
 
+def send_slack_invitation(user):
+    ''' Send an invitation to the newly created user '''
+    url = 'https://slack.com/api/users.admin.invite'
+    payload = {'token': BILLJOBS_SLACK_TOKEN, 'email': user.email}
+    # send request
+    response = requests.post(url, data=payload)
+    # get json response
+    json_response = response.json()
+    # response['ok'] is a bool
+    notify_subscription(user, json_response['ok'])
+
+
+def notify_subscription(user, invitation):
+    ''' Send to a specific channel information about last signup '''
+    if invitation is True:
+        invitation_status = 'L\'envoi de l\'invitation slack a réussi'
+    elif invitation is False:
+        invitation_status = (
+                "L\'envoi de l\'invitation slack a échoué\nSoit il sait pas "
+                "écrire son email (ça commence bien), soit slack a un "
+                "problème (c\'est possible)"
+                )
+
+    url = 'https://slack.com/api/chat.postMessage'
+    payload = {
+            'token': BILLJOBS_SLACK_TOKEN,
+            'channel': BILLJOBS_SLACK_CHANNEL,
+            'text': (
+                'L\'utilisateur {0} ({1} {2}) est inscrit\n'
+                'L\'adresse email est {3}\n{4}'.format(
+                    user.username,
+                    user.first_name,
+                    user.last_name,
+                    user.email,
+                    invitation_status
+                    )
+                )
+            }
+    # this failed silently, we do not manage errors
+    requests.post(url, data=payload)
+
+
 def signup(request):
     ''' Signup view for new user '''
     if request.method == 'POST':
@@ -81,6 +125,8 @@ def signup(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+            if BILLJOBS_SLACK_TOKEN is not False:
+                send_slack_invitation(user)
             return redirect('billjobs_signup_success')
     else:
         user_form = UserSignupForm()
