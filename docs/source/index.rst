@@ -19,15 +19,16 @@ Welcome to django-billjobs's documentation!
 
 *A django billing app for coworking space*
 
+.. note:: **Warning end of life**
+
+   This project is going to be closed soon. Do not use for a new project
+
 -------------------------
 What is django-billjobs ?
 -------------------------
 
 Django-billjobs_ is a django app to manage coworkers and create their invoices. It uses `Django admin site`_ 
 to manage coworkers account, services the space is providing and manage coworkers invoices.
-
-From version `v1.x` Django-billjobs provides an API to let coworking 
-spaces develop their own online services for their coworkers based on unique account.
 
 --------
 Features
