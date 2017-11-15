@@ -7,7 +7,10 @@ env:
 install:
   - pip install -r requirements.txt
   - pip install -q Django==$DJANGO_VERSION
+  - pip install coveralls
 # command to run tests
 script:
   - python manage.py makemigrations
   - coverage run --source="." manage.py test billjobs
+after_success:
+  - coveralls
