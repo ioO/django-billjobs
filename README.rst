@@ -35,4 +35,5 @@ Requirements
   - **Python**: 3.4+
   - **Django**: 1.10+
   - **Reportlab**: 3.3+
+  - **Requests**: 2.18+
 
