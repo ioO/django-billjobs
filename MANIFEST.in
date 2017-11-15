@@ -1,7 +1,6 @@
 include LICENSE
 include README.rst
 recursive-include billjobs/static *
-recursive-include billjobs/fixtures *
 recursive-include billjobs/locale *
 recursive-include billjobs/migrations *
 recursive-include billjobs/tests *
