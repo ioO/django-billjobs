@@ -96,10 +96,11 @@ def notify_subscription(user, invitation):
 
     url = 'https://slack.com/api/chat.postMessage'
     payload = {
+            'username': 'signup-bot',
             'token': BILLJOBS_SLACK_TOKEN,
             'channel': BILLJOBS_SLACK_CHANNEL,
             'text': (
-                'L\'utilisateur {0} ({1} {2}) est inscrit\n'
+                ':new:\nL\'utilisateur {0} ({1} {2}) est inscrit\n'
                 'L\'adresse email est {3}\n{4}'.format(
                     user.username,
                     user.first_name,
