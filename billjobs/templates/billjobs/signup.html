@@ -75,11 +75,12 @@
                 <label class="label">Adresse de facturation</label>
                 <div class="control">
                   {% if profile_form.billing_address.errors %}
-                    <textarea class="textarea is-danger" placeholder="Votre adresse" name={{ profile_form.billing_address.name }}>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
+                    <textarea class="textarea is-danger" placeholder="Votre adresse" name={{ profile_form.billing_address.name }} required>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
                     <div class="help is-danger">{{ profile_form.billing_address.errors }}</div>
                   {% else %}
-                  <textarea class="textarea" placeholder="Votre adresse" name={{ profile_form.billing_address.name }}>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
+                  <textarea class="textarea" placeholder="Votre adresse" name={{ profile_form.billing_address.name }} required>{{ profile_form.billing_address.value|default_if_none:"" }}</textarea>
                   {% endif %}
+                  <div class="help">Si vous voulez des factures au nom d'une société, association ou tout autre structure, indiquez le nom et l'adresse de cette structure dans ce champ.</p>
                 </div>
               </div>
             <div class="field is-clearfix">
