@@ -80,6 +80,7 @@ in your django settings file::
    :caption: Contents:
 
    getting_started
+   settings
    contributing
 
 Indices and tables
