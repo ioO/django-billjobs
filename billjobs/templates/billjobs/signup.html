@@ -42,10 +42,10 @@
               <label class="label">Email</label>
               <div class="control">
                 {% if user_form.email.errors %}
-                <input class="input is-danger" type="text" placeholder="Votre adresse email" name={{ user_form.email.name }} value="{{ user_form.email.value }}">
+                <input class="input is-danger" type="email" placeholder="Votre adresse email" name={{ user_form.email.name }} value="{{ user_form.email.value }}" required>
                 <div class="help is-danger">{{ user_form.email.errors }}</div>
                 {% else %}
-                <input class="input" type="text" placeholder="Votre adresse email" name={{ user_form.email.name }} value="{{ user_form.email.value|default_if_none:'' }}">
+                <input class="input" type="email" placeholder="Votre adresse email" name={{ user_form.email.name }} value="{{ user_form.email.value|default_if_none:'' }}" required>
                 {% endif %}
               </div>
             </div>
