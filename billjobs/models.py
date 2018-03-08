@@ -13,18 +13,28 @@ import datetime
 class Bill(models.Model):
 
     user = models.ForeignKey(User, verbose_name=_('Coworker'))
-    number = models.CharField(max_length=10, unique=True, blank=True, 
+    number = models.CharField(
+            max_length=16,
+            unique=True,
+            blank=True,
             verbose_name=_('Bill number'),
             help_text=_('This value is set automatically.'))
-    isPaid = models.BooleanField(default=False, 
+    isPaid = models.BooleanField(
+            default=False,
             verbose_name=_('Bill is paid ?'),
             help_text=_('Check this value when bill is paid'))
-    billing_date = models.DateField(auto_now_add=True,verbose_name=_('Date'),
+    billing_date = models.DateField(
+            auto_now_add=True,
+            verbose_name=_('Date'),
             help_text=_('This value is set automatically.'))
-    amount = models.FloatField(blank=True, default=0, 
+    amount = models.FloatField(
+            blank=True,
+            default=0,
             verbose_name=_('Bill total amount'),
             help_text=_('The amount is computed automatically.'))
-    issuer_address = models.CharField(max_length=1024, blank=False, 
+    issuer_address = models.CharField(
+            max_length=1024,
+            blank=False,
             default=BILLJOBS_BILL_ISSUER)
     billing_address = models.CharField(max_length=1024, blank=True)
 
