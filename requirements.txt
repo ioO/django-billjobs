@@ -10,9 +10,9 @@ babel==2.4.0              # via sphinx
 certifi==2017.11.5        # via requests
 chardet==3.0.4            # via requests
 click==6.6                # via pip-tools
-coverage==4.4.2
-django-debug-toolbar==1.8
-django==1.11.7
+coverage==4.5.1
+django-debug-toolbar==1.9.1
+django==1.11.11
 docutils==0.13.1          # via sphinx
 first==2.0.1              # via pip-tools
 idna==2.6                 # via requests
@@ -20,13 +20,13 @@ imagesize==0.7.1          # via sphinx
 jinja2==2.9.5             # via sphinx
 livereload==2.5.1         # via sphinx-autobuild
 markupsafe==1.0           # via jinja2
-packaging==16.8           # via pip-review
+packaging==16.8           # via pip-review, sphinx
 pathtools==0.1.2          # via sphinx-autobuild, watchdog
 pillow==3.2.0             # via reportlab
 pip-review==1.0
-pip-tools==1.10.1
+pip-tools==1.11.0
 pkginfo==1.4.1            # via twine
-port_for==0.3.1           # via sphinx-autobuild
+port-for==0.3.1           # via sphinx-autobuild
 pygments==2.2.0           # via sphinx
 pyparsing==2.1.10         # via packaging
 pytz==2016.10             # via babel, django
@@ -36,16 +36,13 @@ requests-toolbelt==0.8.0  # via twine
 requests==2.18.4
 six==1.11.0
 snowballstemmer==1.2.1    # via sphinx
-sphinx-autobuild==0.6.0
+sphinx-autobuild==0.7.1
 sphinx-rtd-theme==0.2.4
-sphinx==1.6.5
+sphinx==1.7.1
 sphinxcontrib-websupport==1.0.1  # via sphinx
 sqlparse==0.2.1           # via django-debug-toolbar
 tornado==4.4.2            # via livereload, sphinx-autobuild
 tqdm==4.19.4              # via twine
-twine==1.9.1
+twine==1.10.0
 urllib3==1.22             # via requests
 watchdog==0.8.3           # via sphinx-autobuild
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
