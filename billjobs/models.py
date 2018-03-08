@@ -2,14 +2,11 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save, post_delete
-# TODO delete this import
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from .settings import BILLJOBS_BILL_ISSUER
 import datetime
 
 
-@python_2_unicode_compatible
 class Bill(models.Model):
 
     user = models.ForeignKey(User, verbose_name=_('Coworker'))
@@ -54,7 +51,6 @@ class Bill(models.Model):
         super(Bill, self).save(*args, **kwargs)
 
 
-@python_2_unicode_compatible
 class Service(models.Model):
 
     reference = models.CharField(max_length=5, verbose_name=_('Reference'))
