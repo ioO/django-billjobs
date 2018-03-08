@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from billjobs.models import Bill, Service
 from billjobs.settings import BILLJOBS_BILL_ISSUER
+import datetime
 
 
 class BillingTestCase(TestCase):
@@ -52,6 +53,19 @@ class BillingTestCase(TestCase):
         bill.amount = 100
         bill.save()
         self.assertEqual(bill.billing_address, previous_billing_address)
+
+    def test_bill_number_is_more_than_999(self):
+        ''' Test the bill number property could be more than 999 '''
+        for i in range(1100):
+            bill = Bill(user=self.user)
+            bill.save()
+            del(bill)
+        # get last bill
+        last_bill = Bill.objects.order_by('id').last()
+        # bills number depend on date, so depend when test is running ;)
+        today = datetime.date.today()
+        last_number = 'F%s%s' % (today.strftime('%Y%m'), '1100')
+        self.assertEqual(last_bill.number, last_number)
 
 
 class ServiceTestCase(TestCase):
