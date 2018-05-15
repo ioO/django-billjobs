@@ -344,16 +344,6 @@ elif current_month == 12:
     previous_month_name = 'November'
 
 
-
-
-def get_current_year_revenue(request):
-    current_year_revenue = (Bill.objects.filter(billing_date__year=current_year, billing_date__month__lte=previous_month).aggregate(Sum('amount'))['amount__sum']) / previous_month * 12
-    return current_year_revenue
-
-def get_previous_year_revenue(request):
-    previous_year_total =  Bill.objects.filter(billing_date__year=previous_year).aggregate(Sum('amount'))['amount__sum']
-    return previous_year_revenue
-
 # Refactored version
 def get_annual_revenue(request, year):
     if year == current_year: # Le chiffre d'affaire annuel est une estimation
@@ -385,71 +375,11 @@ def get_previous_month_revenue(request):
     previous_month_revenue = Bill.objects.filter(billing_date__month=previous_month, billing_date__year=current_year).aggregate(Sum('amount'))['amount__sum']
     return previous_month_revenue
 
-def january_revenue(request, year):
-    return get_monthly_revenue(request, 1, year)
 
-def february_revenue(request, year):
-    return get_monthly_revenue(request, 2, year)
-
-def march_revenue(request, year):
-    return get_monthly_revenue(request, 3, year)
-
-def april_revenue(request, year):
-    return get_monthly_revenue(request, 4, year)
-
-def may_revenue(request, year):
-    return get_monthly_revenue(request, 5, year)
-
-def june_revenue(request, year):
-    return get_monthly_revenue(request, 6, year)
-
-def july_revenue(request, year):
-    return get_monthly_revenue(request, 7, year)
-
-def august_revenue(request, year):
-    return get_monthly_revenue(request, 8, year)
-
-def september_revenue(request, year):
-    return get_monthly_revenue(request, 9, year)
-
-def october_revenue(request, year):
-    return get_monthly_revenue(request, 10, year)
-
-def november_revenue(request, year):
-    return get_monthly_revenue(request, 11, year)
-
-def december_revenue(request, year):
-    return get_monthly_revenue(request, 12, year)
-
-
-
-# class SubscriptionAdmin(admin.ModelAdmin):
-#     model = Subscription
-#     list_display = ('service', 'Abonnement_annuel_2018', 'Abonnement_annuel_2017')
-#
-def Abonnement_annuel_2017(self, obj):
-    # if obj.service == 'Full Time':
-    #     return BillLine.objects.filter(service__is_available=True,
-    #     service__pk=1, bill__billing_date__year=2017).count()
-    # if obj.service == 'Mid Time':
-    #     return BillLine.objects.filter(service__is_available=True,
-    #     service__pk=2, bill__billing_date__year=2017).count()
-    # if obj.service == 'Meeting 1 day':
-    #     return BillLine.objects.filter(service__is_available=True,
-    #     service__pk=3, bill__billing_date__year=2017).count()
-    return BillLine.objects.filter(service__is_available=True,
-    service__name=obj.service, bill__billing_date__year=2017).count()
-#
-# def Abonnement_annuel_2018(self, obj):
-#     return BillLine.objects.filter(service__is_available=True,
-#     service__name=obj.service, bill__billing_date__year=2018).count()
 def get_annual_subscriptions(request, subscription, year):
     annual_subscriptions = BillLine.objects.filter(service__is_available=True,
     service__pk=subscription, bill__billing_date__year=year).count()
     return annual_subscriptions
-
-def january_subscriptions(request, year):
-    return get_annual_subscriptions(request, 1, year)
 
 def get_monthly_subscriptions(request, subscription, month, year):
     monthly_subscriptions = BillLine.objects.filter(service__is_available=True,
