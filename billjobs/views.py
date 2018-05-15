@@ -18,8 +18,12 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_PAYMENT_INFO, BILLJOBS_FORCE_SUPERUSER, \
         BILLJOBS_FORCE_USER_GROUP, BILLJOBS_SLACK_TOKEN, \
         BILLJOBS_SLACK_CHANNEL
-from .models import Bill, UserProfile
+from .models import Bill, UserProfile, BillLine
 from textwrap import wrap
+from django.utils import timezone
+from django.db.models import Sum
+from django.utils.html import format_html
+
 
 
 class UserSignupForm(ModelForm):
@@ -287,3 +291,283 @@ def generate_pdf(request, bill_id):
     buffer.close()
     response.write(genpdf)
     return response
+
+
+
+# set variables
+current_year = timezone.now().year
+previous_year = current_year - 1
+current_month = timezone.now().month
+previous_month = current_month - 1
+month = 0
+
+# if current_month == 5:
+#     current_month_name = 'Mai'
+# if previous_month == 4:
+#     previous_month_name = 'Avril'
+
+if current_month == 1:
+    current_month_name = 'Janvier'
+    previous_month_name = 'Décembre'
+elif current_month == 2:
+    current_month_name = 'Février'
+    previous_month_name = 'Janvier'
+elif current_month == 3:
+    current_month_name = 'Mars'
+    previous_month_name = 'Février'
+elif current_month == 4:
+    current_month_name = 'Avril'
+    previous_month_name = 'Mars'
+elif current_month == 5:
+    current_month_name = 'Mai'
+    previous_month_name = 'Avril'
+elif current_month == 6:
+    current_month_name = 'Juin'
+    previous_month_name = 'Mai'
+elif current_month == 7:
+    current_month_name = 'Juillet'
+    previous_month_name = 'Juin'
+elif current_month == 8:
+    current_month_name = 'Août'
+    previous_month_name = 'Juillet'
+elif current_month == 9:
+    current_month_name = 'Septembre'
+    previous_month_name = 'Août'
+elif current_month == 10:
+    current_month_name = 'Octobre'
+    previous_month_name = 'September'
+elif current_month == 11:
+    current_month_name = 'Novembre'
+    previous_month_name = 'October'
+elif current_month == 12:
+    month_name = 'December'
+    previous_month_name = 'November'
+
+
+
+
+def get_current_year_revenue(request):
+    current_year_revenue = (Bill.objects.filter(billing_date__year=current_year, billing_date__month__lte=previous_month).aggregate(Sum('amount'))['amount__sum']) / previous_month * 12
+    return current_year_revenue
+
+def get_previous_year_revenue(request):
+    previous_year_total =  Bill.objects.filter(billing_date__year=previous_year).aggregate(Sum('amount'))['amount__sum']
+    return previous_year_revenue
+
+# Refactored version
+def get_annual_revenue(request, year):
+    if year == current_year: # Le chiffre d'affaire annuel est une estimation
+        annual_revenue = (Bill.objects.filter(billing_date__year=year, billing_date__month__lte=previous_month).aggregate(Sum('amount'))['amount__sum']) / previous_month * 12
+        if annual_revenue == None:
+            annual_revenue = "-"
+    else:
+        annual_revenue =  Bill.objects.filter(billing_date__year=year).aggregate(Sum('amount'))['amount__sum']
+        if annual_revenue == None:
+            annual_revenue = "-"
+    return annual_revenue
+
+# Refactored version
+def get_monthly_revenue(request, month, year):
+    monthly_revenue =  Bill.objects.filter(billing_date__month=month, billing_date__year=year).aggregate(Sum('amount'))['amount__sum']
+    if monthly_revenue == None:
+        monthly_revenue = "-"
+    if month == current_month and year == current_year:
+        return format_html('<strong style="color: purple">{}</strong>', monthly_revenue)
+    else:
+        return monthly_revenue
+
+
+def get_current_month_revenue(request):
+    current_month_revenue = Bill.objects.filter(billing_date__month=current_month, billing_date__year=current_year).aggregate(Sum('amount'))['amount__sum']
+    return current_month_revenue
+
+def get_previous_month_revenue(request):
+    previous_month_revenue = Bill.objects.filter(billing_date__month=previous_month, billing_date__year=current_year).aggregate(Sum('amount'))['amount__sum']
+    return previous_month_revenue
+
+def january_revenue(request, year):
+    return get_monthly_revenue(request, 1, year)
+
+def february_revenue(request, year):
+    return get_monthly_revenue(request, 2, year)
+
+def march_revenue(request, year):
+    return get_monthly_revenue(request, 3, year)
+
+def april_revenue(request, year):
+    return get_monthly_revenue(request, 4, year)
+
+def may_revenue(request, year):
+    return get_monthly_revenue(request, 5, year)
+
+def june_revenue(request, year):
+    return get_monthly_revenue(request, 6, year)
+
+def july_revenue(request, year):
+    return get_monthly_revenue(request, 7, year)
+
+def august_revenue(request, year):
+    return get_monthly_revenue(request, 8, year)
+
+def september_revenue(request, year):
+    return get_monthly_revenue(request, 9, year)
+
+def october_revenue(request, year):
+    return get_monthly_revenue(request, 10, year)
+
+def november_revenue(request, year):
+    return get_monthly_revenue(request, 11, year)
+
+def december_revenue(request, year):
+    return get_monthly_revenue(request, 12, year)
+
+
+
+# class SubscriptionAdmin(admin.ModelAdmin):
+#     model = Subscription
+#     list_display = ('service', 'Abonnement_annuel_2018', 'Abonnement_annuel_2017')
+#
+def Abonnement_annuel_2017(self, obj):
+    # if obj.service == 'Full Time':
+    #     return BillLine.objects.filter(service__is_available=True,
+    #     service__pk=1, bill__billing_date__year=2017).count()
+    # if obj.service == 'Mid Time':
+    #     return BillLine.objects.filter(service__is_available=True,
+    #     service__pk=2, bill__billing_date__year=2017).count()
+    # if obj.service == 'Meeting 1 day':
+    #     return BillLine.objects.filter(service__is_available=True,
+    #     service__pk=3, bill__billing_date__year=2017).count()
+    return BillLine.objects.filter(service__is_available=True,
+    service__name=obj.service, bill__billing_date__year=2017).count()
+#
+# def Abonnement_annuel_2018(self, obj):
+#     return BillLine.objects.filter(service__is_available=True,
+#     service__name=obj.service, bill__billing_date__year=2018).count()
+def get_annual_subscriptions(request, subscription, year):
+    annual_subscriptions = BillLine.objects.filter(service__is_available=True,
+    service__pk=subscription, bill__billing_date__year=year).count()
+    return annual_subscriptions
+
+def january_subscriptions(request, year):
+    return get_annual_subscriptions(request, 1, year)
+
+def get_monthly_subscriptions(request, subscription, month, year):
+    monthly_subscriptions = BillLine.objects.filter(service__is_available=True,
+    service__pk=subscription, bill__billing_date__month=month, bill__billing_date__year=year).count()
+    return monthly_subscriptions
+
+def statistics(request):
+    return render(request, 'billjobs/statistics.html',
+    {'current_month_name': current_month_name,
+    'current_year': current_year,
+    'current_month_revenue': get_monthly_revenue(request, current_month, current_year),
+    'previous_month_name': previous_month_name, 'previous_year': previous_year,
+    'previous_month_revenue': get_monthly_revenue(request, previous_month, current_year),
+    'current_year_revenue': get_annual_revenue(request, current_year),
+    'previous_year_revenue': get_annual_revenue(request, previous_year),
+    'current_january_revenue': get_monthly_revenue(request, 1, current_year),
+    'previous_january_revenue': get_monthly_revenue(request, 1, previous_year),
+    'current_february_revenue': get_monthly_revenue(request, 2, current_year),
+    'previous_february_revenue': get_monthly_revenue(request, 2, previous_year),
+    'current_march_revenue': get_monthly_revenue(request, 3, current_year),
+    'previous_march_revenue': get_monthly_revenue(request, 3, previous_year),
+    'current_april_revenue': get_monthly_revenue(request, 4, current_year),
+    'previous_april_revenue': get_monthly_revenue(request, 4, previous_year),
+    'current_may_revenue': get_monthly_revenue(request, 5, current_year),
+    'previous_may_revenue': get_monthly_revenue(request, 5, previous_year),
+    'current_june_revenue': get_monthly_revenue(request, 6, current_year),
+    'previous_june_revenue': get_monthly_revenue(request, 6, previous_year),
+    'current_july_revenue': get_monthly_revenue(request, 7, current_year),
+    'previous_july_revenue': get_monthly_revenue(request, 7, previous_year),
+    'current_august_revenue': get_monthly_revenue(request, 8, current_year),
+    'previous_august_revenue': get_monthly_revenue(request, 8, previous_year),
+    'current_september_revenue': get_monthly_revenue(request, 9, current_year),
+    'previous_september_revenue': get_monthly_revenue(request, 9, previous_year),
+    'current_october_revenue': get_monthly_revenue(request, 10, current_year),
+    'previous_october_revenue': get_monthly_revenue(request, 10, previous_year),
+    'current_november_revenue': get_monthly_revenue(request, 11, current_year),
+    'previous_november_revenue': get_monthly_revenue(request, 11, previous_year),
+    'current_december_revenue': get_monthly_revenue(request, 12, current_year),
+    'previous_december_revenue': get_monthly_revenue(request, 12, previous_year),
+    'current_january_subscriptions_1': get_monthly_subscriptions(request, 1, 1, current_year),
+    'current_february_subscriptions_1': get_monthly_subscriptions(request, 1, 2, current_year),
+    'current_march_subscriptions_1': get_monthly_subscriptions(request, 1, 3, current_year),
+    'current_april_subscriptions_1': get_monthly_subscriptions(request, 1, 4, current_year),
+    'current_may_subscriptions_1': get_monthly_subscriptions(request, 1, 5, current_year),
+    'current_june_subscriptions_1': get_monthly_subscriptions(request, 1, 6, current_year),
+    'current_july_subscriptions_1': get_monthly_subscriptions(request, 1, 7, current_year),
+    'current_august_subscriptions_1': get_monthly_subscriptions(request, 1, 8, current_year),
+    'current_september_subscriptions_1': get_monthly_subscriptions(request, 1, 9, current_year),
+    'current_october_subscriptions_1': get_monthly_subscriptions(request, 1, 10, current_year),
+    'current_november_subscriptions_1': get_monthly_subscriptions(request, 1, 11, current_year),
+    'current_december_subscriptions_1': get_monthly_subscriptions(request, 1, 12, current_year),
+    'current_year_subscriptions_1': get_annual_subscriptions(request, 1, current_year),
+    'current_january_subscriptions_2': get_monthly_subscriptions(request, 2, 1, current_year),
+    'current_february_subscriptions_2': get_monthly_subscriptions(request, 2, 2, current_year),
+    'current_march_subscriptions_2': get_monthly_subscriptions(request, 2, 3, current_year),
+    'current_april_subscriptions_2': get_monthly_subscriptions(request, 2, 4, current_year),
+    'current_may_subscriptions_2': get_monthly_subscriptions(request, 2, 5, current_year),
+    'current_june_subscriptions_2': get_monthly_subscriptions(request, 2, 6, current_year),
+    'current_july_subscriptions_2': get_monthly_subscriptions(request, 2, 7, current_year),
+    'current_august_subscriptions_2': get_monthly_subscriptions(request, 2, 8, current_year),
+    'current_september_subscriptions_2': get_monthly_subscriptions(request, 2, 9, current_year),
+    'current_october_subscriptions_2': get_monthly_subscriptions(request, 2, 10, current_year),
+    'current_november_subscriptions_2': get_monthly_subscriptions(request, 2, 11, current_year),
+    'current_december_subscriptions_2': get_monthly_subscriptions(request, 2, 12, current_year),
+    'current_year_subscriptions_2': get_annual_subscriptions(request, 2, current_year),
+    'current_january_subscriptions_3': get_monthly_subscriptions(request, 3, 1, current_year),
+    'current_february_subscriptions_3': get_monthly_subscriptions(request, 3, 2, current_year),
+    'current_march_subscriptions_3': get_monthly_subscriptions(request, 3, 3, current_year),
+    'current_april_subscriptions_3': get_monthly_subscriptions(request, 3, 4, current_year),
+    'current_may_subscriptions_3': get_monthly_subscriptions(request, 3, 5, current_year),
+    'current_june_subscriptions_3': get_monthly_subscriptions(request, 3, 6, current_year),
+    'current_july_subscriptions_3': get_monthly_subscriptions(request, 3, 7, current_year),
+    'current_august_subscriptions_3': get_monthly_subscriptions(request, 3, 8, current_year),
+    'current_september_subscriptions_3': get_monthly_subscriptions(request, 3, 9, current_year),
+    'current_october_subscriptions_3': get_monthly_subscriptions(request, 3, 10, current_year),
+    'current_november_subscriptions_3': get_monthly_subscriptions(request, 3, 11, current_year),
+    'current_december_subscriptions_3': get_monthly_subscriptions(request, 3, 12, current_year),
+    'current_year_subscriptions_3': get_annual_subscriptions(request, 3, current_year),
+
+    'previous_january_subscriptions_1': get_monthly_subscriptions(request, 1, 1, previous_year),
+    'previous_february_subscriptions_1': get_monthly_subscriptions(request, 1, 2, previous_year),
+    'previous_march_subscriptions_1': get_monthly_subscriptions(request, 1, 3, previous_year),
+    'previous_april_subscriptions_1': get_monthly_subscriptions(request, 1, 4, previous_year),
+    'previous_may_subscriptions_1': get_monthly_subscriptions(request, 1, 5, previous_year),
+    'previous_june_subscriptions_1': get_monthly_subscriptions(request, 1, 6, previous_year),
+    'previous_july_subscriptions_1': get_monthly_subscriptions(request, 1, 7, previous_year),
+    'previous_august_subscriptions_1': get_monthly_subscriptions(request, 1, 8, previous_year),
+    'previous_september_subscriptions_1': get_monthly_subscriptions(request, 1, 9, previous_year),
+    'previous_october_subscriptions_1': get_monthly_subscriptions(request, 1, 10, previous_year),
+    'previous_november_subscriptions_1': get_monthly_subscriptions(request, 1, 11, previous_year),
+    'previous_december_subscriptions_1': get_monthly_subscriptions(request, 1, 12, previous_year),
+    'previous_year_subscriptions_1': get_annual_subscriptions(request, 1, previous_year),
+    'previous_january_subscriptions_2': get_monthly_subscriptions(request, 2, 1, previous_year),
+    'previous_february_subscriptions_2': get_monthly_subscriptions(request, 2, 2, previous_year),
+    'previous_march_subscriptions_2': get_monthly_subscriptions(request, 2, 3, previous_year),
+    'previous_april_subscriptions_2': get_monthly_subscriptions(request, 2, 4, previous_year),
+    'previous_may_subscriptions_2': get_monthly_subscriptions(request, 2, 5, previous_year),
+    'previous_june_subscriptions_2': get_monthly_subscriptions(request, 2, 6, previous_year),
+    'previous_july_subscriptions_2': get_monthly_subscriptions(request, 2, 7, previous_year),
+    'previous_august_subscriptions_2': get_monthly_subscriptions(request, 2, 8, previous_year),
+    'previous_september_subscriptions_2': get_monthly_subscriptions(request, 2, 9, previous_year),
+    'previous_october_subscriptions_2': get_monthly_subscriptions(request, 2, 10, previous_year),
+    'previous_november_subscriptions_2': get_monthly_subscriptions(request, 2, 11, previous_year),
+    'previous_december_subscriptions_2': get_monthly_subscriptions(request, 2, 12, previous_year),
+    'previous_year_subscriptions_2': get_annual_subscriptions(request, 2, previous_year),
+    'previous_january_subscriptions_3': get_monthly_subscriptions(request, 3, 1, previous_year),
+    'previous_february_subscriptions_3': get_monthly_subscriptions(request, 3, 2, previous_year),
+    'previous_march_subscriptions_3': get_monthly_subscriptions(request, 3, 3, previous_year),
+    'previous_april_subscriptions_3': get_monthly_subscriptions(request, 3, 4, previous_year),
+    'previous_may_subscriptions_3': get_monthly_subscriptions(request, 3, 5, previous_year),
+    'previous_june_subscriptions_3': get_monthly_subscriptions(request, 3, 6, previous_year),
+    'previous_july_subscriptions_3': get_monthly_subscriptions(request, 3, 7, previous_year),
+    'previous_august_subscriptions_3': get_monthly_subscriptions(request, 3, 8, previous_year),
+    'previous_september_subscriptions_3': get_monthly_subscriptions(request, 3, 9, previous_year),
+    'previous_october_subscriptions_3': get_monthly_subscriptions(request, 3, 10, previous_year),
+    'previous_november_subscriptions_3': get_monthly_subscriptions(request, 3, 11, previous_year),
+    'previous_december_subscriptions_3': get_monthly_subscriptions(request, 3, 12, previous_year),
+    'previous_year_subscriptions_3': get_annual_subscriptions(request, 3, previous_year),
+
+
+    } )
