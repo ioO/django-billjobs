@@ -23,7 +23,7 @@ from textwrap import wrap
 from django.utils import timezone
 from django.db.models import Sum
 from django.utils.html import format_html
-
+import calendar
 
 
 class UserSignupForm(ModelForm):
@@ -299,7 +299,14 @@ current_year = timezone.now().year
 previous_year = current_year - 1
 current_month = timezone.now().month
 previous_month = current_month - 1
-month = 0
+
+calendar.month_name[current_month]
+
+def month_name(month):
+    output = _(calendar.month_name[month])
+    return output
+
+
 
 # if current_month == 5:
 #     current_month_name = 'Mai'
@@ -388,10 +395,10 @@ def get_monthly_subscriptions(request, subscription, month, year):
 
 def statistics(request):
     return render(request, 'billjobs/statistics.html',
-    {'current_month_name': current_month_name,
+    {'current_month_name': month_name(current_month),
     'current_year': current_year,
     'current_month_revenue': get_monthly_revenue(request, current_month, current_year),
-    'previous_month_name': previous_month_name, 'previous_year': previous_year,
+    'previous_month_name': month_name(previous_month), 'previous_year': previous_year,
     'previous_month_revenue': get_monthly_revenue(request, previous_month, current_year),
     'current_year_revenue': get_annual_revenue(request, current_year),
     'previous_year_revenue': get_annual_revenue(request, previous_year),
