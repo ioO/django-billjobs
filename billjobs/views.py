@@ -308,49 +308,6 @@ def month_name(month):
 
 
 
-# if current_month == 5:
-#     current_month_name = 'Mai'
-# if previous_month == 4:
-#     previous_month_name = 'Avril'
-
-if current_month == 1:
-    current_month_name = 'Janvier'
-    previous_month_name = 'Décembre'
-elif current_month == 2:
-    current_month_name = 'Février'
-    previous_month_name = 'Janvier'
-elif current_month == 3:
-    current_month_name = 'Mars'
-    previous_month_name = 'Février'
-elif current_month == 4:
-    current_month_name = 'Avril'
-    previous_month_name = 'Mars'
-elif current_month == 5:
-    current_month_name = 'Mai'
-    previous_month_name = 'Avril'
-elif current_month == 6:
-    current_month_name = 'Juin'
-    previous_month_name = 'Mai'
-elif current_month == 7:
-    current_month_name = 'Juillet'
-    previous_month_name = 'Juin'
-elif current_month == 8:
-    current_month_name = 'Août'
-    previous_month_name = 'Juillet'
-elif current_month == 9:
-    current_month_name = 'Septembre'
-    previous_month_name = 'Août'
-elif current_month == 10:
-    current_month_name = 'Octobre'
-    previous_month_name = 'September'
-elif current_month == 11:
-    current_month_name = 'Novembre'
-    previous_month_name = 'October'
-elif current_month == 12:
-    month_name = 'December'
-    previous_month_name = 'November'
-
-
 # Refactored version
 def get_annual_revenue(request, year):
     if year == current_year: # Le chiffre d'affaire annuel est une estimation
@@ -368,10 +325,7 @@ def get_monthly_revenue(request, month, year):
     monthly_revenue =  Bill.objects.filter(billing_date__month=month, billing_date__year=year).aggregate(Sum('amount'))['amount__sum']
     if monthly_revenue == None:
         monthly_revenue = "-"
-    if month == current_month and year == current_year:
-        return format_html('<strong style="color: purple">{}</strong>', monthly_revenue)
-    else:
-        return monthly_revenue
+    return monthly_revenue
 
 
 def get_current_month_revenue(request):
