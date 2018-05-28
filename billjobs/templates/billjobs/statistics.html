@@ -60,7 +60,7 @@
              <th class="is-info">Décembre</th>
              <th class="is-danger">Total</th>
          </tr>
-         <tr>
+         <!-- <tr>
              <td>{{ current_year}}</td>
              <td>{{ current_january_revenue }}</td>
              <td>{{ current_february_revenue }}</td>
@@ -80,8 +80,21 @@
                par le nombre de mois multipliés par 12.">
         i
       </span></td>
-         </tr>
+         </tr> -->
          <tr>
+             <td>{{ current_year}}</td>
+             {% for revenue in current_monthly_revenue %}
+             <td>{{revenue}}</td>
+                 {% endfor %}
+             <td>{{ current_year_revenue }}<span class="icon has-text-info"
+               style="border: 1px solid hsl(204, 86%, 53%); border-radius: 100%; cursor: pointer"
+               title="Estimation du CA annuel : somme des mois finis divisée
+               par le nombre de mois multipliés par 12.">
+        i
+      </span></td>
+         </tr>
+
+         <!-- <tr>
              <td>{{ previous_year }}</td>
              <td>{{ previous_january_revenue }}</td>
              <td>{{ previous_february_revenue }}</td>
@@ -96,7 +109,15 @@
              <td>{{ previous_november_revenue }}</td>
              <td>{{ previous_december_revenue }}</td>
              <td>{{ previous_year_revenue }}</td>
+         </tr> -->
+         <tr>
+             <td>{{ previous_year }}</td>
+             {% for revenue in previous_monthly_revenue %}
+             <td>{{revenue}}</td>
+                 {% endfor %}
+             <td>{{ previous_year_revenue }}</td>
          </tr>
+
       </table>
     </div>
     </section>
@@ -108,7 +129,7 @@
 
 
     <table class="table is-striped is-fullwidth">
-    <p class="title is-4">Abonnements / Services {{ current_year}}</p>
+    <p class="title is-4">Abonnements / Services {{ current_year }}</p>
 
     <tr>
        <th class="is-info"></th>
@@ -126,7 +147,7 @@
        <th class="is-info">Décembre</th>
        <th class="is-danger">Total</th>
     </tr>
-    <tr>
+    <!-- <tr>
        <td>Full Time</td>
        <td>{{ current_january_subscriptions_1 }}</td>
        <td>{{ current_february_subscriptions_1 }}</td>
@@ -141,8 +162,8 @@
        <td>{{ current_november_subscriptions_1 }}</td>
        <td>{{ current_december_subscriptions_1 }}</td>
        <td>{{ current_year_subscriptions_1 }}</td>
-    </tr>
-    <tr>
+    </tr> -->
+    <!-- <tr>
        <td>Mid Time</td>
        <td>{{ current_january_subscriptions_2 }}</td>
        <td>{{ current_february_subscriptions_2 }}</td>
@@ -157,8 +178,8 @@
        <td>{{ current_november_subscriptions_2 }}</td>
        <td>{{ current_december_subscriptions_2 }}</td>
        <td>{{ current_year_subscriptions_2 }}</td>
-    </tr>
-    <tr>
+    </tr> -->
+    <!-- <tr>
        <td>Meeting 1 day</td>
        <td>{{ current_january_subscriptions_3 }}</td>
        <td>{{ current_february_subscriptions_3 }}</td>
@@ -173,6 +194,28 @@
        <td>{{ current_november_subscriptions_3 }}</td>
        <td>{{ current_december_subscriptions_3 }}</td>
        <td>{{ current_year_subscriptions_3 }}</td>
+    </tr> -->
+    <tr>
+       <td>Full Time</td>
+       {% for subscriptions in current_monthly_subscriptions_1 %}
+       <td>{{subscriptions}}</td>
+           {% endfor %}
+      <td>{{ current_year_subscriptions_1 }}</td>
+    </tr>
+    <tr>
+       <td>Mid Time</td>
+       {% for subscriptions in current_monthly_subscriptions_2 %}
+       <td>{{subscriptions}}</td>
+           {% endfor %}
+      <td>{{ current_year_subscriptions_2 }}</td>
+    </tr>
+
+    <tr>
+       <td>Meeting 1 day</td>
+       {% for subscriptions in current_monthly_subscriptions_3 %}
+       <td>{{subscriptions}}</td>
+           {% endfor %}
+      <td>{{ current_year_subscriptions_3 }}</td>
     </tr>
 
 
@@ -209,53 +252,26 @@
   </tr>
   <tr>
      <td>Full Time</td>
-     <td>{{ previous_january_subscriptions_1 }}</td>
-     <td>{{ previous_february_subscriptions_1 }}</td>
-     <td>{{ previous_march_subscriptions_1 }}</td>
-     <td>{{ previous_april_subscriptions_1 }}</td>
-     <td>{{ previous_may_subscriptions_1 }}</td>
-     <td>{{ previous_june_subscriptions_1 }}</td>
-     <td>{{ previous_july_subscriptions_1 }}</td>
-     <td>{{ previous_august_subscriptions_1 }}</td>
-     <td>{{ previous_september_subscriptions_1 }}</td>
-     <td>{{ previous_october_subscriptions_1 }}</td>
-     <td>{{ previous_november_subscriptions_1 }}</td>
-     <td>{{ previous_december_subscriptions_1 }}</td>
-     <td>{{ previous_year_subscriptions_1 }}</td>
+     {% for subscriptions in previous_monthly_subscriptions_1 %}
+     <td>{{subscriptions}}</td>
+         {% endfor %}
+    <td>{{ previous_year_subscriptions_1 }}</td>
   </tr>
   <tr>
      <td>Mid Time</td>
-     <td>{{ previous_january_subscriptions_2 }}</td>
-     <td>{{ previous_february_subscriptions_2 }}</td>
-     <td>{{ previous_march_subscriptions_2 }}</td>
-     <td>{{ previous_april_subscriptions_2 }}</td>
-     <td>{{ previous_may_subscriptions_2 }}</td>
-     <td>{{ previous_june_subscriptions_2 }}</td>
-     <td>{{ previous_july_subscriptions_2 }}</td>
-     <td>{{ previous_august_subscriptions_2 }}</td>
-     <td>{{ previous_september_subscriptions_2 }}</td>
-     <td>{{ previous_october_subscriptions_2 }}</td>
-     <td>{{ previous_november_subscriptions_2 }}</td>
-     <td>{{ previous_december_subscriptions_2 }}</td>
-     <td>{{ previous_year_subscriptions_2 }}</td>
-  </tr>
-  <tr>
-     <td>Meeting 1 day</td>
-     <td>{{ previous_january_subscriptions_3 }}</td>
-     <td>{{ previous_february_subscriptions_3 }}</td>
-     <td>{{ previous_march_subscriptions_3 }}</td>
-     <td>{{ previous_april_subscriptions_3 }}</td>
-     <td>{{ previous_may_subscriptions_3 }}</td>
-     <td>{{ previous_june_subscriptions_3 }}</td>
-     <td>{{ previous_july_subscriptions_3 }}</td>
-     <td>{{ previous_august_subscriptions_3 }}</td>
-     <td>{{ previous_september_subscriptions_3 }}</td>
-     <td>{{ previous_october_subscriptions_3 }}</td>
-     <td>{{ previous_november_subscriptions_3 }}</td>
-     <td>{{ previous_december_subscriptions_3 }}</td>
-     <td>{{ previous_year_subscriptions_3 }}</td>
+     {% for subscriptions in previous_monthly_subscriptions_2 %}
+     <td>{{subscriptions}}</td>
+         {% endfor %}
+    <td>{{ previous_year_subscriptions_2 }}</td>
   </tr>
 
+  <tr>
+     <td>Meeting 1 day</td>
+     {% for subscriptions in previous_monthly_subscriptions_3 %}
+     <td>{{subscriptions}}</td>
+         {% endfor %}
+    <td>{{ previous_year_subscriptions_3 }}</td>
+  </tr>
 
   </table>
 
@@ -263,5 +279,7 @@
 
   </div>
   </section>
-
+  {% for entry in test %}
+          <p>{{entry}}</p>
+      {% endfor %}
 {% endblock body %}
