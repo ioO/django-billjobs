@@ -306,6 +306,17 @@ def month_name(month):
     output = _(calendar.month_name[month])
     return output
 
+def get_month_names():
+    months = []
+    for i in range (1,13):
+        months.append(month_name(i))
+    return months
+
+
+# def get_monthly_revenues(year):
+#     revenues =  []
+#     for i in range(1,13):
+        # revenues.append(get_monthly_revenue(None, i, year))
 
 
 # Refactored version
@@ -506,4 +517,5 @@ def statistics(request):
     'previous_monthly_subscriptions_1': previous_monthly_subscriptions_1,
     'previous_monthly_subscriptions_2': previous_monthly_subscriptions_2,
     'previous_monthly_subscriptions_3': previous_monthly_subscriptions_3,
+    'get_month': get_month_names(),
     } )
