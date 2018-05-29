@@ -18,7 +18,7 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_PAYMENT_INFO, BILLJOBS_FORCE_SUPERUSER, \
         BILLJOBS_FORCE_USER_GROUP, BILLJOBS_SLACK_TOKEN, \
         BILLJOBS_SLACK_CHANNEL
-from .models import Bill, UserProfile, BillLine
+from .models import Bill, UserProfile, BillLine, Service
 from textwrap import wrap
 from django.utils import timezone
 from django.db.models import Sum
@@ -302,7 +302,7 @@ previous_month = current_month - 1
 
 # calendar.month_name[current_month]
 
-def month_name(month):
+def month_name(month): # month is an integer ranging from 1 to 12
     output = _(calendar.month_name[month])
     return output
 
@@ -312,11 +312,8 @@ def get_month_names():
         months.append(month_name(i))
     return months
 
-
-# def get_monthly_revenues(year):
-#     revenues =  []
-#     for i in range(1,13):
-        # revenues.append(get_monthly_revenue(None, i, year))
+# nombre total de services disponibles
+number_of_available_services = Service.objects.filter(is_available=1).count()
 
 
 # Refactored version
@@ -339,14 +336,6 @@ def get_monthly_revenue(request, month, year):
     return monthly_revenue
 
 
-# def get_current_month_revenue(request):
-#     current_month_revenue = Bill.objects.filter(billing_date__month=current_month, billing_date__year=current_year).aggregate(Sum('amount'))['amount__sum']
-#     return current_month_revenue
-#
-# def get_previous_month_revenue(request):
-#     previous_month_revenue = Bill.objects.filter(billing_date__month=previous_month, billing_date__year=current_year).aggregate(Sum('amount'))['amount__sum']
-#     return previous_month_revenue
-
 
 def get_annual_subscriptions(request, subscription, year):
     annual_subscriptions = BillLine.objects.filter(service__is_available=True,
@@ -358,45 +347,45 @@ def get_monthly_subscriptions(request, subscription, month, year):
     service__pk=subscription, bill__billing_date__month=month, bill__billing_date__year=year).count()
     return monthly_subscriptions
 
-def get_monthly_revenues(year):
+
+def get_subscription_list_by_year(year):
+    subscription_list_by_year = []
+    number_of_available_services = Service.objects.filter(is_available=1).count()
+    for i in range (1, number_of_available_services + 1):
+        subscription_list_by_year.append(get_monthly_subscriptions_list(i, year))
+    return subscription_list_by_year
+
+def get_monthly_subscriptions_list(subscription, year):
+    monthly_subscriptionss = []
+    # number_of_available_services = Service.objects.filter(is_available=1).count()
+    # for num in range(1, number_of_available_services + 1):
+    for i in range (1, 13):
+        monthly_subscriptionss.append(get_monthly_subscriptions(None, subscription, i, year))
+    return monthly_subscriptionss
+
+def get_monthly_revenues(year): # liste des revenus
     revenues =  []
     for i in range(1,13):
         revenues.append(get_monthly_revenue(None, i, year))
-
     return revenues
 
+
+def current_monthly_subscriptions(subscription):
+    current_monthly_subscriptions = []
+    for i in range (1, 13):
+        current_monthly_subscriptions.append(get_monthly_subscriptions(None, subscription, i, current_year))
+    return current_monthly_subscriptions
+
+def previous_monthly_subscriptions(subscription):
+    previous_monthly_subscriptions = []
+    for i in range (1, 13):
+        previous_monthly_subscriptions.append(get_monthly_subscriptions(None, subscription, i, previous_year))
+    return previous_monthly_subscriptions
+
+
+
 def statistics(request):
-    current_monthly_subscriptions_1 = []
-    for i in range (1, 13):
-        current_monthly_subscriptions_1.append(get_monthly_subscriptions(request, 1, i, current_year))
 
-    current_monthly_subscriptions_2 = []
-    for i in range (1, 13):
-        current_monthly_subscriptions_2.append(get_monthly_subscriptions(request, 2, i, current_year))
-
-    current_monthly_subscriptions_3 = []
-    for i in range (1, 13):
-        current_monthly_subscriptions_3.append(get_monthly_subscriptions(request, 3, i, current_year))
-
-    previous_monthly_subscriptions_1 = []
-    for i in range (1, 13):
-        previous_monthly_subscriptions_1.append(get_monthly_subscriptions(request, 1, i, previous_year))
-
-    previous_monthly_subscriptions_2 = []
-    for i in range (1, 13):
-        previous_monthly_subscriptions_2.append(get_monthly_subscriptions(request, 2, i, previous_year))
-
-    previous_monthly_subscriptions_3 = []
-    for i in range (1, 13):
-        previous_monthly_subscriptions_3.append(get_monthly_subscriptions(request, 3, i, previous_year))
-
-    previous_monthly_revenue = []
-    for i in range (1, 13):
-        previous_monthly_revenue.append(get_monthly_revenue(request, i, previous_year))
-
-    current_monthly_revenue = []
-    for i in range (1, 13):
-        current_monthly_revenue.append(get_monthly_revenue(request, i, current_year))
 
     return render(request, 'billjobs/statistics.html',
     {'current_month_name': month_name(current_month),
@@ -411,14 +400,16 @@ def statistics(request):
     'current_year_subscriptions_1': get_annual_subscriptions(request, 1, current_year),
     'current_year_subscriptions_2': get_annual_subscriptions(request, 2, current_year),
     'current_year_subscriptions_3': get_annual_subscriptions(request, 3, current_year),
-    'current_monthly_subscriptions_1': current_monthly_subscriptions_1,
-    'current_monthly_subscriptions_2': current_monthly_subscriptions_2,
-    'current_monthly_subscriptions_3': current_monthly_subscriptions_3,
     'previous_year_subscriptions_1': get_annual_subscriptions(request, 1, previous_year),
     'previous_year_subscriptions_2': get_annual_subscriptions(request, 2, previous_year),
     'previous_year_subscriptions_3': get_annual_subscriptions(request, 3, previous_year),
-    'previous_monthly_subscriptions_1': previous_monthly_subscriptions_1,
-    'previous_monthly_subscriptions_2': previous_monthly_subscriptions_2,
-    'previous_monthly_subscriptions_3': previous_monthly_subscriptions_3,
     'get_month': get_month_names(),
+    'current_monthly_subscriptions_1': get_monthly_subscriptions_list(1, current_year),
+    'current_monthly_subscriptions_2': get_monthly_subscriptions_list(2, current_year),
+    'current_monthly_subscriptions_3': get_monthly_subscriptions_list(3, current_year),
+    'previous_monthly_subscriptions_1': get_monthly_subscriptions_list(1, previous_year),
+    'previous_monthly_subscriptions_2': get_monthly_subscriptions_list(2, previous_year),
+    'previous_monthly_subscriptions_3': get_monthly_subscriptions_list(3, previous_year),
+    'test': get_subscription_list_by_year(previous_year),
+
     } )
