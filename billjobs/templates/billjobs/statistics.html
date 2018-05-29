@@ -13,11 +13,11 @@
 
 
 <div class="column">
-  <p class="title is-4">Chiffre d'affaire {{ current_month_name }} {{ current_year }}</p>
+  <p class="title is-4">Chiffre d'affaire {{ current_month_name | title}} {{ current_year }}</p>
   <p class="subtitle is-4" style="background-color: hsla(204, 86%, 53%, 0.25); line-height: 200px; height: 200px; width: 200px; border-radius: 100%; text-align: center; border: 3px dotted black">{{ current_month_revenue}} €</p>
 </div>
 <div class="column">
-  <p class="title is-4">Chiffre d'affaire {{ previous_month_name }} {{ current_year }}</p>
+  <p class="title is-4">Chiffre d'affaire {{ previous_month_name | title}} {{ current_year }}</p>
   <p class="subtitle is-4" style="background-color: hsla(204, 86%, 53%, 0.5); line-height: 200px; height: 200px; width: 200px; border-radius: 100%; text-align: center; border: 3px solid black">{{ previous_month_revenue}} €</p>
 </div>
 </div>
@@ -46,41 +46,11 @@
 
          <tr>
              <th class="is-info">Année</th>
-             <th class="is-info">Janvier</th>
-             <th class="is-info">Février</th>
-             <th class="is-info">Mars</th>
-             <th class="is-info">Avril</th>
-             <th class="is-info">Mai</th>
-             <th class="is-info">Juin</th>
-             <th class="is-info">Juillet</th>
-             <th class="is-info">Août</th>
-             <th class="is-info">Septembre</th>
-             <th class="is-info">Octobre</th>
-             <th class="is-info">Novembre</th>
-             <th class="is-info">Décembre</th>
+             {% for month in get_month %}
+                     <th class="is-info">{{ month | title}}</th>
+                 {% endfor %}
              <th class="is-danger">Total</th>
          </tr>
-         <!-- <tr>
-             <td>{{ current_year}}</td>
-             <td>{{ current_january_revenue }}</td>
-             <td>{{ current_february_revenue }}</td>
-             <td>{{ current_march_revenue }}</td>
-             <td>{{ current_april_revenue }}</td>
-             <td>{{ current_may_revenue }}</td>
-             <td>{{ current_june_revenue }}</td>
-             <td>{{ current_july_revenue }}</td>
-             <td>{{ current_august_revenue }}</td>
-             <td>{{ current_september_revenue }}</td>
-             <td>{{ current_october_revenue }}</td>
-             <td>{{ current_november_revenue }}</td>
-             <td>{{ current_december_revenue }}</td>
-             <td>{{ current_year_revenue }}<span class="icon has-text-info"
-               style="border: 1px solid hsl(204, 86%, 53%); border-radius: 100%"
-               title="Estimation du CA annuel : somme des mois finis divisée
-               par le nombre de mois multipliés par 12.">
-        i
-      </span></td>
-         </tr> -->
          <tr>
              <td>{{ current_year}}</td>
              {% for revenue in current_monthly_revenue %}
@@ -93,23 +63,6 @@
         i
       </span></td>
          </tr>
-
-         <!-- <tr>
-             <td>{{ previous_year }}</td>
-             <td>{{ previous_january_revenue }}</td>
-             <td>{{ previous_february_revenue }}</td>
-             <td>{{ previous_march_revenue }}</td>
-             <td>{{ previous_april_revenue }}</td>
-             <td>{{ previous_may_revenue }}</td>
-             <td>{{ previous_june_revenue }}</td>
-             <td>{{ previous_july_revenue }}</td>
-             <td>{{ previous_august_revenue }}</td>
-             <td>{{ previous_september_revenue }}</td>
-             <td>{{ previous_october_revenue }}</td>
-             <td>{{ previous_november_revenue }}</td>
-             <td>{{ previous_december_revenue }}</td>
-             <td>{{ previous_year_revenue }}</td>
-         </tr> -->
          <tr>
              <td>{{ previous_year }}</td>
              {% for revenue in previous_monthly_revenue %}
@@ -133,68 +86,11 @@
 
     <tr>
        <th class="is-info"></th>
-       <th class="is-info">Janvier</th>
-       <th class="is-info">Février</th>
-       <th class="is-info">Mars</th>
-       <th class="is-info">Avril</th>
-       <th class="is-info">Mai</th>
-       <th class="is-info">Juin</th>
-       <th class="is-info">Juillet</th>
-       <th class="is-info">Août</th>
-       <th class="is-info">Septembre</th>
-       <th class="is-info">Octobre</th>
-       <th class="is-info">Novembre</th>
-       <th class="is-info">Décembre</th>
+       {% for month in get_month %}
+               <th class="is-info">{{ month | title}}</th>
+           {% endfor %}
        <th class="is-danger">Total</th>
     </tr>
-    <!-- <tr>
-       <td>Full Time</td>
-       <td>{{ current_january_subscriptions_1 }}</td>
-       <td>{{ current_february_subscriptions_1 }}</td>
-       <td>{{ current_march_subscriptions_1 }}</td>
-       <td>{{ current_april_subscriptions_1 }}</td>
-       <td>{{ current_may_subscriptions_1 }}</td>
-       <td>{{ current_june_subscriptions_1 }}</td>
-       <td>{{ current_july_subscriptions_1 }}</td>
-       <td>{{ current_august_subscriptions_1 }}</td>
-       <td>{{ current_september_subscriptions_1 }}</td>
-       <td>{{ current_october_subscriptions_1 }}</td>
-       <td>{{ current_november_subscriptions_1 }}</td>
-       <td>{{ current_december_subscriptions_1 }}</td>
-       <td>{{ current_year_subscriptions_1 }}</td>
-    </tr> -->
-    <!-- <tr>
-       <td>Mid Time</td>
-       <td>{{ current_january_subscriptions_2 }}</td>
-       <td>{{ current_february_subscriptions_2 }}</td>
-       <td>{{ current_march_subscriptions_2 }}</td>
-       <td>{{ current_april_subscriptions_2 }}</td>
-       <td>{{ current_may_subscriptions_2 }}</td>
-       <td>{{ current_june_subscriptions_2 }}</td>
-       <td>{{ current_july_subscriptions_2 }}</td>
-       <td>{{ current_august_subscriptions_2 }}</td>
-       <td>{{ current_september_subscriptions_2 }}</td>
-       <td>{{ current_october_subscriptions_2 }}</td>
-       <td>{{ current_november_subscriptions_2 }}</td>
-       <td>{{ current_december_subscriptions_2 }}</td>
-       <td>{{ current_year_subscriptions_2 }}</td>
-    </tr> -->
-    <!-- <tr>
-       <td>Meeting 1 day</td>
-       <td>{{ current_january_subscriptions_3 }}</td>
-       <td>{{ current_february_subscriptions_3 }}</td>
-       <td>{{ current_march_subscriptions_3 }}</td>
-       <td>{{ current_april_subscriptions_3 }}</td>
-       <td>{{ current_may_subscriptions_3 }}</td>
-       <td>{{ current_june_subscriptions_3 }}</td>
-       <td>{{ current_july_subscriptions_3 }}</td>
-       <td>{{ current_august_subscriptions_3 }}</td>
-       <td>{{ current_september_subscriptions_3 }}</td>
-       <td>{{ current_october_subscriptions_3 }}</td>
-       <td>{{ current_november_subscriptions_3 }}</td>
-       <td>{{ current_december_subscriptions_3 }}</td>
-       <td>{{ current_year_subscriptions_3 }}</td>
-    </tr> -->
     <tr>
        <td>Full Time</td>
        {% for subscriptions in current_monthly_subscriptions_1 %}
@@ -236,18 +132,9 @@
 
   <tr>
      <th class="is-info"></th>
-     <th class="is-info">Janvier</th>
-     <th class="is-info">Février</th>
-     <th class="is-info">Mars</th>
-     <th class="is-info">Avril</th>
-     <th class="is-info">Mai</th>
-     <th class="is-info">Juin</th>
-     <th class="is-info">Juillet</th>
-     <th class="is-info">Août</th>
-     <th class="is-info">Septembre</th>
-     <th class="is-info">Octobre</th>
-     <th class="is-info">Novembre</th>
-     <th class="is-info">Décembre</th>
+     {% for month in get_month %}
+             <th class="is-info">{{ month | title}}</th>
+         {% endfor %}
      <th class="is-danger">Total</th>
   </tr>
   <tr>
@@ -279,7 +166,8 @@
 
   </div>
   </section>
-  {% for entry in test %}
+  <!-- <p>HI {{ get_month}}</p>
+  {% for entry in get_month %}
           <p>{{entry}}</p>
-      {% endfor %}
+      {% endfor %} -->
 {% endblock body %}
