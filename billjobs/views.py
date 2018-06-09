@@ -410,6 +410,5 @@ def statistics(request):
     'previous_monthly_subscriptions_1': get_monthly_subscriptions_list(1, previous_year),
     'previous_monthly_subscriptions_2': get_monthly_subscriptions_list(2, previous_year),
     'previous_monthly_subscriptions_3': get_monthly_subscriptions_list(3, previous_year),
-    'test': get_subscription_list_by_year(previous_year),
 
     } )
