@@ -312,9 +312,6 @@ def get_month_names():
         months.append(month_name(i))
     return months
 
-# nombre total de services disponibles
-number_of_available_services = Service.objects.filter(is_available=1).count()
-
 
 # Refactored version
 def get_annual_revenue(request, year):
