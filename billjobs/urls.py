@@ -7,5 +7,5 @@ urlpatterns = [
         url(r'^signup/$', views.signup, name='billjobs_signup'),
         url(r'^signup-success/$', views.signup_success,
             name='billjobs_signup_success'),
-        url(r'^statistics/$', views.statistics, name = 'statistics')
+        url(r'^statistics/$', views.statistics, name='billjobs_statistics')
         ]
