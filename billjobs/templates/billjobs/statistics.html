@@ -1,0 +1,170 @@
+{% extends "billjobs/base.html" %}
+{% block body %}
+<section class="section">
+  <div class="container">
+    <a href="{% url 'admin:index' %}">Accueil</a>
+    <h2 class="title is-3">Statistiques</h2>
+  </div>
+  </section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns">
+
+
+<div class="column">
+  <p class="title is-4">Chiffre d'affaire {{ current_month_name | title}} {{ current_year }}</p>
+  <p class="subtitle is-4" style="background-color: hsla(204, 86%, 53%, 0.25); line-height: 200px; height: 200px; width: 200px; border-radius: 100%; text-align: center; border: 3px dotted black">{{ current_month_revenue}} €</p>
+</div>
+<div class="column">
+  <p class="title is-4">Chiffre d'affaire {{ previous_month_name | title}} {{ current_year }}</p>
+  <p class="subtitle is-4" style="background-color: hsla(204, 86%, 53%, 0.5); line-height: 200px; height: 200px; width: 200px; border-radius: 100%; text-align: center; border: 3px solid black">{{ previous_month_revenue}} €</p>
+</div>
+</div>
+  </div>
+  </section>
+<section class="section">
+  <div class="container">
+          <table class="table is-striped is-fullwidth">
+            <tr>
+              <th class="is-info">Chiffre d'affaire {{ current_month_name }} {{ current_year }}</th>
+              <th class="is-info">Chiffre d'affaire {{ previous_month_name }} {{ current_year }}</th>
+            </tr>
+            <tr>
+              <td>{{ current_month_revenue}} €</td>
+              <td>{{ previous_month_revenue}} €</td>
+            </tr>
+          </table>
+      </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+
+          <table class="table is-striped is-fullwidth">
+         <p class="title is-4">Chiffre d'affaire annuel</p>
+
+         <tr>
+             <th class="is-info">Année</th>
+             {% for month in get_month %}
+                     <th class="is-info">{{ month | title}}</th>
+                 {% endfor %}
+             <th class="is-danger">Total</th>
+         </tr>
+         <tr>
+             <td>{{ current_year}}</td>
+             {% for revenue in current_monthly_revenue %}
+             <td>{{revenue}}</td>
+                 {% endfor %}
+             <td>{{ current_year_revenue }}<span class="icon has-text-info"
+               style="border: 1px solid hsl(204, 86%, 53%); border-radius: 100%; cursor: pointer"
+               title="Estimation du CA annuel : somme des mois finis divisée
+               par le nombre de mois multipliés par 12.">
+        i
+      </span></td>
+         </tr>
+         <tr>
+             <td>{{ previous_year }}</td>
+             {% for revenue in previous_monthly_revenue %}
+             <td>{{revenue}}</td>
+                 {% endfor %}
+             <td>{{ previous_year_revenue }}</td>
+         </tr>
+
+      </table>
+    </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+
+    </table>
+
+
+    <table class="table is-striped is-fullwidth">
+    <p class="title is-4">Abonnements / Services {{ current_year }}</p>
+
+    <tr>
+       <th class="is-info"></th>
+       {% for month in get_month %}
+               <th class="is-info">{{ month | title}}</th>
+           {% endfor %}
+       <th class="is-danger">Total</th>
+    </tr>
+    <tr>
+       <td>Full Time</td>
+       {% for subscriptions in current_monthly_subscriptions_1 %}
+       <td>{{subscriptions}}</td>
+           {% endfor %}
+      <td>{{ current_year_subscriptions_1 }}</td>
+    </tr>
+    <tr>
+       <td>Mid Time</td>
+       {% for subscriptions in current_monthly_subscriptions_2 %}
+       <td>{{subscriptions}}</td>
+           {% endfor %}
+      <td>{{ current_year_subscriptions_2 }}</td>
+    </tr>
+
+    <tr>
+       <td>Meeting 1 day</td>
+       {% for subscriptions in current_monthly_subscriptions_3 %}
+       <td>{{subscriptions}}</td>
+           {% endfor %}
+      <td>{{ current_year_subscriptions_3 }}</td>
+    </tr>
+
+
+    </table>
+
+
+
+    </div>
+    </section>
+
+
+  <section class="section">
+    <div class="container">
+
+  </table>
+  <table class="table is-striped is-fullwidth">
+  <p class="title is-4">Abonnements / Services {{ previous_year}}</p>
+
+  <tr>
+     <th class="is-info"></th>
+     {% for month in get_month %}
+             <th class="is-info">{{ month | title}}</th>
+         {% endfor %}
+     <th class="is-danger">Total</th>
+  </tr>
+  <tr>
+     <td>Full Time</td>
+     {% for subscriptions in previous_monthly_subscriptions_1 %}
+     <td>{{subscriptions}}</td>
+         {% endfor %}
+    <td>{{ previous_year_subscriptions_1 }}</td>
+  </tr>
+  <tr>
+     <td>Mid Time</td>
+     {% for subscriptions in previous_monthly_subscriptions_2 %}
+     <td>{{subscriptions}}</td>
+         {% endfor %}
+    <td>{{ previous_year_subscriptions_2 }}</td>
+  </tr>
+
+  <tr>
+     <td>Meeting 1 day</td>
+     {% for subscriptions in previous_monthly_subscriptions_3 %}
+     <td>{{subscriptions}}</td>
+         {% endfor %}
+    <td>{{ previous_year_subscriptions_3 }}</td>
+  </tr>
+
+  </table>
+
+
+
+  </div>
+  </section>
+
+{% endblock body %}

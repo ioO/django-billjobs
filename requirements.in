@@ -11,3 +11,4 @@ sphinx_rtd_theme
 six==1.11.0
 coverage==4.5.1
 requests==2.18.4
+factory-boy

@@ -2,6 +2,7 @@ import csv
 from django import forms
 from django.http import HttpResponse
 from django.db.models import Q
+from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
@@ -11,6 +12,22 @@ from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from .models import Bill, BillLine, Service, UserProfile
+from .views import statistics
+
+
+class BilljobsAdminSite(admin.AdminSite):
+    index_template = 'billjobs/admin_index.html'
+
+    def get_urls(self):
+        urls = super(BilljobsAdminSite, self).get_urls()
+
+        my_urls = [
+            url(r'^statistics$', self.admin_view(statistics),
+                name='billjobs_statistics')
+        ]
+
+        return my_urls + urls
+
 
 class BillLineInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -135,9 +152,10 @@ class ServiceAdmin(admin.ModelAdmin):
     list_editable = ('is_available',)
     list_filter = ('is_available',)
 
-admin.site.register(Bill, BillAdmin)
-admin.site.register(Service, ServiceAdmin)
 
+admin_site = BilljobsAdminSite(name='myadmin')
 # User have to be unregistered
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+# admin_site.unregister(User)
+admin_site.register(User, UserAdmin)
+admin_site.register(Bill, BillAdmin)
+admin_site.register(Service, ServiceAdmin)

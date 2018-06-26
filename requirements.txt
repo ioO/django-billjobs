@@ -14,6 +14,8 @@ coverage==4.5.1
 django-debug-toolbar==1.9.1
 django==1.11.11
 docutils==0.13.1          # via sphinx
+factory-boy==2.11.1
+faker==0.8.16             # via factory-boy
 first==2.0.1              # via pip-tools
 idna==2.6                 # via requests
 imagesize==0.7.1          # via sphinx
@@ -29,6 +31,7 @@ pkginfo==1.4.1            # via twine
 port-for==0.3.1           # via sphinx-autobuild
 pygments==2.2.0           # via sphinx
 pyparsing==2.1.10         # via packaging
+python-dateutil==2.7.3    # via faker
 pytz==2016.10             # via babel, django
 pyyaml==3.12
 reportlab==3.4.0
@@ -41,6 +44,7 @@ sphinx-rtd-theme==0.2.4
 sphinx==1.7.1
 sphinxcontrib-websupport==1.0.1  # via sphinx
 sqlparse==0.2.1           # via django-debug-toolbar
+text-unidecode==1.2       # via faker
 tornado==4.4.2            # via livereload, sphinx-autobuild
 tqdm==4.19.4              # via twine
 twine==1.10.0
