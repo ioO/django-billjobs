@@ -53,3 +53,4 @@ class BillFactory(factory.django.DjangoModelFactory):
         django_get_or_create = ('user',)
 
     user = factory.SubFactory(UserFactory)
+    amount = factory.fuzzy.FuzzyInteger(100, 200, 10)
