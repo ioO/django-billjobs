@@ -416,6 +416,7 @@ def previous_monthly_subscriptions(subscription):
     return previous_monthly_subscriptions
 
 
+@login_required(login_url='/admin/login/')
 def statistics(request):
     return render(
             request,
