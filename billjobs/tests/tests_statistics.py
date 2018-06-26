@@ -15,13 +15,13 @@ class Statistics(TestCase):
 
     def test_login_required(self):
         '''Test redirect to admin login page'''
-        response = self.client.get(reverse('billjobs_statistics'), follow=True)
+        response = self.client.get('/admin/statistics', follow=True)
         self.assertRedirects(
-                response, '/admin/login/?next=/billjobs/statistics/')
+                response, '/admin/login/?next=/admin/statistics')
 
     def test_admin_access_stats(self):
         '''Test an authenticated admin can view statistic page'''
         self.client.force_login(self.admin)
         response = self.client.get(
-                reverse('billjobs_statistics'), follow=False)
+                '/admin/statistics', follow=False)
         self.assertEqual(response.status_code, 200)
