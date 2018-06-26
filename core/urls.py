@@ -1,11 +1,11 @@
 from django.conf.urls import include, url
-from django.contrib import admin
 from core import settings
-admin.site.site_header = 'Coworking space administration'
+from billjobs.admin import admin_site
+admin_site.site_header = 'Coworking space administration'
 
 urlpatterns = [
     url(r'^billjobs/', include('billjobs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin_site.urls)),
 ]
 
 if settings.DEBUG:
