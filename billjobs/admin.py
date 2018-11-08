@@ -62,9 +62,22 @@ class BillAdmin(admin.ModelAdmin):
     search_fields = ('user__first_name', 'user__last_name', 'number', 'amount')
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        """Return the User field foreign key with overwrited properties
+
+        In form to create or update a bill (invoice) the User field display a
+        list of users based on username sorted by alphabetical asc. This
+        function use the current user session as default field value and return
+        a string based on user full name and username
+
+        Returns
+        ------
+        Field
+            The User django admin form field
+
+        """
         field = super(BillAdmin, self).formfield_for_foreignkey(
                                                 db_field, request, **kwargs)
-        if db_field.rel.to == User:
+        if db_field.name == 'user':
             field.initial = request.user.id
             field.label_from_instance = self.get_user_label
         return field
