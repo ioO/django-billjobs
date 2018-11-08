@@ -2,6 +2,7 @@
    sphinx-quickstart on Sun Mar 26 14:15:00 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
+
 ===========================================
 Welcome to django-billjobs's documentation!
 ===========================================
@@ -82,6 +83,7 @@ in your django settings file::
    getting_started
    settings
    contributing
+   migration_to_v0.8.x
 
 Indices and tables
 ==================
