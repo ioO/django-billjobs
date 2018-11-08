@@ -19,9 +19,10 @@ Welcome to django-billjobs's documentation!
 
 *A django billing app for coworking space*
 
-.. note:: **Warning end of life**
+.. note:: **Warning: I maintain this project 2/3 times a year.**
 
-   This project is going to be closed soon. Do not use for a new project
+   If you start a new coworking space as a french non-profit organization, this project could help you on the first
+   time. Otherwise, it must be wiser to use another peace of software.
 
 -------------------------
 What is django-billjobs ?
