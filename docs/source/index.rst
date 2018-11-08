@@ -2,6 +2,7 @@
    sphinx-quickstart on Sun Mar 26 14:15:00 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
+
 ===========================================
 Welcome to django-billjobs's documentation!
 ===========================================
@@ -19,9 +20,10 @@ Welcome to django-billjobs's documentation!
 
 *A django billing app for coworking space*
 
-.. note:: **Warning end of life**
+.. note:: **Warning: I maintain this project 2/3 times a year.**
 
-   This project is going to be closed soon. Do not use for a new project
+   If you start a new coworking space as a french non-profit organization, this project could help you on the first
+   time. Otherwise, it must be wiser to use another peace of software.
 
 -------------------------
 What is django-billjobs ?
@@ -65,7 +67,6 @@ in your django settings file::
       'django.contrib.sessions',
       'django.contrib.messages',
       'django.contrib.staticfiles',
-      'rest_framework',
       'billjobs',
     )
 
@@ -82,6 +83,7 @@ in your django settings file::
    getting_started
    settings
    contributing
+   migration_to_v0.8.x
 
 Indices and tables
 ==================
@@ -92,5 +94,4 @@ Indices and tables
 
 .. _Django-billjobs: https://github.com/ioO/django-billjobs/
 .. _Django admin site: https://docs.djangoproject.com/en/dev/ref/contrib/admin/
-.. _v1.x: https://github.com/ioO/django-billjobs/tree/v1.x
 .. _Django authentication system: https://docs.djangoproject.com/en/dev/topics/auth/default/

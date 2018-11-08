@@ -5,6 +5,8 @@ Getting Started
 `Django-billjobs`_ is a Django reusable app that you can install with `pip`_. We recommend you follow those steps to 
 setup a new project for your coworking space :
 
+.. note:: If you update to version v0.8.0 you need to read :ref:`migration-to-v08x`
+
 Create virtualenv
 -----------------
 You need Python version 3.5 at least, `virtualenv`_ and `mkvirtualenv`_ installed in your system. We let you read 
@@ -31,8 +33,7 @@ Install Django-billjobs
 -----------------------
 
 Most of the time, Django-billjobs is up to date with the latest Django version. You can check which version we actually 
-support in the `travis.yml`_ file. You can install Django-billjobs directly, all requirements as Django, reportlab and 
-Django REST Framework will be installed in the same time.
+support in the `travis.yml`_ file. You can install Django-billjobs directly, all requirements as Django, reportlab will be installed in the same time.
 
 .. code-block:: bash
 
@@ -40,8 +41,6 @@ Django REST Framework will be installed in the same time.
     Collecting Django-billjobs
     Collecting django>1.9 (from Django-billjobs)
       Using cached Django-1.11-py2.py3-none-any.whl
-    Collecting djangorestframework==3.6.2 (from Django-billjobs)
-      Using cached djangorestframework-3.6.2-py2.py3-none-any.whl
     Collecting reportlab==3.4.0 (from Django-billjobs)
       Using cached reportlab-3.4.0-cp36-cp36m-manylinux1_x86_64.whl
     [...]
@@ -60,8 +59,6 @@ Now everything is installed you can create a django project.
     (my-space-name) [ioo@billjobs ~/]$ mkdir my-space-name
     (my-space-name) [ioo@billjobs ~/]$ cd my-space-name/
     (my-space-name) [ioo@billjobs ~/my-space-name]$ django-admin startproject myspacename .
-    (my-space-name) [ioo@billjobs ~/my-space-name]$ ls
-    manage.py  myspacename
 
 .. note:: You notice the dot at the end of django-admin startproject command, right ? If not you only have a 
   myspacename folder that contains another directory with the same name.
@@ -116,28 +113,7 @@ authentification to use the API with your client app.
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'billjobs',
-    'rest_framework',
-    'rest_framework.authtoken',
     )
-
-Django REST Framework allow to browse the API with a web browser. You should configure your project settings to 
-allow `SessionAuthentication`_. If you want to use your own application client you should use 
-`TokenAuthentication`_. Add those lines in your settings.py
-
-.. code-block:: python
-
-    REST_FRAMEWORK = {
-        'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.TokenAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
-            ),
-        'DEFAULT_PERMISSION_CLASSES': (
-            'rest_framework.permissions.IsAdminUser',
-            ),
-        'PAGE_SIZE': 10
-    }
-
-By default, only admin users can access the API. The goal is to avoid to expose sensitives data to public.
 
 Before running and playing with your application, you need to create a database.
 
@@ -183,12 +159,13 @@ Last, you need to include *billjobs.urls* to browse the application with your we
 .. code-block:: python
 
     # myspacename/urls.py
-    from django.conf.urls import url, include
-    from django.contrib import admin
+    from django.urls import include, path, re_path
+    from billjobs.admin import admin_site
+    import billjobs
 
     urlpatterns = [
-        url(r'^billjobs/', include('billjobs.urls')),
-        url(r'^admin/', admin.site.urls),
+        re_path(r'^billjobs/', include('billjobs.urls')),
+        path('admin/', admin_site.urls),
     ]
 
 Now you can run the local server and play with django-billjobs
@@ -203,8 +180,7 @@ Now you can run the local server and play with django-billjobs
     Starting development server at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
 
-To browse the admin interface http://localhost:8000/admin and to browse the API 
-http://localhost:8000/billjobs/api/1.0/users/
+To browse the admin interface http://localhost:8000/admin
 
 .. _Django-billjobs: https://github.com/ioO/django-billjobs/
 .. _virtualenv: https://virtualenv.pypa.io/en/stable/
@@ -212,5 +188,3 @@ http://localhost:8000/billjobs/api/1.0/users/
 .. _Python: https://www.python.org/
 .. _pip: https://pypi.python.org/pypi
 .. _travis.yml: https://github.com/ioO/django-billjobs/blob/master/.travis.yml
-.. _SessionAuthentication: http://www.django-rest-framework.org/api-guide/authentication/#sessionauthentication
-.. _TokenAuthentication: http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication

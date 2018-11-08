@@ -13,11 +13,14 @@ Billjobs
    :target: http://django-billjobs.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
-**Warning: this project is going to be closed soon** Do not use it for a new project
+**Warning: I maintain this project 2/3 times a year.** If you start a new coworking space as a french non-profit
+organization, this project could help you on the first time. Otherwise, it must be wiser to use another peace of
+software.
 
 A django billing app for coworking space.
 
-We intend to keep things as simple as we can and with an easy user experience. This apps is designed to manage coworkers and their bills.
+We intend to keep things as simple as we can and with an easy user experience. This apps is designed to manage invoices
+of coworkers.
 
 **No tax management**. There is no tax for non-profit organization in
 France. This application doesn't manage tax, it only displays legal
@@ -32,8 +35,8 @@ and `Sète en Commun <https://www.facebook.com/Setencommun/>`__ three coworking 
 Requirements
 ------------
 
-  - **Python**: 3.4+
-  - **Django**: 1.10+
+  - **Python**: 3.5+
+  - **Django**: 2.0+
   - **Reportlab**: 3.3+
-  - **Requests**: 2.18+
+  - **Requests**: 2.20+
 

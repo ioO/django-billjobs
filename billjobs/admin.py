@@ -7,10 +7,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
-from django.core.urlresolvers import reverse
 from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
 from .models import Bill, BillLine, Service, UserProfile
 from .views import statistics
 
@@ -33,14 +33,17 @@ class BillLineInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BillLineInlineForm, self).__init__(*args, **kwargs)
         if self.instance.id:
-            self.fields['service'].queryset = Service.objects.filter(Q(is_available=True) | Q(name=self.instance.service.name))
+            self.fields['service'].queryset = Service.objects.filter(
+                    Q(is_available=True) | Q(name=self.instance.service.name))
             print(self.fields['service'].choices)
         else:
-            self.fields['service'].queryset = Service.objects.filter(is_available=True)
+            self.fields['service'].queryset = Service.objects.filter(
+                    is_available=True)
 
     class Meta:
         model = BillLine
         fields = ('service', 'quantity', 'total', 'note')
+
 
 class BillLineInline(admin.TabularInline):
     model = BillLine
@@ -53,15 +56,28 @@ class BillAdmin(admin.ModelAdmin):
     exclude = ('issuer_address', 'billing_address')
     inlines = [BillLineInline]
     list_display = ('__str__', 'coworker_name_link', 'amount', 'billing_date',
-            'isPaid', 'pdf_file_url')
+                    'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
     list_filter = ('isPaid', )
     search_fields = ('user__first_name', 'user__last_name', 'number', 'amount')
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        """Return the User field foreign key with overwrited properties
+
+        In form to create or update a bill (invoice) the User field display a
+        list of users based on username sorted by alphabetical asc. This
+        function use the current user session as default field value and return
+        a string based on user full name and username
+
+        Returns
+        ------
+        Field
+            The User django admin form field
+
+        """
         field = super(BillAdmin, self).formfield_for_foreignkey(
                                                 db_field, request, **kwargs)
-        if db_field.rel.to == User:
+        if db_field.name == 'user':
             field.initial = request.user.id
             field.label_from_instance = self.get_user_label
         return field
@@ -85,7 +101,9 @@ class BillAdmin(admin.ModelAdmin):
                 '<a href="{}">{}.pdf</a>',
                 reverse('generate-pdf', args=(obj.id,)),
                 obj.number)
-    pdf_file_url.short_description=_('Download invoice')
+
+    pdf_file_url.short_description = _('Download invoice')
+
 
 class RequiredInlineFormSet(BaseInlineFormSet):
     """
@@ -100,9 +118,11 @@ class RequiredInlineFormSet(BaseInlineFormSet):
         form.empty_permitted = False
         return form
 
+
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
     formset = RequiredInlineFormSet
+
 
 class UserForm(UserChangeForm):
 
@@ -111,6 +131,7 @@ class UserForm(UserChangeForm):
         self.fields['email'].required = True
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
+
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileAdmin, )
@@ -145,6 +166,7 @@ class UserAdmin(UserAdmin):
 
         return response
     export_email.short_description = _('Export email of selected users')
+
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service

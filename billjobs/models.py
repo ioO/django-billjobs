@@ -9,7 +9,8 @@ import datetime
 
 class Bill(models.Model):
 
-    user = models.ForeignKey(User, verbose_name=_('Coworker'))
+    user = models.ForeignKey(
+            User, verbose_name=_('Coworker'), on_delete=models.PROTECT)
     number = models.CharField(
             max_length=16,
             unique=True,
@@ -74,8 +75,8 @@ class Service(models.Model):
 
 class BillLine(models.Model):
 
-    bill = models.ForeignKey(Bill)
-    service = models.ForeignKey(Service)
+    bill = models.ForeignKey(Bill, models.PROTECT)
+    service = models.ForeignKey(Service, models.PROTECT)
     quantity = models.SmallIntegerField(default=1, verbose_name=_('Quantity'))
     total = models.FloatField(
             blank=True,
@@ -95,7 +96,7 @@ class BillLine(models.Model):
 
 class UserProfile(models.Model):
     """ extend User class """
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, models.PROTECT)
     billing_address = models.TextField(
             max_length=1024,
             verbose_name=_('Billing Address'))
