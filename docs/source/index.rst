@@ -66,7 +66,6 @@ in your django settings file::
       'django.contrib.sessions',
       'django.contrib.messages',
       'django.contrib.staticfiles',
-      'rest_framework',
       'billjobs',
     )
 
@@ -93,5 +92,4 @@ Indices and tables
 
 .. _Django-billjobs: https://github.com/ioO/django-billjobs/
 .. _Django admin site: https://docs.djangoproject.com/en/dev/ref/contrib/admin/
-.. _v1.x: https://github.com/ioO/django-billjobs/tree/v1.x
 .. _Django authentication system: https://docs.djangoproject.com/en/dev/topics/auth/default/
