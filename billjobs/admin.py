@@ -33,14 +33,17 @@ class BillLineInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BillLineInlineForm, self).__init__(*args, **kwargs)
         if self.instance.id:
-            self.fields['service'].queryset = Service.objects.filter(Q(is_available=True) | Q(name=self.instance.service.name))
+            self.fields['service'].queryset = Service.objects.filter(
+                    Q(is_available=True) | Q(name=self.instance.service.name))
             print(self.fields['service'].choices)
         else:
-            self.fields['service'].queryset = Service.objects.filter(is_available=True)
+            self.fields['service'].queryset = Service.objects.filter(
+                    is_available=True)
 
     class Meta:
         model = BillLine
         fields = ('service', 'quantity', 'total', 'note')
+
 
 class BillLineInline(admin.TabularInline):
     model = BillLine
@@ -53,7 +56,7 @@ class BillAdmin(admin.ModelAdmin):
     exclude = ('issuer_address', 'billing_address')
     inlines = [BillLineInline]
     list_display = ('__str__', 'coworker_name_link', 'amount', 'billing_date',
-            'isPaid', 'pdf_file_url')
+                    'isPaid', 'pdf_file_url')
     list_editable = ('isPaid',)
     list_filter = ('isPaid', )
     search_fields = ('user__first_name', 'user__last_name', 'number', 'amount')
@@ -85,7 +88,9 @@ class BillAdmin(admin.ModelAdmin):
                 '<a href="{}">{}.pdf</a>',
                 reverse('generate-pdf', args=(obj.id,)),
                 obj.number)
-    pdf_file_url.short_description=_('Download invoice')
+
+    pdf_file_url.short_description = _('Download invoice')
+
 
 class RequiredInlineFormSet(BaseInlineFormSet):
     """
@@ -100,9 +105,11 @@ class RequiredInlineFormSet(BaseInlineFormSet):
         form.empty_permitted = False
         return form
 
+
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
     formset = RequiredInlineFormSet
+
 
 class UserForm(UserChangeForm):
 
@@ -111,6 +118,7 @@ class UserForm(UserChangeForm):
         self.fields['email'].required = True
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
+
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileAdmin, )
@@ -145,6 +153,7 @@ class UserAdmin(UserAdmin):
 
         return response
     export_email.short_description = _('Export email of selected users')
+
 
 class ServiceAdmin(admin.ModelAdmin):
     model = Service
