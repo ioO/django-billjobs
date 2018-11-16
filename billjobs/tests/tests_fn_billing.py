@@ -12,5 +12,7 @@ class BillingAdminListViewTestCase(TestCase):
         self.client.force_login(admin)
         response = self.client.get('/admin/billjobs/bill/')
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response,
-                '<td class="field-coworker_name_link"><a href="/admin/auth/user/1/change/">Bill Jobs</a></td>')
+        self.assertContains(
+                response,
+                '<td class="field-coworker_name_link">' +
+                '<a href="/admin/auth/user/1/change/">Bill Jobs</a></td>')
