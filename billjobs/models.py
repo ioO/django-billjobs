@@ -130,7 +130,7 @@ def define_number(sender, instance, **kwargs):
         except sender.DoesNotExist:
             last_num = '001'
 
-        instance.number = 'F%s%s' % (today.strftime('%Y%m'), last_num)
+        instance.number = 'F{}{}'.format(today.strftime('%Y%m'), last_num)
 
 
 @receiver(pre_save, sender=Bill)
