@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.utils import IntegrityError
 from billjobs.models import Bill, Service
 from billjobs.settings import BILLJOBS_BILL_ISSUER
+from .factories import ServiceFactory, BillFactory, UserFactory
 import datetime
 
 
@@ -66,6 +67,34 @@ class BillingTestCase(TestCase):
         today = datetime.date.today()
         last_number = 'F%s%s' % (today.strftime('%Y%m'), '1100')
         self.assertEqual(last_bill.number, last_number)
+
+    def test_service_price_change_do_not_change_bill_line(self):
+        '''Test when admin change a service price
+
+        Previous stored bills do not have to be impacted by price change
+        '''
+        # fixtures
+        user = UserFactory()
+        # create 4 services and add service to bill
+        for i in range(0, 4):
+            # create service
+            service = ServiceFactory()
+            # create bill add service
+            bill = BillFactory(user=user)
+            bill.billline_set.create(service=service)
+            # check bill line total is service price
+            self.assertEqual(
+                    bill.billline_set.first().total,
+                    service.price
+                    )
+            # update service price
+            service.price += 10
+            service.save()
+            # price is not the same
+            self.assertNotEqual(
+                    bill.billline_set.first().total,
+                    service.price
+                    )
 
 
 class ServiceTestCase(TestCase):
