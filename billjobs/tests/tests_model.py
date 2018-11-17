@@ -96,6 +96,22 @@ class BillingTestCase(TestCase):
                     service.price
                     )
 
+    def test_bill_number_as_no_limit(self):
+        ''' Test the bill number has no limit '''
+        user = UserFactory()
+        numbers = (999, 2122, 13456, 123456, 999999)
+        # bills number depend on date, so depend when test is running ;)
+        prefix = 'F{}'.format(datetime.date.today().strftime('%Y%m'))
+        for number in numbers:
+
+            # create a bill with forced number
+            BillFactory(user=user, number='{}{}'.format(prefix, number))
+            BillFactory(user=user)
+            # get last bill
+            last_bill = Bill.objects.order_by('id').last()
+            # bill number has to be one more
+            self.assertEqual(last_bill.number, '{}{}'.format(prefix, number+1))
+
 
 class ServiceTestCase(TestCase):
     ''' Test CRUD for Service model '''
