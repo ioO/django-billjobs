@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.shortcuts import reverse
 from billjobs.tests.factories import UserFactory, SuperUserFactory, BillFactory
 
 

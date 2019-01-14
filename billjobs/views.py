@@ -324,9 +324,9 @@ def get_month_names():
 
 
 # Refactored version
-def get_annual_revenue(request, year):
+def get_annual_revenue(year):
     # Le chiffre d'affaire annuel est une estimation
-    if year == current_year:
+    if year == current_year and current_month != 1:
         annual_revenue = (
                 Bill.objects.filter(
                     billing_date__year=year,
@@ -431,9 +431,9 @@ def statistics(request):
                 'previous_month_revenue':
                     get_monthly_revenue(request, previous_month, current_year),
                 'current_year_revenue':
-                    get_annual_revenue(request, current_year),
+                    get_annual_revenue(current_year),
                 'previous_year_revenue':
-                    get_annual_revenue(request, previous_year),
+                    get_annual_revenue(previous_year),
                 'current_monthly_revenue':
                     get_monthly_revenues(current_year),
                 'previous_monthly_revenue':
