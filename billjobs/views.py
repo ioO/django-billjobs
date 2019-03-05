@@ -125,6 +125,8 @@ def signup(request):
         profile_form = UserProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
+            user.set_password(user_form.fields['password'])
+            user.save()
             force_user_properties(user)
             profile = profile_form.save(commit=False)
             profile.user = user
