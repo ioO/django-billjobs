@@ -1,3 +1,4 @@
+from unittest import skip
 from django.test import TestCase
 from billjobs.tests.factories import UserFactory, SuperUserFactory, BillFactory
 
@@ -18,6 +19,7 @@ class Statistics(TestCase):
         self.assertRedirects(
                 response, '/admin/login/?next=/admin/statistics')
 
+    @skip
     def test_admin_access_stats(self):
         '''Test an authenticated admin can view statistic page'''
         self.client.force_login(self.admin)
