@@ -8,7 +8,8 @@
           <p>Bienvenue</p>
         </div>
         <div class="message-body">
-          Vous êtes inscrit à notre espace de coworking.
+          {% url "admin:login" as login_url %}
+          Vous êtes inscrit à notre espace de coworking. <a href="{{ login_url }}">Connectez-vous.</a>
         </div>
       </article>
     </div>
