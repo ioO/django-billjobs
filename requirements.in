@@ -1,4 +1,4 @@
-Django==2.1.7
+Django==2.1.11
 reportlab==3.5.13
 pip-tools==3.4.0
 pip-review==1.0
