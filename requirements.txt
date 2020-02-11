@@ -13,7 +13,7 @@ chardet==3.0.4            # via requests
 click==6.6                # via pip-tools
 coverage==4.5.2
 django-debug-toolbar==1.11
-django==2.1.7
+django==2.2.10
 docutils==0.13.1          # via readme-renderer, sphinx
 entrypoints==0.3          # via flake8
 factory-boy==2.11.1
@@ -50,7 +50,7 @@ sphinx-autobuild==0.7.1
 sphinx==1.8.4
 sphinx_rtd_theme==0.4.2
 sphinxcontrib-websupport==1.0.1  # via sphinx
-sqlparse==0.2.1           # via django-debug-toolbar
+sqlparse==0.2.1           # via django, django-debug-toolbar
 text-unidecode==1.2       # via faker
 tornado==4.4.2            # via livereload, sphinx-autobuild
 tqdm==4.19.4              # via twine
