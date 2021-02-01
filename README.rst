@@ -26,7 +26,7 @@ of coworkers.
 France. This application doesn't manage tax, it only displays legal
 French informations and tax 0% on bills.
 
-We use it at `Cowork'in Montpellier <http://www.coworkinmontpellier.org>`__ and `Le village <http://www.levillage.co/>`__, 
+We use it at `Cowork'in Montpellier <http://www.coworkinmontpellier.org>`__ and `Le Vîllage <https://www.levillage.co/>`__, 
 and `Sète en Commun <https://www.facebook.com/Setencommun/>`__ three coworking spaces in South of France
 
   * `Documentation <http://django-billjobs.readthedocs.io/en/latest/>`__
