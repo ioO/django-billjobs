@@ -1,5 +1,5 @@
 Django==2.1.7
-reportlab==3.5.13
+reportlab<3.6
 pip-tools==3.4.0
 pip-review==1.0
 django-debug-toolbar==1.11
