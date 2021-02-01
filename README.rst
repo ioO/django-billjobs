@@ -35,7 +35,7 @@ and `Sète en Commun <https://www.facebook.com/Setencommun/>`__ three coworking 
 Requirements
 ------------
 
-  - **Python**: 3.5+
+  - **Python**: 3.6+
   - **Django**: 2.2+
   - **Reportlab**: 3.5+
   - **Requests**: 2.25+
