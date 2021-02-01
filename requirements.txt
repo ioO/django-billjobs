@@ -7,19 +7,19 @@
 alabaster==0.7.10         # via sphinx
 argh==0.26.2              # via sphinx-autobuild, watchdog
 babel==2.4.0              # via sphinx
-bleach==3.0.2             # via readme-renderer
+bleach==3.1.4             # via readme-renderer
 certifi==2017.11.5        # via requests
 chardet==3.0.4            # via requests
 click==6.6                # via pip-tools
-coverage==4.5.2
-django-debug-toolbar==1.11
-django==2.1.7
+coverage==4.5.2           # via -r requirements.in
+django-debug-toolbar==1.11  # via -r requirements.in
+django==2.1.7             # via -r requirements.in, django-debug-toolbar
 docutils==0.13.1          # via readme-renderer, sphinx
 entrypoints==0.3          # via flake8
-factory-boy==2.11.1
+factory-boy==2.11.1       # via -r requirements.in
 faker==0.8.16             # via factory-boy
-flake8-django==0.0.4
-flake8==3.7.7
+flake8-django==0.0.4      # via -r requirements.in
+flake8==3.7.7             # via -r requirements.in, flake8-django
 idna==2.6                 # via requests
 imagesize==0.7.1          # via sphinx
 jinja2==2.9.5             # via sphinx
@@ -29,8 +29,8 @@ mccabe==0.6.1             # via flake8
 packaging==16.8           # via pip-review, sphinx
 pathtools==0.1.2          # via sphinx-autobuild, watchdog
 pillow==6.2.0             # via reportlab
-pip-review==1.0
-pip-tools==3.4.0
+pip-review==1.0           # via -r requirements.in
+pip-tools==3.4.0          # via -r requirements.in
 pkginfo==1.4.2            # via twine
 port_for==0.3.1           # via sphinx-autobuild
 pycodestyle==2.5.0        # via flake8
@@ -39,22 +39,22 @@ pygments==2.2.0           # via readme-renderer, sphinx
 pyparsing==2.1.10         # via packaging
 python-dateutil==2.7.3    # via faker
 pytz==2016.10             # via babel, django
-pyyaml==3.13
+pyyaml==3.13              # via -r requirements.in, sphinx-autobuild, watchdog
 readme-renderer==24.0     # via twine
-reportlab==3.5.13
+reportlab==3.5.13         # via -r requirements.in
 requests-toolbelt==0.8.0  # via twine
-requests==2.21.0
-six==1.12.0
+requests==2.21.0          # via -r requirements.in, requests-toolbelt, sphinx, twine
+six==1.12.0               # via -r requirements.in, bleach, faker, livereload, packaging, pip-tools, python-dateutil, readme-renderer, sphinx
 snowballstemmer==1.2.1    # via sphinx
-sphinx-autobuild==0.7.1
-sphinx==1.8.4
-sphinx_rtd_theme==0.4.2
+sphinx-autobuild==0.7.1   # via -r requirements.in
+sphinx==1.8.4             # via -r requirements.in, sphinx-rtd-theme
+sphinx_rtd_theme==0.4.2   # via -r requirements.in
 sphinxcontrib-websupport==1.0.1  # via sphinx
 sqlparse==0.2.1           # via django-debug-toolbar
 text-unidecode==1.2       # via faker
 tornado==4.4.2            # via livereload, sphinx-autobuild
 tqdm==4.19.4              # via twine
-twine==1.13.0
+twine==1.13.0             # via -r requirements.in
 urllib3==1.22             # via requests
 watchdog==0.8.3           # via sphinx-autobuild
 webencodings==0.5.1       # via bleach
