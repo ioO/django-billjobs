@@ -14,12 +14,18 @@ bleach==3.3.0
     # via readme-renderer
 certifi==2020.12.5
     # via requests
+cffi==1.14.4
+    # via cryptography
 chardet==4.0.0
     # via requests
 click==7.1.2
     # via pip-tools
+colorama==0.4.4
+    # via twine
 coverage==4.5.2
     # via -r requirements.in
+cryptography==3.3.1
+    # via secretstorage
 django-debug-toolbar==1.11
     # via -r requirements.in
 django==2.2.18
@@ -46,8 +52,18 @@ idna==2.10
     # via requests
 imagesize==1.2.0
     # via sphinx
+importlib-metadata==3.4.0
+    # via
+    #   keyring
+    #   twine
+jeepney==0.6.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==2.11.3
     # via sphinx
+keyring==22.0.1
+    # via twine
 livereload==2.6.3
     # via sphinx-autobuild
 markupsafe==1.1.1
@@ -73,6 +89,8 @@ port_for==0.3.1
     # via sphinx-autobuild
 pycodestyle==2.5.0
     # via flake8
+pycparser==2.20
+    # via cffi
 pyflakes==2.1.1
     # via flake8
 pygments==2.7.4
@@ -103,10 +121,15 @@ requests==2.25.1
     #   requests-toolbelt
     #   sphinx
     #   twine
+rfc3986==1.4.0
+    # via twine
+secretstorage==3.3.0
+    # via keyring
 six==1.12.0
     # via
     #   -r requirements.in
     #   bleach
+    #   cryptography
     #   livereload
     #   python-dateutil
     #   readme-renderer
@@ -137,14 +160,18 @@ tornado==6.1
     #   sphinx-autobuild
 tqdm==4.56.0
     # via twine
-twine==1.13.0
+twine==3.3.0
     # via -r requirements.in
+typing-extensions==3.7.4.3
+    # via importlib-metadata
 urllib3==1.26.3
     # via requests
 watchdog==1.0.2
     # via sphinx-autobuild
 webencodings==0.5.1
     # via bleach
+zipp==3.4.0
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

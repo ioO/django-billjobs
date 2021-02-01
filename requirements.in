@@ -3,7 +3,7 @@ reportlab<3.6
 pip-tools
 pip-review==1.0
 django-debug-toolbar==1.11
-twine==1.13.0
+twine<4
 Sphinx==1.8.4
 sphinx-autobuild==0.7.1
 sphinx_rtd_theme==0.4.2
