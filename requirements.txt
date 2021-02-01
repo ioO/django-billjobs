@@ -18,7 +18,7 @@ certifi==2017.11.5
     # via requests
 chardet==3.0.4
     # via requests
-click==6.6
+click==7.1.2
     # via pip-tools
 coverage==4.5.2
     # via -r requirements.in
@@ -68,7 +68,7 @@ pillow==8.1.0
     # via reportlab
 pip-review==1.0
     # via -r requirements.in
-pip-tools==3.4.0
+pip-tools==5.5.0
     # via -r requirements.in
 pkginfo==1.4.2
     # via twine
@@ -114,7 +114,6 @@ six==1.12.0
     #   faker
     #   livereload
     #   packaging
-    #   pip-tools
     #   python-dateutil
     #   readme-renderer
     #   sphinx

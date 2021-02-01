@@ -1,6 +1,6 @@
 Django==2.1.7
 reportlab<3.6
-pip-tools==3.4.0
+pip-tools
 pip-review==1.0
 django-debug-toolbar==1.11
 twine==1.13.0
