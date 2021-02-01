@@ -21,6 +21,7 @@ setup(
     license='X11 License',
     description='A django billing app for coworking space.',
     long_description=README,
+    long_description_content_type='text/x-rst',
     url='https://github.com/ioO/django-billjobs',
     author='Lionel Chanson',
     author_email='github@lionelchanson.fr',
