@@ -87,7 +87,7 @@ pytz==2021.1
     # via
     #   babel
     #   django
-pyyaml==3.13
+pyyaml==5.1
     # via
     #   -r requirements.in
     #   sphinx-autobuild
