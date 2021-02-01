@@ -14,7 +14,7 @@ Settings
 
 Using Django v2.x need changes in your *settings.py* file::
 
-      - MIDDELWARE_CLASSES=(
+      - MIDDLEWARE_CLASSES=(
       + MIDDLEWARE=(
       -     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 
