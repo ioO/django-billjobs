@@ -24,7 +24,7 @@ coverage==4.5.2
     # via -r requirements.in
 django-debug-toolbar==1.11
     # via -r requirements.in
-django==2.1.7
+django==2.2.18
     # via
     #   -r requirements.in
     #   django-debug-toolbar
@@ -129,8 +129,10 @@ sphinx_rtd_theme==0.4.2
     # via -r requirements.in
 sphinxcontrib-websupport==1.0.1
     # via sphinx
-sqlparse==0.2.1
-    # via django-debug-toolbar
+sqlparse==0.4.1
+    # via
+    #   django
+    #   django-debug-toolbar
 text-unidecode==1.2
     # via faker
 tornado==4.4.2
