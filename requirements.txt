@@ -48,7 +48,7 @@ idna==2.6
     # via requests
 imagesize==0.7.1
     # via sphinx
-jinja2==2.9.5
+jinja2==2.10.1
     # via sphinx
 livereload==2.5.1
     # via sphinx-autobuild
