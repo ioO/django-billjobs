@@ -66,7 +66,7 @@ Jinja2 = "==2.11.3"
 MarkupSafe = "==1.1.1"
 Pillow = "==8.1.0"
 Pygments = "==2.7.4"
-PyYAML = "==3.13"
+PyYAML = "==5.4.1"
 SecretStorage = "==3.3.0"
 Sphinx = "==1.8.4"
 
