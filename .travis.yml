@@ -1,22 +1,17 @@
+os: linux
 language: python
 python:
   - "3.6"
-matrix:
-  include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
-env:
-  - DJANGO_VERSION=2.0
-  - DJANGO_VERSION=2.1
-  - DJANGO_VERSION=2.1.5
+  - "3.7"
+  - "3.8"
+  - "3.9"
+
 install:
   - pip install -r requirements.txt
-  - pip install -q Django==$DJANGO_VERSION
   - pip install coveralls
 # command to run tests
 script:
-  - python manage.py makemigrations
+  - python manage.py migrate
   - coverage run --source="." manage.py test billjobs
 after_success:
   - coveralls
