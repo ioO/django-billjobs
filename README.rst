@@ -14,8 +14,7 @@ Billjobs
    :alt: Documentation Status
 
 **Warning: I maintain this project 2/3 times a year.** If you start a new coworking space as a french non-profit
-organization, this project could help you on the first time. Otherwise, it must be wiser to use another peace of
-software.
+organization, this project could help you on the first time. Otherwise, it must be wiser to use another software.
 
 A django billing app for coworking space.
 
@@ -23,11 +22,11 @@ We intend to keep things as simple as we can and with an easy user experience. T
 of coworkers.
 
 **No tax management**. There is no tax for non-profit organization in
-France. This application doesn't manage tax, it only displays legal
-French informations and tax 0% on bills.
+France. This application doesn't manage tax, it displays only legal
+French informations and tax 0% in invoice.
 
 We use it at `Cowork'in Montpellier <http://www.coworkinmontpellier.org>`__ and `Le Vîllage <https://www.levillage.co/>`__, 
-and `Sète en Commun <https://www.facebook.com/Setencommun/>`__ three coworking spaces in South of France
+two coworking spaces in South of France
 
   * `Documentation <http://django-billjobs.readthedocs.io/en/latest/>`__
   * `Issue Tracking <https://github.com/ioO/django-billjobs/issues>`__
