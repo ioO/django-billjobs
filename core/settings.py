@@ -30,6 +30,7 @@ INTERNAL_IPS = ['127.0.0.1']
 DEBUG = True
 
 # Application definition
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -90,6 +91,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
