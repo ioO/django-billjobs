@@ -49,6 +49,13 @@ class UserSignupForm(ModelForm):
             raise ValidationError(_("This field is required."))
         return data
 
+    def save(self, commit=True):
+        user = super(UserSignupForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
 
 class UserProfileForm(ModelForm):
 
@@ -125,8 +132,6 @@ def signup(request):
         profile_form = UserProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            user.set_password(user_form.fields['password'])
-            user.save()
             force_user_properties(user)
             profile = profile_form.save(commit=False)
             profile.user = user
