@@ -334,19 +334,20 @@ def get_month_names():
 def get_annual_revenue(year):
     # Le chiffre d'affaire annuel est une estimation
     if year == current_year and current_month != 1:
+        bills = Bill.objects.filter(
+            billing_date__year=year,
+            billing_date__month__lte=previous_month
+        )
+        if len(bills) == 0:
+            return 0
         annual_revenue = (
-                Bill.objects.filter(
-                    billing_date__year=year,
-                    billing_date__month__lte=previous_month
-                    )
-                .aggregate(Sum('amount'))['amount__sum'])\
+                bills.aggregate(Sum('amount'))['amount__sum'])\
                             / previous_month * 12
     else:
-        annual_revenue = Bill.objects.filter(billing_date__year=year)\
-                .aggregate(Sum('amount'))['amount__sum']
-
-    if annual_revenue is None:
-        annual_revenue = "-"
+        bills = Bill.objects.filter(billing_date__year=year)
+        if len(bills) == 0:
+            return 0
+        annual_revenue = bills.aggregate(Sum('amount'))['amount__sum']
 
     return annual_revenue
 
