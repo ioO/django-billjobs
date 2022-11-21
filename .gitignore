@@ -9,4 +9,5 @@ docs/build/*
 build/*
 
 ## Project specific
+/static_root
 secret.txt
