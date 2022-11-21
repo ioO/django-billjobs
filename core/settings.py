@@ -26,7 +26,7 @@ DATABASES = {
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INTERNAL_IPS = ['127.0.0.1']
 
-DEBUG = True
+DEBUG = True if os.environ.get("DEBUG") == "1" else False
 
 # Application definition
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'billjobs',
-    'debug_toolbar',
 )
 
 MIDDLEWARE = (
@@ -50,8 +49,12 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+# Debug
+if DEBUG == True:
+    INSTALLED_APPS += ("debug_toolbar",)
+    MIDDLEWARE.insert(1, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = 'core.urls'
 
@@ -79,6 +82,7 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/static/'
+STATIC_ROOT = root("static_root")
 
 TEMPLATES = [
     {
