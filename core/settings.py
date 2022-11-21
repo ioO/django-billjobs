@@ -8,9 +8,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+from .utils.path import root, BASE_DIR
+from .utils.keygen import SECRET_KEY  # Secret key from generator module
+
+
+SECRET_KEY = SECRET_KEY
 
 DATABASES = {
     'default': {
@@ -18,11 +22,6 @@ DATABASES = {
         'NAME': 'develop.sqlite3',
     }
 }
-
-SECRET_KEY = 'vVj14cKNh76tO1gzFh5yXG3WnKb8BMWN'
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INTERNAL_IPS = ['127.0.0.1']
