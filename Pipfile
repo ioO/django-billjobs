@@ -20,6 +20,7 @@ flake8 = "==3.7.7"
 flake8-django = "==0.0.4"
 factory-boy = "*"
 PyYAML = "*"
+build = "*"
 
 [requires]
 python_version = "3.9"
