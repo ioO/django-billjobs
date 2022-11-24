@@ -8,9 +8,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+from .utils.path import root, BASE_DIR
+from .utils.keygen import SECRET_KEY  # Secret key from generator module
+
+
+SECRET_KEY = SECRET_KEY
 
 DATABASES = {
     'default': {
@@ -19,17 +23,13 @@ DATABASES = {
     }
 }
 
-SECRET_KEY = 'vVj14cKNh76tO1gzFh5yXG3WnKb8BMWN'
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 INTERNAL_IPS = ['127.0.0.1']
 
-DEBUG = True
+DEBUG = True if os.environ.get("DEBUG") == "1" else False
 
 # Application definition
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'billjobs',
-    'debug_toolbar',
 )
 
 MIDDLEWARE = (
@@ -50,8 +49,12 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+# Debug
+if DEBUG == True:
+    INSTALLED_APPS += ("debug_toolbar",)
+    MIDDLEWARE.insert(1, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = 'core.urls'
 
@@ -79,6 +82,7 @@ LOCALE_PATHS = (
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/static/'
+STATIC_ROOT = root("static_root")
 
 TEMPLATES = [
     {
@@ -90,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',

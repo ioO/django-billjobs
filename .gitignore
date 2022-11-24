@@ -7,3 +7,7 @@ docs/build/*
 .coverage
 .pypirc
 build/*
+
+## Project specific
+/static_root
+secret.txt

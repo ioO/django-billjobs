@@ -1,5 +1,7 @@
 from django.test import TestCase
 from django.shortcuts import reverse
+from django.contrib.auth.models import User
+from billjobs.models import UserProfile
 
 
 class SignupAndSlack(TestCase):
@@ -23,3 +25,9 @@ class SignupAndSlack(TestCase):
                 status_code=302,
                 target_status_code=200
                 )
+
+        user = User.objects.get(username = 'noslack')
+        self.assertEqual(user.check_password('motdepasse'), True)
+
+        profile = user.userprofile
+        self.assertEqual(profile.billing_address, 'une adresse')

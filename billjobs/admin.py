@@ -2,15 +2,14 @@ import csv
 from django import forms
 from django.http import HttpResponse
 from django.db.models import Q
-from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.forms.models import BaseInlineFormSet
 from django.utils.html import format_html
-from django.utils.translation import ugettext_lazy as _
-from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse, path
 from .models import Bill, BillLine, Service, UserProfile
 from .views import statistics
 
@@ -22,7 +21,7 @@ class BilljobsAdminSite(admin.AdminSite):
         urls = super(BilljobsAdminSite, self).get_urls()
 
         my_urls = [
-            url(r'^statistics$', self.admin_view(statistics),
+            path('statistics', self.admin_view(statistics),
                 name='billjobs_statistics')
         ]
 
