@@ -31,9 +31,14 @@ two coworking spaces in South of France
   * `Documentation <http://django-billjobs.readthedocs.io/en/latest/>`__
   * `Issue Tracking <https://github.com/ioO/django-billjobs/issues>`__
 
-## Upgrade dependencies
-
+Upgrade dependencies
+--------------------
 ```
 pipenv install
 pipenv requirements > requirements.txt
 ```
+
+How to release
+--------------
+
+https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/
