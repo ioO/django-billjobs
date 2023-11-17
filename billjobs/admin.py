@@ -1,4 +1,5 @@
 import csv
+import datetime
 from django import forms
 from django.http import HttpResponse
 from django.db.models import Q
@@ -131,7 +132,7 @@ class QuoteAdmin(admin.ModelAdmin):
     exclude = ('issuer_address', 'billing_address')
     inlines = [QuoteLineInline]
     list_display = ('__str__', 'coworker_name_link', 'amount', 'creation_date',
-                    'expiration_date', 'pdf_file_url')
+                    'expiration_date', 'pdf_file_url', 'is_expired')
     search_fields = ('user__first_name', 'user__last_name', 'number', 'amount')
 
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
@@ -160,6 +161,9 @@ class QuoteAdmin(admin.ModelAdmin):
         username = user.username
         return (name and name != username and '%s (%s)' % (name, username)
                 or username)
+
+    def is_expired(self, obj):
+        return obj.expiration_date < datetime.datetime.now().date()
 
     def coworker_name_link(self, obj):
         ''' Create a link to user admin edit view '''
