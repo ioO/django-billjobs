@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.utils.translation import gettext as _
@@ -156,13 +156,8 @@ def signup_success(request):
 @login_required
 def generate_pdf(request, entity_id):
     is_bill = not bool(request.GET.get('is_quote', False))
-    target = None
-    if is_bill:
-        target = Bill.objects.get(id=entity_id)
-    else:
-        target = Quote.objects.get(id=entity_id)
-    # TODO/VDO: check bill exists
-
+    target_class = Bill if is_bill else Quote
+    target = get_object_or_404(target_class, id=entity_id)
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = '{} "{}"'.format(
