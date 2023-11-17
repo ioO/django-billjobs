@@ -63,4 +63,3 @@ class QuoteFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     amount = factory.fuzzy.FuzzyInteger(100, 200, 10)
-
