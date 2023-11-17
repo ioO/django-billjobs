@@ -212,7 +212,7 @@ def bill_pre_save(sender, instance, **kwargs):
     """ Always compute the total amount of one bill before save. """
     set_bill_amount(sender, instance, **kwargs)
 
-@receiver(pre_save, sender=Bill)
+@receiver(pre_save, sender=Quote)
 def quote_pre_save(sender, instance, **kwargs):
     """ Always compute the total amount of one quote before save. """
     set_quote_amount(sender, instance, **kwargs)
@@ -246,7 +246,7 @@ def set_bill_amount(sender, instance, **kwargs):
 # the total amount.
 @receiver(post_save, sender=QuoteLine)
 @receiver(post_delete, sender=QuoteLine)
-def bill_billLine_post_save_and_delete(sender, instance, **kwargs):
+def quote_quoteLine_post_save_and_delete(sender, instance, **kwargs):
     """ Update Quote total amount when related quoteLines change
         When admin modify or delete a QuoteLine, Quote instance has no change, so
         the pre_save is not called and total amount is not computed.
