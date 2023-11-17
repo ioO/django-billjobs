@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.utils.translation import gettext_lazy as _
-from .settings import BILLJOBS_BILL_ISSUER
+from .settings import BILLJOBS_BILL_ISSUER, BILLJOBS_QUOTE_EXPIRES_DAYS
 import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -196,16 +196,14 @@ def define_number(sender, instance, **kwargs):
         except sender.DoesNotExist:
             last_num = '001'
 
-        type_ = "F"
-        if isinstance(instance, Quote):
-            type_ = "D"
+        type_ = "D" if isinstance(instance, Quote) else "F"
         instance.number = '{}{}{}'.format(type_, today.strftime('%Y%m'), last_num)
 
 @receiver(pre_save, sender=Quote)
 def quote_set_expiration_date(sender, instance, **kwargs):
     """ set quote expiration date """
     creation_date = datetime.datetime.now()
-    instance.expiration_date = creation_date + relativedelta(days=90) # TODO/VDO: make configurable
+    instance.expiration_date = creation_date + relativedelta(days=BILLJOBS_QUOTE_EXPIRES_DAYS)
 
 @receiver(pre_save, sender=Bill)
 def bill_pre_save(sender, instance, **kwargs):
