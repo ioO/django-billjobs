@@ -5,7 +5,50 @@ from django.db.models.signals import pre_save, post_save, post_delete
 from django.utils.translation import gettext_lazy as _
 from .settings import BILLJOBS_BILL_ISSUER
 import datetime
+from dateutil.relativedelta import relativedelta
 
+
+class Quote(models.Model):
+    user = models.ForeignKey(
+            User, verbose_name=_('Coworker'), on_delete=models.PROTECT)
+    number = models.CharField(
+            max_length=16,
+            unique=True,
+            blank=True,
+            verbose_name=_('Quote number'),
+            help_text=_('This value is set automatically.'))
+    creation_date = models.DateField(
+            auto_now_add=True,
+            verbose_name=_('Creation date'),
+            help_text=_('This value is set automatically.'))
+    expiration_date = models.DateField(
+            verbose_name=_('Expiration date'),
+            help_text=_('This value is set automatically.'))
+    amount = models.FloatField(
+            blank=True,
+            default=0,
+            verbose_name=_('Quote total amount'),
+            help_text=_('The amount is computed automatically.'))
+    issuer_address = models.CharField(
+            max_length=1024,
+            blank=False,
+            default=BILLJOBS_BILL_ISSUER)
+    billing_address = models.CharField(max_length=1024, blank=True)
+
+    def __str__(self):
+            return self.number
+
+    def coworker_name(self):
+        return '%s %s' % (self.user.first_name, self.user.last_name)
+    coworker_name.short_description = _('Coworker name')
+
+    class Meta:
+        verbose_name = _('Quote')
+
+    def save(self, *args, **kwargs):
+        if not self.billing_address:
+            self.billing_address = self.user.userprofile.billing_address
+        super(Quote, self).save(*args, **kwargs)
 
 class Bill(models.Model):
 
@@ -94,6 +137,27 @@ class BillLine(models.Model):
         verbose_name_plural = _('Bill Lines')
 
 
+class QuoteLine(models.Model):
+
+    quote = models.ForeignKey(Quote, models.PROTECT)
+    service = models.ForeignKey(Service, models.PROTECT)
+    quantity = models.SmallIntegerField(default=1, verbose_name=_('Quantity'))
+    total = models.FloatField(
+            blank=True,
+            help_text=_('This value is computed automatically'),
+            verbose_name=_('Total'))
+    note = models.CharField(
+            max_length=1024,
+            verbose_name=_('Note'),
+            blank=True,
+            help_text=_('Write a simple note which will be added in your quote')
+            )
+
+    class Meta:
+        verbose_name = _('Quote Line')
+        verbose_name_plural = _('Quote Lines')
+
+
 class UserProfile(models.Model):
     """ extend User class """
     user = models.OneToOneField(User, models.PROTECT)
@@ -107,6 +171,7 @@ class UserProfile(models.Model):
 
 
 @receiver(pre_save, sender=BillLine)
+@receiver(pre_save, sender=QuoteLine)
 def compute_total(sender, instance, **kwargs):
         """ set total of line automatically """
         if not instance.total:
@@ -114,6 +179,7 @@ def compute_total(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=Bill)
+@receiver(pre_save, sender=Quote)
 def define_number(sender, instance, **kwargs):
     """ set bill number incrementally """
 
@@ -130,13 +196,26 @@ def define_number(sender, instance, **kwargs):
         except sender.DoesNotExist:
             last_num = '001'
 
-        instance.number = 'F{}{}'.format(today.strftime('%Y%m'), last_num)
+        type_ = "F"
+        if isinstance(instance, Quote):
+            type_ = "D"
+        instance.number = '{}{}{}'.format(type_, today.strftime('%Y%m'), last_num)
 
+@receiver(pre_save, sender=Quote)
+def quote_set_expiration_date(sender, instance, **kwargs):
+    """ set quote expiration date """
+    creation_date = datetime.datetime.now()
+    instance.expiration_date = creation_date + relativedelta(days=90) # TODO/VDO: make configurable
 
 @receiver(pre_save, sender=Bill)
 def bill_pre_save(sender, instance, **kwargs):
     """ Always compute the total amount of one bill before save. """
     set_bill_amount(sender, instance, **kwargs)
+
+@receiver(pre_save, sender=Bill)
+def quote_pre_save(sender, instance, **kwargs):
+    """ Always compute the total amount of one quote before save. """
+    set_quote_amount(sender, instance, **kwargs)
 
 
 # If you change a BillLine, Bill object is not save, so pre_save do not compute
@@ -161,3 +240,27 @@ def set_bill_amount(sender, instance, **kwargs):
 
     if sender is not Bill:
         bill.save()
+
+
+# If you change a QuoteLine, Quote object is not save, so pre_save do not compute
+# the total amount.
+@receiver(post_save, sender=QuoteLine)
+@receiver(post_delete, sender=QuoteLine)
+def bill_billLine_post_save_and_delete(sender, instance, **kwargs):
+    """ Update Quote total amount when related quoteLines change
+        When admin modify or delete a QuoteLine, Quote instance has no change, so
+        the pre_save is not called and total amount is not computed.
+    """
+    set_quote_amount(sender, instance.quote, **kwargs)
+
+
+def set_quote_amount(sender, instance, **kwargs):
+    """ set total price of billing when saving """
+    # reset self.amount in case is already set
+    quote = instance
+    quote.amount = 0
+    for line in quote.quoteline_set.all():
+        quote.amount += line.total
+
+    if sender is not Quote:
+        quote.save()
