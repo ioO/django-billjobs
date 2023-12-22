@@ -69,3 +69,8 @@ BILLJOBS_SLACK_CHANNEL = getattr(
         'BILLJOBS_SLACK_CHANNEL',
         False
         )
+BILLJOBS_QUOTE_EXPIRES_DAYS = int(getattr(
+        settings,
+        'BILLJOBS_QUOTE_EXPIRES_DAYS',
+        30
+))

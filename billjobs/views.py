@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm, ValidationError
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.utils.translation import gettext as _
@@ -18,7 +18,7 @@ from .settings import BILLJOBS_DEBUG_PDF, BILLJOBS_BILL_LOGO_PATH, \
         BILLJOBS_BILL_PAYMENT_INFO, BILLJOBS_FORCE_SUPERUSER, \
         BILLJOBS_FORCE_USER_GROUP, BILLJOBS_SLACK_TOKEN, \
         BILLJOBS_SLACK_CHANNEL
-from .models import Bill, UserProfile, BillLine, Service
+from .models import Bill, UserProfile, BillLine, Service, Quote, QuoteLine
 from textwrap import wrap
 from django.utils import timezone
 from django.db.models import Sum
@@ -154,11 +154,14 @@ def signup_success(request):
 
 
 @login_required
-def generate_pdf(request, bill_id):
-    bill = Bill.objects.get(id=bill_id)
+def generate_pdf(request, entity_id):
+    is_bill = not bool(request.GET.get('is_quote', False))
+    target_class = Bill if is_bill else Quote
+    target = get_object_or_404(target_class, id=entity_id)
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = '{} "{}"'.format(
-            'attachment; filename=', bill.number)
+            'attachment; filename=', target.number + '.pdf')
 
     # Create a buffer
     buffer = BytesIO()
@@ -190,16 +193,31 @@ def generate_pdf(request, bill_id):
     lh = 15  # define a line height
     pdf.setFillColorRGB(0.3, 0.3, 0.3)
     pdf.setFont("Helvetica-Bold", 14)
-    pdf.drawRightString(width, height-lh, 'Facture')
+    pdf.drawRightString(width, height-lh, 'Facture' if is_bill else 'Devis')
     pdf.setFont("Helvetica-Bold", 10)
-    pdf.drawRightString(width, height-2*lh, u'Numéro : %s' % bill.number)
+    pdf.drawRightString(width, height-2*lh, u'Numéro : %s' % target.number)
     pdf.setFont("Helvetica", 10)
-    pdf.drawRightString(
-            width,
-            height-3*lh,
-            u'Date facturation : {}'.format(
-                bill.billing_date.strftime('%d/%m/%Y'))
-            )
+
+    if is_bill:
+        pdf.drawRightString(
+                width,
+                height-3*lh,
+                u'Date facturation : {}'.format(
+                    target.billing_date.strftime('%d/%m/%Y'))
+                )
+    else:
+        pdf.drawRightString(
+                width,
+                height-3*lh,
+                u'Date émission : {}'.format(
+                    target.creation_date.strftime('%d/%m/%Y'))
+                )
+        pdf.drawRightString(
+                width,
+                height-4*lh,
+                u'Valide jusqu\'au : {}'.format(
+                    target.expiration_date.strftime('%d/%m/%Y'))
+                )
 
     # define new height
     nh = height - 90
@@ -212,7 +230,7 @@ def generate_pdf(request, bill_id):
     # reset fill for text color
     pdf.setFillColorRGB(0.3, 0.3, 0.3)
     pdf.drawString(10, nh-lh, 'Émetteur')
-    issuer = Paragraph(bill.issuer_address, getSampleStyleSheet()['Normal'])
+    issuer = Paragraph(target.issuer_address, getSampleStyleSheet()['Normal'])
     issuer.wrapOn(pdf, width*0.25, 6*lh)
     issuer.drawOn(pdf, 20, nh-6*lh)
 
@@ -222,9 +240,9 @@ def generate_pdf(request, bill_id):
     customer.setTextOrigin(width/2+20, nh-3*lh)
     # create text with \n and remove \r
     text = '{} {}\n{}'.format(
-            bill.user.first_name,
-            bill.user.last_name,
-            bill.billing_address.replace('\r', '')
+            target.user.first_name,
+            target.user.last_name,
+            target.billing_address.replace('\r', '')
             )
     # get each line
     for line in text.split('\n'):
@@ -240,7 +258,10 @@ def generate_pdf(request, bill_id):
 
     data = [['Désignation', 'Prix unit. HT', 'Quantité', 'Total HT']]
 
-    for line in bill.billline_set.all():
+    
+    target_set = bill.billline_set if is_bill else target.quoteline_set
+
+    for line in target_set.all():
         description = '{} - {}\n{}'.format(
                 line.service.reference,
                 line.service.name,
@@ -258,10 +279,10 @@ def generate_pdf(request, bill_id):
         'TVA non applicable art-293B du CGI',
         '',
         'Total HT',
-        '{} €'.format(bill.amount)
+        '{} €'.format(target.amount)
         ))
     data.append(('', '', 'TVA 0%', '0'))
-    data.append(('', '', 'Total TTC', '{} €.'.format(bill.amount)))
+    data.append(('', '', 'Total TTC', '{} €.'.format(target.amount)))
 
     # widths in percent of pdf width
     colWidths = (width*0.55, width*0.15, width*0.15, width*0.15)
