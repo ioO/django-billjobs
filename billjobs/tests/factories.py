@@ -60,3 +60,11 @@ class BillFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     amount = factory.fuzzy.FuzzyInteger(100, 200, 10)
+
+
+class QuoteFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = 'billjobs.Quote'
+
+    user = factory.SubFactory(UserFactory)
+    amount = factory.fuzzy.FuzzyInteger(100, 200, 10)
