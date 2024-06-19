@@ -227,8 +227,10 @@ def bill_pre_save(sender, instance, **kwargs):
 @receiver(pre_save, sender=Quote)
 def quote_pre_save(sender, instance, **kwargs):
     """ Always compute the total amount of one quote before save. """
-    set_quote_amount(sender, instance, **kwargs)
-
+    try:
+        set_quote_amount(sender, instance, **kwargs)
+    except ValueError:
+        pass
 
 # If you change a BillLine, Bill object is not save, so pre_save do not compute
 # the total amount.
