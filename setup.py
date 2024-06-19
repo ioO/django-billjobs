@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-billjobs',
-    version='0.11.1',
+    version='0.12.0',
     packages=['billjobs'],
     include_package_data=True,
     python_requires='>=3.10',
