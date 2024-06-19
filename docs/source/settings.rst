@@ -89,3 +89,12 @@ Default is False.
 
 .. _billjobs/settings: https://github.com/ioO/django-billjobs/blob/master/billjobs/settings.py
 .. _Legacy token: https://api.slack.com/custom-integrations/legacy-tokens
+
+BILLJOBS_QUOTE_EXPIRES_DAYS
+----------------------
+
+Integer.
+
+Number of days an issued quote remains valid
+
+Default is 30 days.
