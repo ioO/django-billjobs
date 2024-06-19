@@ -16,7 +16,7 @@ setup(
     install_requires=[
         "django<5",
         "reportlab<3.7",
-        "requests<2.28",
+        "requests<3",
         "python-dateutil",
     ],
     license='X11 License',

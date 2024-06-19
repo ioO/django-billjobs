@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 Django = "<5"
 reportlab = "<3.7"
-requests = "<2.28"
+requests = "<3"
 python-dateutil = "*"
 
 [dev-packages]
