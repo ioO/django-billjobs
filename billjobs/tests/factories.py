@@ -22,6 +22,11 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
         django_get_or_create = ('username',)
 
+    @classmethod
+    def _after_postgeneration(cls, instance, create, results=None):
+        # Some post-generation hooks ran, and may have modified us.
+        instance.save()
+
     username = 'steve'
     password = 'gates'
     first_name = 'Steve'

@@ -89,10 +89,20 @@ class Bill(models.Model):
     class Meta:
         verbose_name = _('Bill')
 
-    def save(self, *args, **kwargs):
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
         if not self.billing_address:
             self.billing_address = self.user.userprofile.billing_address
-        super(Bill, self).save(*args, **kwargs)
+            if update_fields is not None and "billing_address" in update_fields:
+                update_fields = {"billing_address"}.union(update_fields)
+
+        super(Bill, self).save(
+            force_insert=force_insert,
+            force_update=force_update,
+            using=using,
+            update_fields=update_fields,
+        )
 
 
 class Service(models.Model):
@@ -208,7 +218,11 @@ def quote_set_expiration_date(sender, instance, **kwargs):
 @receiver(pre_save, sender=Bill)
 def bill_pre_save(sender, instance, **kwargs):
     """ Always compute the total amount of one bill before save. """
-    set_bill_amount(sender, instance, **kwargs)
+    # Handle https://forum.djangoproject.com/t/saving-in-3-2-versus-4-2/22926
+    try:
+        set_bill_amount(sender, instance, **kwargs)
+    except ValueError:
+        pass
 
 @receiver(pre_save, sender=Quote)
 def quote_pre_save(sender, instance, **kwargs):

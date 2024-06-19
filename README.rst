@@ -33,12 +33,16 @@ two coworking spaces in South of France
 
 Upgrade dependencies
 --------------------
-```
+``
 pipenv install
 pipenv requirements > requirements.txt
-```
+``
 
 How to release
 --------------
-
-https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/
+``
+rm -rf dist/*
+pipenv run python3 -m build
+pipenv run twine upload dist/*
+``
+More information: https://packaging.python.org/en/latest/guides/distributing-packages-using-setuptools/
