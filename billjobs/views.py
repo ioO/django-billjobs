@@ -259,7 +259,7 @@ def generate_pdf(request, entity_id):
     data = [['Désignation', 'Prix unit. HT', 'Quantité', 'Total HT']]
 
     
-    target_set = bill.billline_set if is_bill else target.quoteline_set
+    target_set = target.billline_set if is_bill else target.quoteline_set
 
     for line in target_set.all():
         description = '{} - {}\n{}'.format(
