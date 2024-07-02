@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 23:56+0000\n"
+"POT-Creation-Date: 2024-07-02 21:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,130 +18,189 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: billjobs/admin.py:62 billjobs/models.py:35
+#: billjobs/admin.py:97 billjobs/admin.py:177 billjobs/models.py:43
+#: billjobs/models.py:88
 msgid "Coworker name"
 msgstr "Coworker"
 
-#: billjobs/admin.py:69
+#: billjobs/admin.py:105
 msgid "Download invoice"
 msgstr "Télécharger la facture"
 
-#: billjobs/admin.py:80
+#: billjobs/admin.py:167
+msgid "Yes"
+msgstr "Oui"
+
+#: billjobs/admin.py:168
+msgid "No"
+msgstr "Non"
+
+#: billjobs/admin.py:169
+msgid "Expired"
+msgstr "Expiré"
+
+#: billjobs/admin.py:185
+msgid "Download quote"
+msgstr "Télécharger le devis"
+
+#: billjobs/admin.py:222
 msgid "Personal info"
 msgstr "Information personnelle"
 
-#: billjobs/admin.py:83
+#: billjobs/admin.py:225
 msgid "Permissions"
 msgstr "Permissions"
 
-#: billjobs/admin.py:88
+#: billjobs/admin.py:230
 msgid "Important dates"
 msgstr "Dates importantes"
 
-#: billjobs/admin.py:105
+#: billjobs/admin.py:248
 msgid "Export email of selected users"
 msgstr "Exporter les adresses électroniques"
 
-#: billjobs/models.py:14
+#: billjobs/models.py:13 billjobs/models.py:57
 msgid "Coworker"
 msgstr "Coworker"
 
-#: billjobs/models.py:16
-msgid "Bill number"
-msgstr "Numéro de facture"
+#: billjobs/models.py:18
+msgid "Quote number"
+msgstr "Numéro de devis"
 
-#: billjobs/models.py:17 billjobs/models.py:22
+#: billjobs/models.py:19 billjobs/models.py:23 billjobs/models.py:26
+#: billjobs/models.py:63 billjobs/models.py:71
 msgid "This value is set automatically."
 msgstr "Cette valeur est définie automatiquement."
 
-#: billjobs/models.py:19
-msgid "Bill is paid ?"
-msgstr "Facture payée ?"
-
-#: billjobs/models.py:20
-msgid "Check this value when bill is paid"
-msgstr "Cocher quand la facture est payée"
-
-#: billjobs/models.py:21
-msgid "Date"
-msgstr "Date"
-
-#: billjobs/models.py:24
-msgid "Bill total amount"
-msgstr "Montant total de la facture"
+#: billjobs/models.py:22
+msgid "Creation date"
+msgstr "Date de création"
 
 #: billjobs/models.py:25
+msgid "Expiration date"
+msgstr "Limite de validité"
+
+#: billjobs/models.py:30
+msgid "Quote total amount"
+msgstr "Montant total du devis"
+
+#: billjobs/models.py:31 billjobs/models.py:76
 msgid "The amount is computed automatically."
 msgstr "Le montant est calculé automatiquement"
 
-#: billjobs/models.py:38
+#: billjobs/models.py:46
+msgid "Quote"
+msgstr "Devis"
+
+#: billjobs/models.py:47
+msgid "Quotes"
+msgstr "Devis"
+
+#: billjobs/models.py:62
+msgid "Bill number"
+msgstr "Numéro de facture"
+
+#: billjobs/models.py:66
+msgid "Bill is paid ?"
+msgstr "Facture payée ?"
+
+#: billjobs/models.py:67
+msgid "Check this value when bill is paid"
+msgstr "Cocher quand la facture est payée"
+
+#: billjobs/models.py:70
+msgid "Date"
+msgstr "Date"
+
+#: billjobs/models.py:75
+msgid "Bill total amount"
+msgstr "Montant total de la facture"
+
+#: billjobs/models.py:91
 msgid "Bill"
 msgstr "Facture"
 
-#: billjobs/models.py:49
+#: billjobs/models.py:111
 msgid "Reference"
 msgstr "Reférence"
 
-#: billjobs/models.py:50
+#: billjobs/models.py:112
 msgid "Name"
 msgstr "Nom"
 
-#: billjobs/models.py:52
+#: billjobs/models.py:115
 msgid "Description"
 msgstr "Description"
 
-#: billjobs/models.py:53
+#: billjobs/models.py:116
 msgid "Write service description limited to 256 characters"
 msgstr "Écrivez une description inférieure à 256 caractères"
 
-#: billjobs/models.py:54
+#: billjobs/models.py:117
 msgid "Price"
 msgstr "Prix"
 
-#: billjobs/models.py:55
+#: billjobs/models.py:119
 msgid "Is available ?"
 msgstr "Disponible ?"
 
-#: billjobs/models.py:63
+#: billjobs/models.py:127
 msgid "Service"
 msgstr "Service"
 
-#: billjobs/models.py:69
+#: billjobs/models.py:134 billjobs/models.py:155
 msgid "Quantity"
 msgstr "Quantité"
 
-#: billjobs/models.py:71
+#: billjobs/models.py:137 billjobs/models.py:158
 msgid "This value is computed automatically"
-msgstr "Cette valeur est caclculée automatiquement"
+msgstr "Cette valeur est calculée automatiquement"
 
-#: billjobs/models.py:72
+#: billjobs/models.py:138 billjobs/models.py:159
 msgid "Total"
 msgstr "Total"
 
-#: billjobs/models.py:73
+#: billjobs/models.py:141 billjobs/models.py:162
 msgid "Note"
 msgstr "Note"
 
-#: billjobs/models.py:75
+#: billjobs/models.py:143
 msgid "Write a simple note which will be added in your bill"
 msgstr "Écrivez une note à ajouter à la facture"
 
-#: billjobs/models.py:79
+#: billjobs/models.py:147
 msgid "Bill Line"
 msgstr "Ligne de facturation"
 
-#: billjobs/models.py:80
+#: billjobs/models.py:148
 msgid "Bill Lines"
 msgstr "Lignes de facturation"
 
-#: billjobs/models.py:86
+#: billjobs/models.py:164
+msgid "Write a simple note which will be added in your quote"
+msgstr "Écrivez une note à ajouter au devis"
+
+#: billjobs/models.py:168
+msgid "Quote Line"
+msgstr "Ligne de devis"
+
+#: billjobs/models.py:169
+msgid "Quote Lines"
+msgstr "Lignes de devis"
+
+#: billjobs/models.py:177
 msgid "Billing Address"
 msgstr "Adresse de facturation"
 
-#: billjobs/models.py:89
+#: billjobs/models.py:180
 msgid "User Profile"
 msgstr "Profil utilisateur"
 
-#: billjobs/models.py:90
+#: billjobs/models.py:181
 msgid "User Profiles"
 msgstr "Profils utilisateur"
+
+#: billjobs/views.py:37 billjobs/views.py:43 billjobs/views.py:49
+#: billjobs/views.py:69
+msgid "This field is required."
+msgstr "Ce champ est obligatoire"

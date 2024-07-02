@@ -163,7 +163,10 @@ class QuoteAdmin(admin.ModelAdmin):
                 or username)
 
     def is_expired(self, obj):
-        return obj.expiration_date < datetime.datetime.now().date()
+        if obj.expiration_date < datetime.datetime.now().date():
+            return _("Yes")
+        return _("No")
+    is_expired.short_description = _('Expired')
 
     def coworker_name_link(self, obj):
         ''' Create a link to user admin edit view '''
@@ -179,7 +182,7 @@ class QuoteAdmin(admin.ModelAdmin):
                 reverse('generate-pdf', args=(obj.id,)) + "?is_quote=true",
                 obj.number)
 
-    pdf_file_url.short_description = _('Download invoice')
+    pdf_file_url.short_description = _('Download quote')
 
 
 class RequiredInlineFormSet(BaseInlineFormSet):
