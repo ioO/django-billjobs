@@ -44,6 +44,7 @@ class Quote(models.Model):
 
     class Meta:
         verbose_name = _('Quote')
+        verbose_name_plural = _('Quotes')
 
     def save(self, *args, **kwargs):
         if not self.billing_address:
