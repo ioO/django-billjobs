@@ -1,6 +1,6 @@
 -i https://pypi.org/simple
 asgiref==3.8.1; python_version >= '3.8'
-certifi==2024.6.2; python_version >= '3.6'
+certifi==2024.7.4; python_version >= '3.6'
 charset-normalizer==3.3.2; python_full_version >= '3.7.0'
 django==4.2.13; python_version >= '3.8'
 idna==3.7; python_version >= '3.5'
